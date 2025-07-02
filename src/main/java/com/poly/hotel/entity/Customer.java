@@ -6,8 +6,8 @@ package com.poly.hotel.entity;
 
 /**
  *
- * @author PHUONG LAM
+ * @author ADMIN
  */
-public class Room {
-    private String fullName;
+public class Customer {
+    
 }
