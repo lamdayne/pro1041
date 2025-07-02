@@ -29,19 +29,19 @@ public class HotelJFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton2 = new javax.swing.JButton();
+        btnServiceManager = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        btnCustomer = new javax.swing.JButton();
+        btnRevenue = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
+        btnRoomManager = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -53,12 +53,12 @@ public class HotelJFrame extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 210, -1));
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-service-24.png"))); // NOI18N
-        jButton2.setText("Dịch vụ");
-        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton2.setIconTextGap(10);
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 210, 50));
+        btnServiceManager.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnServiceManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-service-24.png"))); // NOI18N
+        btnServiceManager.setText("Dịch vụ");
+        btnServiceManager.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnServiceManager.setIconTextGap(10);
+        jPanel1.add(btnServiceManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 210, 50));
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-home-24.png"))); // NOI18N
@@ -67,33 +67,33 @@ public class HotelJFrame extends javax.swing.JFrame {
         jButton3.setIconTextGap(10);
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 210, 50));
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/user.png"))); // NOI18N
-        jButton4.setText("Khách hàng");
-        jButton4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton4.setIconTextGap(10);
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 210, 50));
+        btnCustomer.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/user.png"))); // NOI18N
+        btnCustomer.setText("Khách hàng");
+        btnCustomer.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnCustomer.setIconTextGap(10);
+        jPanel1.add(btnCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 210, 50));
 
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/list.png"))); // NOI18N
-        jButton5.setText("Doanh thu");
-        jButton5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton5.setIconTextGap(10);
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 210, 50));
+        btnRevenue.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnRevenue.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/list.png"))); // NOI18N
+        btnRevenue.setText("Doanh thu");
+        btnRevenue.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnRevenue.setIconTextGap(10);
+        jPanel1.add(btnRevenue, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 210, 50));
 
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/logout.png"))); // NOI18N
-        jButton6.setText("Đăng xuất");
-        jButton6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton6.setIconTextGap(10);
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 210, 50));
+        btnLogout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/logout.png"))); // NOI18N
+        btnLogout.setText("Đăng xuất");
+        btnLogout.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLogout.setIconTextGap(10);
+        jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 210, 50));
 
-        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-room-24.png"))); // NOI18N
-        jButton7.setText("Quản lý phòng");
-        jButton7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton7.setIconTextGap(10);
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 210, 50));
+        btnRoomManager.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnRoomManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-room-24.png"))); // NOI18N
+        btnRoomManager.setText("Quản lý phòng");
+        btnRoomManager.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnRoomManager.setIconTextGap(10);
+        jPanel1.add(btnRoomManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 210, 50));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -171,12 +171,12 @@ public class HotelJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCustomer;
+    private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnRevenue;
+    private javax.swing.JButton btnRoomManager;
+    private javax.swing.JButton btnServiceManager;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
