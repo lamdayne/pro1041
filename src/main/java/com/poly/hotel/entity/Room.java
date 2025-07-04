@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.poly.hotel.entity;
+
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,12 +19,11 @@ import lombok.NoArgsConstructor;
  * @author PHUONG LAM
  */
 public class Room {
-    private int roomID ;
-    private String roomName ;
-   private int floor ;
-    private float hourPrice ;
-    private float dailyPrice ;
+
+    private String roomID;
+    private int categoryID;
+    private int floor;
     private String status;
-    private String desc ;
-    private int roomCategoryID;
+    private String desc;
+    private boolean isActive;
 }

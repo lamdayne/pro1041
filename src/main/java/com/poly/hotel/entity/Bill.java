@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
  * @author PC
  */
 public class Bill {
-    private int billID;
+    private String billID;
     private int bookingID;
-    private Date billDate;
-    private float totalAmount;
-    private String paymentStatus ;
+    private float amount;
     private String paymentMethod;
+    private Date paymentDate;
+    private String paymentStatus ;
     private String username ;
 }

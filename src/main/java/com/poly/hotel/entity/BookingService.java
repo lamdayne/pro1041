@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.poly.hotel.entity;
+
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,8 +19,10 @@ import lombok.NoArgsConstructor;
  * @author PC
  */
 public class BookingService {
-   private int  bookingID ;
-    private int serviceID ;
-    private int quantity ;
-   private float priceAtTime ;
+    private String bookingServiceID;
+    private int bookingID;
+    private String serviceID;
+    private int quantity;
+    private float unitPrice;
+    private float totalPrice;
 }

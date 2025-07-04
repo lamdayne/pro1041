@@ -18,11 +18,13 @@ import lombok.NoArgsConstructor;
  * @author PC
  */
 public class Service {
-    private int serviceID;
+    private String serviceID;
     private String serviceName;
+    private int serviceCategoryID;
     private float price;
     private String unit;
-    private String desc;
-    private int serviceCategoryID;
+    private String description;
+    private boolean isActive;
+    
     
 }
