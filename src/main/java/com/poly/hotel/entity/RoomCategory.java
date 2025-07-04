@@ -18,8 +18,11 @@ import lombok.NoArgsConstructor;
  * @author PC
  */
 public class RoomCategory {
-    private int roomCategoryID ;
-    private String roomCategoryName ;
-    private float defaultHourPrice ;
-    private float defaultDailyPrice ;
+    private int CategoryID ;
+    private String CategoryName ;
+    private String desc;
+    private float baseHourPrice ;
+    private float baseDailyPrice ;
+    private int maxOccupancy;
+    private boolean isActive;
 }

@@ -19,6 +19,8 @@ import lombok.NoArgsConstructor;
  */
 public class ServiceCategory {
     private int serviceCategoryID ;
-    private String serviceCategoryName;
+    private String categoryName;
+    private String desc;
+    private boolean isActive;
     
 }

@@ -21,10 +21,13 @@ import lombok.NoArgsConstructor;
 public class Booking {
     private int bookingID;
     private int customerID ;
-    private int roomID ;
+    private String roomID ;
+    private String useName;
     private Date checkInDate ;
     private Date checkOutDate;
-    private String bookingStatus ;
     private Date bookingDate ;
-    private String username ;
+    private String status;
+    private float totalRoomAmount;
+    private float totalServiceAmount;
+    private float totalAmount;
 }

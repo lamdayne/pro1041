@@ -26,5 +26,5 @@ public class User {
     private String phoneNumber ;
     private String email ;
     private String role ;
-    private  boolean enabled;
+    private  boolean isActive;
 }
