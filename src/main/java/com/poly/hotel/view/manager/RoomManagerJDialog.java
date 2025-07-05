@@ -81,7 +81,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jPanel1.setBackground(new java.awt.Color(102, 153, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
