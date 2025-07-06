@@ -115,6 +115,7 @@ public class SignUPJDialog extends javax.swing.JDialog {
         jRadioButton3.setForeground(new java.awt.Color(51, 51, 255));
         jRadioButton3.setText("Nhân Viên");
 
+        buttonGroup2.add(jRadioButton4);
         jRadioButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jRadioButton4.setForeground(new java.awt.Color(255, 51, 51));
         jRadioButton4.setText("Quản Lý");
