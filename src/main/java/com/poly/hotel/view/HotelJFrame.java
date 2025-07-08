@@ -224,6 +224,11 @@ public class HotelJFrame extends javax.swing.JFrame {
         btnBill.setContentAreaFilled(false);
         btnBill.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnBill.setIconTextGap(10);
+        btnBill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBillActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnBill, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 210, 50));
 
         btnRoomCategoryManager.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -535,6 +540,11 @@ public class HotelJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         setMainPanelFromDialog(new UserManagerJDialog(this, true));
     }//GEN-LAST:event_btnUserManagerActionPerformed
+
+    private void btnBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBillActionPerformed
+        // TODO add your handling code here:
+        setMainPanelFromDialog(new BillJDialog(this, true));
+    }//GEN-LAST:event_btnBillActionPerformed
 
     /**
      * @param args the command line arguments
