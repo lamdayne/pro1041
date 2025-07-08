@@ -25,7 +25,7 @@ public class MailService {
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true");
-        prop.put("mail.smtp.host", "mail.lamdayne.site");
+        prop.put("mail.smtp.host", "");
         prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.socketFactory.port", "587");
         prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -57,8 +57,8 @@ public class MailService {
     
     public static void sendEmailResetPassword(String email) {
         String from = "quanlykhachsan@gmail.com";
-        String username = "shopbanhang@lamdayne.site";
-        String password = "L@m181006";
+        String username = "";
+        String password = "";
         String content = "Mã đặt lại mật khẩu : " + resetCode();
         sendEmail(email, from, username, password, content);
     }
