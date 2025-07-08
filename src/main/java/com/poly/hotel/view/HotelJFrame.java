@@ -4,17 +4,34 @@
  */
 package com.poly.hotel.view;
 
+import com.poly.hotel.view.manager.RoomCategoryManagerJDialog;
+import com.poly.hotel.view.manager.RoomManagerJDialog;
+import com.poly.hotel.view.manager.ServiceManagerJDialog;
+import com.poly.hotel.view.manager.UserManagerJDialog;
+import javax.swing.JDialog;
+
 /**
  *
  * @author PHUONG LAM
  */
 public class HotelJFrame extends javax.swing.JFrame {
 
+    public void setMainPanelFromDialog(JDialog dialog) {
+        // xóa component bên trong mainPanel
+        mainPanel.removeAll();
+        // lấy nội dung của dialog thêm vào mainPanel
+        mainPanel.add(dialog.getContentPane());
+        // update layout khi thay đổi
+        mainPanel.revalidate();
+        mainPanel.repaint();
+    }
+    
     /**
      * Creates new form HotelJFrame
      */
     public HotelJFrame() {
         initComponents();
+        jScrollPane5.getVerticalScrollBar().setUnitIncrement(18); // lướt ổn hơn
     }
 
     /**
@@ -32,14 +49,17 @@ public class HotelJFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnServiceManager = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnUserManager = new javax.swing.JButton();
+        btnHome = new javax.swing.JButton();
         btnCustomer = new javax.swing.JButton();
         btnRevenue = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         btnRoomManager = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtFullName = new javax.swing.JLabel();
+        btnBill = new javax.swing.JButton();
+        btnRoomCategoryManager = new javax.swing.JButton();
+        btnServiceManager = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         mainPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -113,23 +133,33 @@ public class HotelJFrame extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 210, -1));
 
-        btnServiceManager.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnServiceManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-service-24.png"))); // NOI18N
-        btnServiceManager.setText("Dịch vụ");
-        btnServiceManager.setBorderPainted(false);
-        btnServiceManager.setContentAreaFilled(false);
-        btnServiceManager.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnServiceManager.setIconTextGap(10);
-        jPanel1.add(btnServiceManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 210, 50));
+        btnUserManager.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnUserManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/user.png"))); // NOI18N
+        btnUserManager.setText("QL Nhân viên");
+        btnUserManager.setBorderPainted(false);
+        btnUserManager.setContentAreaFilled(false);
+        btnUserManager.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnUserManager.setIconTextGap(10);
+        btnUserManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserManagerActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnUserManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 210, 50));
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-home-24.png"))); // NOI18N
-        jButton3.setText("Trang chủ");
-        jButton3.setBorderPainted(false);
-        jButton3.setContentAreaFilled(false);
-        jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton3.setIconTextGap(10);
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 210, 50));
+        btnHome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-home-24.png"))); // NOI18N
+        btnHome.setText("Trang chủ");
+        btnHome.setBorderPainted(false);
+        btnHome.setContentAreaFilled(false);
+        btnHome.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnHome.setIconTextGap(10);
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 210, 50));
 
         btnCustomer.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/user.png"))); // NOI18N
@@ -138,6 +168,11 @@ public class HotelJFrame extends javax.swing.JFrame {
         btnCustomer.setContentAreaFilled(false);
         btnCustomer.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnCustomer.setIconTextGap(10);
+        btnCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCustomerActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 210, 50));
 
         btnRevenue.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -156,7 +191,7 @@ public class HotelJFrame extends javax.swing.JFrame {
         btnLogout.setContentAreaFilled(false);
         btnLogout.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnLogout.setIconTextGap(10);
-        jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 210, 50));
+        jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 210, 50));
 
         btnRoomManager.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnRoomManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-room-24.png"))); // NOI18N
@@ -165,17 +200,59 @@ public class HotelJFrame extends javax.swing.JFrame {
         btnRoomManager.setContentAreaFilled(false);
         btnRoomManager.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnRoomManager.setIconTextGap(10);
-        jPanel1.add(btnRoomManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 210, 50));
+        btnRoomManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRoomManagerActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnRoomManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 210, 50));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nhân viên:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, -1, -1));
 
         txtFullName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtFullName.setForeground(new java.awt.Color(0, 0, 0));
         txtFullName.setText("Nguyễn Văn A");
-        jPanel1.add(txtFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 420, -1, -1));
+        jPanel1.add(txtFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 570, -1, -1));
+
+        btnBill.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/payment.png"))); // NOI18N
+        btnBill.setText("Bill");
+        btnBill.setBorderPainted(false);
+        btnBill.setContentAreaFilled(false);
+        btnBill.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnBill.setIconTextGap(10);
+        jPanel1.add(btnBill, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 210, 50));
+
+        btnRoomCategoryManager.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnRoomCategoryManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-room-24.png"))); // NOI18N
+        btnRoomCategoryManager.setText("QL Loại phòng");
+        btnRoomCategoryManager.setBorderPainted(false);
+        btnRoomCategoryManager.setContentAreaFilled(false);
+        btnRoomCategoryManager.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnRoomCategoryManager.setIconTextGap(10);
+        btnRoomCategoryManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRoomCategoryManagerActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnRoomCategoryManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 210, 50));
+
+        btnServiceManager.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnServiceManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-service-24.png"))); // NOI18N
+        btnServiceManager.setText("Dịch vụ");
+        btnServiceManager.setBorderPainted(false);
+        btnServiceManager.setContentAreaFilled(false);
+        btnServiceManager.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnServiceManager.setIconTextGap(10);
+        btnServiceManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnServiceManagerActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnServiceManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 210, 50));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Trạng thái", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
 
@@ -375,16 +452,15 @@ public class HotelJFrame extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
-                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,20 +495,46 @@ public class HotelJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 978, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCustomerActionPerformed
+
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        // TODO add your handling code here:
+        setMainPanelFromDialog(new HomeJDialog(this, true));
+    }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnRoomCategoryManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRoomCategoryManagerActionPerformed
+        // TODO add your handling code here:
+        setMainPanelFromDialog(new RoomCategoryManagerJDialog(this, true));
+    }//GEN-LAST:event_btnRoomCategoryManagerActionPerformed
+
+    private void btnRoomManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRoomManagerActionPerformed
+        // TODO add your handling code here:
+        setMainPanelFromDialog(new RoomManagerJDialog(this, true));
+    }//GEN-LAST:event_btnRoomManagerActionPerformed
+
+    private void btnServiceManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServiceManagerActionPerformed
+        // TODO add your handling code here:
+        setMainPanelFromDialog(new ServiceManagerJDialog(this, true));
+    }//GEN-LAST:event_btnServiceManagerActionPerformed
+
+    private void btnUserManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserManagerActionPerformed
+        // TODO add your handling code here:
+        setMainPanelFromDialog(new UserManagerJDialog(this, true));
+    }//GEN-LAST:event_btnUserManagerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -470,11 +572,15 @@ public class HotelJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBill;
     private javax.swing.JButton btnCustomer;
+    private javax.swing.JButton btnHome;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnRevenue;
+    private javax.swing.JButton btnRoomCategoryManager;
     private javax.swing.JButton btnRoomManager;
     private javax.swing.JButton btnServiceManager;
+    private javax.swing.JButton btnUserManager;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -497,7 +603,6 @@ public class HotelJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton28;
     private javax.swing.JButton jButton29;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
