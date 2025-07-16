@@ -4,6 +4,7 @@
  */
 package com.poly.hotel.view;
 
+import com.poly.hotel.controller.HotelJFrameController;
 import com.poly.hotel.view.manager.RoomCategoryManagerJDialog;
 import com.poly.hotel.view.manager.RoomManagerJDialog;
 import com.poly.hotel.view.manager.ServiceManagerJDialog;
@@ -14,7 +15,7 @@ import javax.swing.JDialog;
  *
  * @author PHUONG LAM
  */
-public class HotelJFrame extends javax.swing.JFrame {
+public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameController {
 
     public void setMainPanelFromDialog(JDialog dialog) {
         // xóa component bên trong mainPanel
@@ -32,6 +33,7 @@ public class HotelJFrame extends javax.swing.JFrame {
     public HotelJFrame() {
         initComponents();
         jScrollPane5.getVerticalScrollBar().setUnitIncrement(18); // lướt ổn hơn
+        this.init();
     }
 
     /**
@@ -191,6 +193,11 @@ public class HotelJFrame extends javax.swing.JFrame {
         btnLogout.setContentAreaFilled(false);
         btnLogout.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnLogout.setIconTextGap(10);
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 210, 50));
 
         btnRoomManager.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -546,6 +553,19 @@ public class HotelJFrame extends javax.swing.JFrame {
         setMainPanelFromDialog(new BillJDialog(this, true));
     }//GEN-LAST:event_btnBillActionPerformed
 
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        this.exit();
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    
+    @Override
+    public void init() {
+        this.setLocationRelativeTo(null);
+        this.showWelcomeJDialog(this);
+        this.showLoginJDialog(this);
+    }
+    
     /**
      * @param args the command line arguments
      */
