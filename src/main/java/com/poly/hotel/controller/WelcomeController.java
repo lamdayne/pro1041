@@ -10,5 +10,5 @@ package com.poly.hotel.controller;
  */
 public interface WelcomeController {
 
-//    void waiting();
+    void waiting();
 }
