@@ -302,7 +302,7 @@ public class UserManagerJDialog extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Biểu Mẫu", jPanel2);
 
-        jPanel3.setBackground(new java.awt.Color(102, 153, 0));
+        jPanel3.setBackground(new java.awt.Color(153, 153, 255));
         jPanel3.setForeground(new java.awt.Color(51, 255, 102));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N

@@ -228,8 +228,9 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
 
         jTabbedPane4.addTab("Biểu Mẫu", jPanel8);
 
-        jPanel6.setBackground(new java.awt.Color(102, 153, 0));
+        jPanel6.setBackground(new java.awt.Color(153, 153, 255));
 
+        jLabel1.setBackground(new java.awt.Color(153, 153, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Quản Lý Dịch vụ");
@@ -341,7 +342,6 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
@@ -353,27 +353,14 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton30;
     private javax.swing.JButton jButton31;
     private javax.swing.JButton jButton32;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane4;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable5;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;

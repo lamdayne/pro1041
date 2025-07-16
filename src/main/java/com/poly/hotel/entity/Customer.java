@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class Customer {
     private int customerID ;
     private String fullName ;
-    private String gender ;
+    private boolean gender ;
     private String phoneNumber ;
     private String email ;
     private String idNumber ;
