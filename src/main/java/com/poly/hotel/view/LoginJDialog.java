@@ -4,13 +4,19 @@
  */
 package com.poly.hotel.view;
 
+import com.poly.hotel.controller.LoginController;
+import com.poly.hotel.dao.UserDAO;
+import com.poly.hotel.dao.impl.UserDAOImpl;
+import com.poly.hotel.entity.User;
+import com.poly.hotel.util.MsgBox;
+import com.poly.hotel.util.XAuth;
 import java.awt.Frame;
 
 /**
  *
  * @author PHUONG LAM
  */
-public class LoginJDialog extends javax.swing.JDialog {
+public class LoginJDialog extends javax.swing.JDialog implements LoginController {
 
     /**
      * Creates new form LoginJDialog
@@ -56,6 +62,11 @@ public class LoginJDialog extends javax.swing.JDialog {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 238, 233));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -176,6 +187,39 @@ public class LoginJDialog extends javax.swing.JDialog {
         dialog.setVisible(true);
     }//GEN-LAST:event_lbForgotPasswordMouseClicked
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_formWindowClosing
+
+    @Override
+    public void open() {
+        this.setLocationRelativeTo(null);
+    }
+
+    @Override
+    public void login() {
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+        UserDAO dao = new UserDAOImpl();
+        User user = dao.findById(username);
+        if (username.isEmpty()) {
+            MsgBox.alert("Tên đăng nhập không được để trống");
+        } else if (user == null) {
+            MsgBox.alert("Tài khoản không tồn tại");
+        } else if (password.isEmpty()) {
+            MsgBox.alert("Vui lòng nhập mật khẩu");
+        } else if (!password.equals(user.getPassword())) {
+            MsgBox.alert("Sai mật khẩu đăng nhập!");
+        } else if (!user.isActive()) {
+            MsgBox.alert("Tài khoản của bạn đang tạm dừng!");
+        } else {
+            MsgBox.alert("Đăng nhập thành công");
+            XAuth.user = user; // duy trì user đăng nhập
+            this.dispose();
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */

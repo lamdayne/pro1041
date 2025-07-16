@@ -521,6 +521,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
 
     private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
         // TODO add your handling code here:
+        setMainPanelFromDialog(new CustomerJDialog(this, true));
     }//GEN-LAST:event_btnCustomerActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
@@ -564,6 +565,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         this.setLocationRelativeTo(null);
         this.showWelcomeJDialog(this);
         this.showLoginJDialog(this);
+        setMainPanelFromDialog(new HomeJDialog(this, true));
     }
     
     /**
