@@ -12,7 +12,7 @@ import java.awt.Font;
  *
  * @author Lenovo
  */
-public class WelcomeJDialog extends javax.swing.JDialog implements WelcomeController {
+public class WelcomeJDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form WelcomeJDialog
@@ -22,26 +22,25 @@ public class WelcomeJDialog extends javax.swing.JDialog implements WelcomeContro
         initComponents();
     }
 
-    @Override
-    public void waiting() {
-        this.setLocationRelativeTo(null);
-
-        new Thread(() -> {
-            try {
-                for (var i = 0; i <= 100; i++) {
-                    progressBar.setValue(i);
-                    lblProgress.setText(String.valueOf(i + "%"));
-
-                    Thread.sleep(10);
-
-                }
-                WelcomeJDialog.this.dispose();
-            } catch (InterruptedException ex) {
-                System.exit(0);
-            }
-        }).start();
-    }
-
+//    @Override
+//    public void waiting() {
+//        this.setLocationRelativeTo(null);
+//
+//        new Thread(() -> {
+//            try {
+//                for (var i = 0; i <= 100; i++) {
+//                    progressBar.setValue(i);
+//                    lblProgress.setText(String.valueOf(i + "%"));
+//
+//                    Thread.sleep(10);
+//
+//                }
+//                WelcomeJDialog.this.dispose();
+//            } catch (InterruptedException ex) {
+//                System.exit(0);
+//            }
+//        }).start();
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +63,7 @@ public class WelcomeJDialog extends javax.swing.JDialog implements WelcomeContro
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\FPT Polytechnic\\pro1041\\src\\main\\resources\\com\\poly\\hotel\\icons\\hotel-icon.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/hotel-icon.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
@@ -114,7 +113,7 @@ public class WelcomeJDialog extends javax.swing.JDialog implements WelcomeContro
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        waiting();
+//        waiting();
     }//GEN-LAST:event_formWindowOpened
 
     /**
