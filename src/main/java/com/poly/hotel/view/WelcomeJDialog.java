@@ -5,14 +5,12 @@
 package com.poly.hotel.view;
 
 import com.poly.hotel.controller.WelcomeController;
-import java.awt.Color;
-import java.awt.Font;
 
 /**
  *
  * @author Lenovo
  */
-public class WelcomeJDialog extends javax.swing.JDialog {
+public class WelcomeJDialog extends javax.swing.JDialog implements WelcomeController {
 
     /**
      * Creates new form WelcomeJDialog
@@ -41,6 +39,7 @@ public class WelcomeJDialog extends javax.swing.JDialog {
             }
         }).start();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,7 +112,7 @@ public class WelcomeJDialog extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-//        waiting();
+        waiting();
     }//GEN-LAST:event_formWindowOpened
 
     /**
