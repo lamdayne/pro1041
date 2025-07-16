@@ -22,25 +22,25 @@ public class WelcomeJDialog extends javax.swing.JDialog {
         initComponents();
     }
 
-//    @Override
-//    public void waiting() {
-//        this.setLocationRelativeTo(null);
-//
-//        new Thread(() -> {
-//            try {
-//                for (var i = 0; i <= 100; i++) {
-//                    progressBar.setValue(i);
-//                    lblProgress.setText(String.valueOf(i + "%"));
-//
-//                    Thread.sleep(10);
-//
-//                }
-//                WelcomeJDialog.this.dispose();
-//            } catch (InterruptedException ex) {
-//                System.exit(0);
-//            }
-//        }).start();
-//    }
+    @Override
+    public void waiting() {
+        this.setLocationRelativeTo(null);
+
+        new Thread(() -> {
+            try {
+                for (var i = 0; i <= 100; i++) {
+                    progressBar.setValue(i);
+                    lblProgress.setText(String.valueOf(i + "%"));
+
+                    Thread.sleep(10);
+
+                }
+                WelcomeJDialog.this.dispose();
+            } catch (InterruptedException ex) {
+                System.exit(0);
+            }
+        }).start();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
