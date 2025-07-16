@@ -114,7 +114,7 @@
                       <Component id="jLabel3" min="-2" pref="141" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="206" max="32767" attributes="0"/>
+              <EmptySpace pref="77" max="32767" attributes="0"/>
           </Group>
           <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
       </Group>
