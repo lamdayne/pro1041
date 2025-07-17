@@ -11,5 +11,5 @@ import com.poly.hotel.entity.User;
  * @author PHUONG LAM
  */
 public interface UserDAO extends CrudDAO<User, String> {
-    
+    User findByEmail(String email);
 }
