@@ -4,12 +4,22 @@
  */
 package com.poly.hotel.view;
 
+import com.poly.hotel.controller.CustomerController;
+import com.poly.hotel.dao.CustomerDAO;
+import com.poly.hotel.dao.impl.CustomerDAOImpl;
+import com.poly.hotel.entity.Customer;
+import com.poly.hotel.util.MsgBox;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author PHUONG LAM
  */
-public class CustomerJDialog extends javax.swing.JDialog {
+public class CustomerJDialog extends javax.swing.JDialog implements CustomerController {
 
+    CustomerDAO dao = new CustomerDAOImpl();
+    List<Customer> items = List.of();
     /**
      * Creates new form CustomerJDialog
      */
@@ -30,12 +40,17 @@ public class CustomerJDialog extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        tblCustomer = new javax.swing.JTable();
+        btnCheckAll = new javax.swing.JButton();
+        btnDeleteItemsChecked = new javax.swing.JButton();
+        btnUnCheckAll = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -44,7 +59,7 @@ public class CustomerJDialog extends javax.swing.JDialog {
         jLabel1.setText("Thông tin khách hàng");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -60,13 +75,13 @@ public class CustomerJDialog extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblCustomer);
 
-        jButton1.setText("Chọn tất cả");
+        btnCheckAll.setText("Chọn tất cả");
 
-        jButton2.setText("Xóa mục đã chọn");
+        btnDeleteItemsChecked.setText("Xóa mục đã chọn");
 
-        jButton3.setText("Bỏ các mục đã chọn");
+        btnUnCheckAll.setText("Bỏ các mục đã chọn");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,11 +91,11 @@ public class CustomerJDialog extends javax.swing.JDialog {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 957, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnCheckAll)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnUnCheckAll)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnDeleteItemsChecked)
                 .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
@@ -91,15 +106,75 @@ public class CustomerJDialog extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnCheckAll)
+                    .addComponent(btnDeleteItemsChecked)
+                    .addComponent(btnUnCheckAll))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.open();
+    }//GEN-LAST:event_formWindowOpened
+
+    @Override
+    public void open() {
+        this.setLocationRelativeTo(null);
+        this.fillToTable();
+    }
+    
+    @Override
+    public void fillToTable() {
+        DefaultTableModel model = (DefaultTableModel) tblCustomer.getModel();
+        model.setRowCount(0);
+        items = dao.findAll();
+        items.forEach(item -> {
+            Object[] rowData = {
+                item.getCustomerID(),
+                item.getFullName(),
+                item.isGender() ? "Nam" : "Nữ",
+                item.getPhoneNumber(),
+                item.getEmail(),
+                item.getIdNumber(),
+                item.getAddress(),
+                false
+            };
+            model.addRow(rowData);
+        });
+    }
+
+    @Override
+    public void checkAll() {
+        this.setCheckedAll(true);
+    }
+
+    @Override
+    public void unCheckAll() {
+        this.setCheckedAll(false);
+    }
+
+    @Override
+    public void deleteCheckedItems() {
+        if (MsgBox.comfirm("Bạn thực sự muốn xóa các mục chọn?")) {
+            for (int i = 0; i < tblCustomer.getRowCount(); i++) {
+                if ((Boolean) tblCustomer.getValueAt(i, 5)) {
+                    dao.deleteById(String.valueOf(items.get(i).getCustomerID()));
+                }
+            }
+            this.fillToTable();
+        }
+    }
+    
+    private void setCheckedAll(boolean checked) {
+        for (int i = 0; i < tblCustomer.getRowCount(); i++) {
+            tblCustomer.setValueAt(checked, i, 7);
+        }
+    }
+
+    
     /**
      * @param args the command line arguments
      */
@@ -143,12 +218,12 @@ public class CustomerJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnCheckAll;
+    private javax.swing.JButton btnDeleteItemsChecked;
+    private javax.swing.JButton btnUnCheckAll;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblCustomer;
     // End of variables declaration//GEN-END:variables
 }

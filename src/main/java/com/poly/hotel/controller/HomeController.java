@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.poly.hotel.dao;
+package com.poly.hotel.controller;
 
-import com.poly.hotel.entity.User;
+import com.poly.hotel.entity.Room;
 
 /**
  *
  * @author PHUONG LAM
  */
-public interface UserDAO extends CrudDAO<User, String> {
-    User findByEmail(String email);
+public interface HomeController extends CrudController<Room> {
+    
 }

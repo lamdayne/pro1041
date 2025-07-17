@@ -4,11 +4,18 @@
  */
 package com.poly.hotel.view;
 
+import com.poly.hotel.dao.UserDAO;
+import com.poly.hotel.dao.impl.UserDAOImpl;
+import com.poly.hotel.entity.User;
+import com.poly.hotel.util.MsgBox;
+
 /**
  *
  * @author Windows
  */
 public class ChangePasswordJDialog extends javax.swing.JDialog {
+
+    UserDAO dao = new UserDAOImpl();
 
     /**
      * Creates new form Change
@@ -41,6 +48,11 @@ public class ChangePasswordJDialog extends javax.swing.JDialog {
         btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 238, 233));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -82,12 +94,22 @@ public class ChangePasswordJDialog extends javax.swing.JDialog {
         btnClose.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnClose.setText("Đóng");
         btnClose.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(255, 153, 51)));
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 460, 90, 40));
 
         btnSave.setBackground(new java.awt.Color(255, 204, 153));
         btnSave.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSave.setText("Lưu");
         btnSave.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(255, 153, 51)));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, 90, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -104,6 +126,42 @@ public class ChangePasswordJDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        this.save();
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.setLocationRelativeTo(null);
+    }//GEN-LAST:event_formWindowOpened
+
+    public void setForm(String username, String password) {
+        txtUsername.setText(username);
+        txtUsername.setEditable(false);
+        txtOldPassword.setText(password);
+        txtOldPassword.setEditable(false);
+    }
+
+    public void save() {
+        String username = txtUsername.getText();
+        String password = txtOldPassword.getText();
+        String newpass = txtNewPassword.getText();
+        String confirm = txtConfirmPassword.getText();
+        
+        UserDAO userDAO = new UserDAOImpl();
+        User user = userDAO.findById(username);
+        
+        user.setPassword(newpass);
+        userDAO.update(user);
+        MsgBox.alert("Đổi mật khẩu thành công!");
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -118,16 +176,24 @@ public class ChangePasswordJDialog extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangePasswordJDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangePasswordJDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangePasswordJDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangePasswordJDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

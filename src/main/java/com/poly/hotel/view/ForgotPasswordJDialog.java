@@ -4,6 +4,9 @@
  */
 package com.poly.hotel.view;
 
+import com.poly.hotel.dao.UserDAO;
+import com.poly.hotel.dao.impl.UserDAOImpl;
+import com.poly.hotel.entity.User;
 import com.poly.hotel.util.MailService;
 import com.poly.hotel.util.MsgBox;
 import java.awt.Frame;
@@ -13,6 +16,8 @@ import java.awt.Frame;
  * @author PHUONG LAM
  */
 public class ForgotPasswordJDialog extends javax.swing.JDialog {
+
+    UserDAO dao = new UserDAOImpl();
 
     /**
      * Creates new form ForgotPasswordJDialog
@@ -146,9 +151,11 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
         // TODO add your handling code here:
+        User user = dao.findByEmail(txtEmail.getText());
         if (MailService.verifyCode(txtCodeReset.getText())) {
-            ChangePasswordJDialog dialog = new ChangePasswordJDialog((Frame)this.getOwner(), true);
+            ChangePasswordJDialog dialog = new ChangePasswordJDialog((Frame) this.getOwner(), true);
             this.dispose();
+            dialog.setForm(user.getUsername(), user.getPassword());
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         } else {

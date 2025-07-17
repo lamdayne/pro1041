@@ -16,11 +16,12 @@ import java.util.List;
  */
 public class UserDAOImpl implements UserDAO {
     
-    String createSql = "INSERT INTO User VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    String updateSql = "UPDATE User SET password=?, fullName=?, gender=?, phoneNumber=?, email=?, role=?, isActive=? WHERE username=?";
-    String deleteSql = "DELETE FROM User WHERE username=?";
-    String findAllSql = "SELECT * FROM User";
-    String findByIdSql = "SELECT * FROM User WHERE username=?";
+    String createSql = "INSERT INTO [User] VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    String updateSql = "UPDATE [User] SET password=?, fullName=?, gender=?, phoneNumber=?, email=?, role=?, isActive=? WHERE username=?";
+    String deleteSql = "DELETE FROM [User] WHERE username=?";
+    String findAllSql = "SELECT * FROM [User]";
+    String findByIdSql = "SELECT * FROM [User] WHERE username=?";
+    String findByEmailSql = "SELECT * FROM [User] WHERE email=?";
 
     @Override
     public User create(User entity) {
@@ -66,5 +67,10 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findById(String id) {
         return XQuery.getSingleBean(User.class, findByIdSql, id);
+    }
+    
+    @Override
+    public User findByEmail(String email) {
+        return XQuery.getSingleBean(User.class, findByEmailSql, email);
     }
 }
