@@ -22,7 +22,6 @@ public class UserDAOImpl implements UserDAO {
     String findAllSql = "SELECT username, password, fullName, gender, phoneNumber, email, role, isActive AS Active FROM [User]";
     String findByIdSql = "SELECT username, password, fullName, gender, phoneNumber, email, role, isActive AS Active FROM [User] WHERE username=?";
     String findByEmailSql = "SELECT username, password, fullName, gender, phoneNumber, email, role, isActive AS Active FROM [User] WHERE email=?";
-    String findAllEmailSql = "SELECT email FROM [User]";
 
     @Override
     public User create(User entity) {
