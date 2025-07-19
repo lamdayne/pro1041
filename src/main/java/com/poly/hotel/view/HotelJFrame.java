@@ -5,8 +5,10 @@
 package com.poly.hotel.view;
 
 import com.poly.hotel.controller.HotelJFrameController;
+import com.poly.hotel.util.XAuth;
 import com.poly.hotel.view.manager.RoomCategoryManagerJDialog;
 import com.poly.hotel.view.manager.RoomManagerJDialog;
+import com.poly.hotel.view.manager.ServiceCategoryManagerJDialog;
 import com.poly.hotel.view.manager.ServiceManagerJDialog;
 import com.poly.hotel.view.manager.UserManagerJDialog;
 import javax.swing.JDialog;
@@ -33,6 +35,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
     public HotelJFrame() {
         initComponents();
         jScrollPane5.getVerticalScrollBar().setUnitIncrement(18); // lướt ổn hơn
+        lbFullName.setText(XAuth.user.getFullName());
         this.init();
     }
 
@@ -58,10 +61,11 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         btnLogout = new javax.swing.JButton();
         btnRoomManager = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtFullName = new javax.swing.JLabel();
+        lbFullName = new javax.swing.JLabel();
         btnBill = new javax.swing.JButton();
         btnRoomCategoryManager = new javax.swing.JButton();
         btnServiceManager = new javax.swing.JButton();
+        btnCategoryService = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         mainPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -147,7 +151,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
                 btnUserManagerActionPerformed(evt);
             }
         });
-        jPanel1.add(btnUserManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 210, 50));
+        jPanel1.add(btnUserManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 210, 50));
 
         btnHome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-home-24.png"))); // NOI18N
@@ -217,12 +221,12 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nhân viên:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 580, -1, -1));
 
-        txtFullName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtFullName.setForeground(new java.awt.Color(0, 0, 0));
-        txtFullName.setText("Nguyễn Văn A");
-        jPanel1.add(txtFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 570, -1, -1));
+        lbFullName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lbFullName.setForeground(new java.awt.Color(0, 0, 0));
+        lbFullName.setText("Nguyễn Văn A");
+        jPanel1.add(lbFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 580, -1, -1));
 
         btnBill.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/payment.png"))); // NOI18N
@@ -264,7 +268,21 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
                 btnServiceManagerActionPerformed(evt);
             }
         });
-        jPanel1.add(btnServiceManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 210, 50));
+        jPanel1.add(btnServiceManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 210, 50));
+
+        btnCategoryService.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCategoryService.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/icons8-service-24.png"))); // NOI18N
+        btnCategoryService.setText("QL Loại dịch vụ");
+        btnCategoryService.setBorderPainted(false);
+        btnCategoryService.setContentAreaFilled(false);
+        btnCategoryService.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnCategoryService.setIconTextGap(10);
+        btnCategoryService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoryServiceActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCategoryService, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 210, 50));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Trạng thái", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
 
@@ -559,6 +577,11 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         this.exit();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
+    private void btnCategoryServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoryServiceActionPerformed
+        // TODO add your handling code here:
+        setMainPanelFromDialog(new ServiceCategoryManagerJDialog(this, true));
+    }//GEN-LAST:event_btnCategoryServiceActionPerformed
+
     
     @Override
     public void init() {
@@ -605,6 +628,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBill;
+    private javax.swing.JButton btnCategoryService;
     private javax.swing.JButton btnCustomer;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnLogout;
@@ -671,7 +695,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lbFullName;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JLabel txtFullName;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,13 +15,14 @@ import java.util.List;
  * @author PHUONG LAM
  */
 public class UserDAOImpl implements UserDAO {
-    
+
     String createSql = "INSERT INTO [User] VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     String updateSql = "UPDATE [User] SET password=?, fullName=?, gender=?, phoneNumber=?, email=?, role=?, isActive=? WHERE username=?";
     String deleteSql = "DELETE FROM [User] WHERE username=?";
-    String findAllSql = "SELECT * FROM [User]";
-    String findByIdSql = "SELECT * FROM [User] WHERE username=?";
-    String findByEmailSql = "SELECT * FROM [User] WHERE email=?";
+    String findAllSql = "SELECT username, password, fullName, gender, phoneNumber, email, role, isActive AS Active FROM [User]";
+    String findByIdSql = "SELECT username, password, fullName, gender, phoneNumber, email, role, isActive AS Active FROM [User] WHERE username=?";
+    String findByEmailSql = "SELECT username, password, fullName, gender, phoneNumber, email, role, isActive AS Active FROM [User] WHERE email=?";
+    String findAllEmailSql = "SELECT email FROM [User]";
 
     @Override
     public User create(User entity) {
@@ -68,9 +69,14 @@ public class UserDAOImpl implements UserDAO {
     public User findById(String id) {
         return XQuery.getSingleBean(User.class, findByIdSql, id);
     }
-    
+
     @Override
     public User findByEmail(String email) {
+//        try {
+//            return XQuery.getSingleBean(User.class, findByEmailSql, email);
+//        } catch (Exception e) {
+//            MsgBox.alert("Email không tồn tại");
+//        }
         return XQuery.getSingleBean(User.class, findByEmailSql, email);
     }
 }

@@ -10,7 +10,11 @@ import com.poly.hotel.dao.impl.UserDAOImpl;
 import com.poly.hotel.entity.User;
 import com.poly.hotel.util.MsgBox;
 import com.poly.hotel.util.XAuth;
+import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -25,6 +29,8 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/accept.png")).getImage();
+        setIconImage(icon);
     }
 
     /**
@@ -62,9 +68,13 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconImage(null);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -85,8 +95,21 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         jLabel4.setText("Tên đăng nhập");
 
         txtUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtUsername.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtUsernameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtUsernameFocusLost(evt);
+            }
+        });
 
         showPassword.setText("Hiện mật khẩu");
+        showPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showPasswordActionPerformed(evt);
+            }
+        });
 
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/poly/hotel/icons/login.png"))); // NOI18N
@@ -103,6 +126,14 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         txtPassword.setBackground(new java.awt.Color(255, 255, 255));
         txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtPassword.setForeground(new java.awt.Color(0, 0, 0));
+        txtPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPasswordFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPasswordFocusLost(evt);
+            }
+        });
 
         lbForgotPassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbForgotPassword.setText("Quên mật khẩu?");
@@ -179,12 +210,12 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-       this.login();
+        this.login();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void lbForgotPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbForgotPasswordMouseClicked
         // TODO add your handling code here:
-        ForgotPasswordJDialog dialog = new ForgotPasswordJDialog((Frame)this.getOwner(), true);
+        ForgotPasswordJDialog dialog = new ForgotPasswordJDialog((Frame) this.getOwner(), true);
         dialog.setVisible(true);
     }//GEN-LAST:event_lbForgotPasswordMouseClicked
 
@@ -193,9 +224,64 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         System.exit(0);
     }//GEN-LAST:event_formWindowClosing
 
+    String placeholderUser = "Nhập tên đăng nhập";
+    String placeholderPass = "Nhập mật khẩu";
+
+    private void txtUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusGained
+        // TODO add your handling code here:
+        if (txtUsername.getText().equals(placeholderUser)) {
+            txtUsername.setText("");
+            txtUsername.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtUsernameFocusGained
+
+    private void txtUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusLost
+        // TODO add your handling code here:
+        if (txtUsername.getText().isEmpty()) {
+            txtUsername.setForeground(Color.GRAY);
+            txtUsername.setText(placeholderUser);
+        }
+    }//GEN-LAST:event_txtUsernameFocusLost
+
+    private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
+        // TODO add your handling code here:
+        if (txtPassword.getText().equals(placeholderPass)) {
+            txtPassword.setText("");
+            txtPassword.setForeground(Color.BLACK);
+            txtPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_txtPasswordFocusGained
+
+    private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
+        // TODO add your handling code here:
+        if (txtPassword.getText().isEmpty()) {
+            txtPassword.setEchoChar((char) 0);
+            txtPassword.setForeground(Color.GRAY);
+            txtPassword.setText(placeholderPass);
+        }
+    }//GEN-LAST:event_txtPasswordFocusLost
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.open();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void showPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordActionPerformed
+        // TODO add your handling code here:
+        if (showPassword.isSelected()) {
+            txtPassword.setEchoChar((char) 0);
+        } else {
+            txtPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_showPasswordActionPerformed
+
     @Override
     public void open() {
         this.setLocationRelativeTo(null);
+        txtUsername.setText(placeholderUser);
+        txtPassword.setEchoChar((char) 0);
+        txtPassword.setForeground(Color.GRAY);
+        txtPassword.setText(placeholderPass);
     }
 
     @Override
@@ -220,7 +306,7 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
             this.dispose();
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
