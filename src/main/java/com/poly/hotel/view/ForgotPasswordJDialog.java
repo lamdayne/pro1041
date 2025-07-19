@@ -9,8 +9,11 @@ import com.poly.hotel.dao.impl.UserDAOImpl;
 import com.poly.hotel.entity.User;
 import com.poly.hotel.util.MailService;
 import com.poly.hotel.util.MsgBox;
+import java.awt.Color;
 import java.awt.Frame;
+import java.awt.Image;
 import java.util.List;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -27,7 +30,13 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
     public ForgotPasswordJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage();
+        setIconImage(icon);
         this.setLocationRelativeTo(null);
+        txtEmail.setText(placeholderEmail);
+        txtEmail.setForeground(Color.GRAY);
+        txtCodeReset.setText(placeholderCode);
+        txtCodeReset.setForeground(Color.GRAY);
     }
 
     /**
@@ -49,6 +58,7 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
         btnConfirm = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Quên mật khẩu");
         setBackground(new java.awt.Color(255, 238, 233));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -62,6 +72,14 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
 
         txtCodeReset.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         txtCodeReset.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(255, 153, 102)));
+        txtCodeReset.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCodeResetFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCodeResetFocusLost(evt);
+            }
+        });
 
         btnSend.setBackground(new java.awt.Color(255, 204, 153));
         btnSend.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -78,6 +96,14 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
 
         txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         txtEmail.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(255, 153, 102)));
+        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtEmailFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtEmailFocusLost(evt);
+            }
+        });
 
         btnConfirm.setBackground(new java.awt.Color(255, 204, 153));
         btnConfirm.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
@@ -170,6 +196,41 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
             MsgBox.alert("Sai mã xác nhận");
         }
     }//GEN-LAST:event_btnConfirmActionPerformed
+
+    String placeholderEmail = "Nhập email";
+    String placeholderCode = "Nhập mã xác nhận";
+
+    private void txtEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusGained
+        // TODO add your handling code here:
+        if (txtEmail.getText().equals(placeholderEmail)) {
+            txtEmail.setText("");
+            txtEmail.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtEmailFocusGained
+
+    private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
+        // TODO add your handling code here:
+        if (txtEmail.getText().isEmpty()) {
+            txtEmail.setForeground(Color.GRAY);
+            txtEmail.setText(placeholderEmail);
+        }
+    }//GEN-LAST:event_txtEmailFocusLost
+
+    private void txtCodeResetFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodeResetFocusGained
+        // TODO add your handling code here:
+        if (txtCodeReset.getText().equals(placeholderCode)) {
+            txtCodeReset.setText("");
+            txtCodeReset.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtCodeResetFocusGained
+
+    private void txtCodeResetFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodeResetFocusLost
+        // TODO add your handling code here:
+        if (txtCodeReset.getText().isEmpty()) {
+            txtCodeReset.setForeground(Color.GRAY);
+            txtCodeReset.setText(placeholderCode);
+        }
+    }//GEN-LAST:event_txtCodeResetFocusLost
 
     /**
      * @param args the command line arguments
