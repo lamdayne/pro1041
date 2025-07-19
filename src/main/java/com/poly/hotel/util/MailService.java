@@ -21,7 +21,7 @@ public class MailService {
 
     private static String sentCode;
 
-    public static void sendEmail(String to, String from, String username, String password, String content) {
+    public static void sendEmail(String to, String from, String subject, String username, String password, String content) {
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true");
@@ -41,7 +41,7 @@ public class MailService {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from, "Hotel Manager"));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject("Đặt lại mật khẩu", "UTF-8");
+            message.setSubject(subject, "UTF-8");
             message.setContent(content, "text/html; charset=UTF-8");
             Transport.send(message);
             System.out.println("Send email success to " + to);
@@ -59,10 +59,11 @@ public class MailService {
 
     public static void sendEmailResetPassword(String email) {
         String from = "quanlykhachsan@gmail.com";
+        String subject = "Đặt lại mật khẩu";
         String username = MailConstant.email;
         String password = MailConstant.password;
         String content = "Mã đặt lại mật khẩu : " + "<strong>" + resetCode() + "</strong>";
-        sendEmail(email, from, username, password, content);
+        sendEmail(email, from, subject, username, password, content);
     }
 
     public static boolean verifyCode(String input) {

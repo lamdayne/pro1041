@@ -5,6 +5,8 @@
 package com.poly.hotel.view;
 
 import com.poly.hotel.controller.WelcomeController;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -17,6 +19,8 @@ public class WelcomeJDialog extends javax.swing.JDialog implements WelcomeContro
      */
     public WelcomeJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage();
+        setIconImage(icon);
         initComponents();
     }
 
