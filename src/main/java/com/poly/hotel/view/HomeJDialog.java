@@ -4,11 +4,19 @@
  */
 package com.poly.hotel.view;
 
+import com.poly.hotel.controller.HomeController;
+import com.poly.hotel.dao.impl.RoomDAOImpl;
+import com.poly.hotel.entity.Room;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+
 /**
  *
  * @author PHUONG LAM
  */
-public class HomeJDialog extends javax.swing.JDialog {
+public class HomeJDialog extends javax.swing.JDialog implements HomeController {
 
     /**
      * Creates new form HomeJDialog
@@ -340,6 +348,28 @@ public class HomeJDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    @Override
+    public void showBookingJDialog() {
+    }
+
+    private void loadRoom() {// tải và hiển thị các thẻ lên cửa sổ bán hàng
+
+    }
+
+    private JButton createButton(Room room) {
+        JButton btnRoom = new JButton();
+        btnRoom.setText(String.format("Card #%d", room.getRoomID()));
+        btnRoom.setPreferredSize(new Dimension(0, 80));
+        btnRoom.setEnabled(!room.isActive());
+        btnRoom.setBackground(btnRoom.isEnabled() ? Color.GREEN : Color.GRAY);
+        btnRoom.setActionCommand(String.valueOf(room.getRoomID()));
+        btnRoom.addActionListener((ActionEvent e) -> {
+            int roomId = Integer.parseInt(e.getActionCommand());
+            HomeJDialog.this.showBookingJDialog();
+        });
+        return btnRoom;
+    }
 
     /**
      * @param args the command line arguments
