@@ -22,7 +22,7 @@ public class Booking {
     private int bookingID;
     private int customerID ;
     private String roomID ;
-    private String useName;
+    private String userName;
     private Date checkInDate ;
     private Date checkOutDate;
     private Date bookingDate ;

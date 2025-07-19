@@ -48,6 +48,7 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 238, 233));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanel1.setBackground(new java.awt.Color(255, 238, 233));
 
@@ -62,7 +63,6 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
 
         btnSend.setBackground(new java.awt.Color(255, 204, 153));
         btnSend.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnSend.setForeground(new java.awt.Color(0, 0, 0));
         btnSend.setText("Gửi");
         btnSend.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(255, 153, 102)));
         btnSend.addActionListener(new java.awt.event.ActionListener() {
@@ -79,7 +79,6 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
 
         btnConfirm.setBackground(new java.awt.Color(255, 204, 153));
         btnConfirm.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        btnConfirm.setForeground(new java.awt.Color(0, 0, 0));
         btnConfirm.setText("Xác nhận");
         btnConfirm.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(255, 153, 102)));
         btnConfirm.addActionListener(new java.awt.event.ActionListener() {
