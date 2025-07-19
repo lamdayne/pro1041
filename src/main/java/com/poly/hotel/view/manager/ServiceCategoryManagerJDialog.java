@@ -4,11 +4,22 @@
  */
 package com.poly.hotel.view.manager;
 
+import com.poly.hotel.controller.ServiceCategoryController;
+import com.poly.hotel.dao.ServiceCategoryDAO;
+import com.poly.hotel.dao.impl.ServiceCategoryImpl;
+import com.poly.hotel.entity.ServiceCategory;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author PC
  */
-public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
+public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implements ServiceCategoryController {
+
+    ServiceCategoryDAO Dao = new ServiceCategoryImpl();
+    List<ServiceCategory> items = List.of();
 
     /**
      * Creates new form ServiceCategoryManagerJDialog
@@ -16,6 +27,7 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
     public ServiceCategoryManagerJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.open();
     }
 
     /**
@@ -27,32 +39,38 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane4 = new javax.swing.JTabbedPane();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        Tabs = new javax.swing.JTabbedPane();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable5 = new javax.swing.JTable();
-        jButton22 = new javax.swing.JButton();
-        jButton23 = new javax.swing.JButton();
-        jButton24 = new javax.swing.JButton();
+        tblServiceCategory = new javax.swing.JTable();
+        btnCheckAll = new javax.swing.JButton();
+        btnUnCheckAll = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
-        jTextField5 = new javax.swing.JTextField();
+        txtServiceID = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jButton25 = new javax.swing.JButton();
-        jButton26 = new javax.swing.JButton();
-        jButton27 = new javax.swing.JButton();
-        jButton28 = new javax.swing.JButton();
-        jButton29 = new javax.swing.JButton();
-        jButton30 = new javax.swing.JButton();
-        jButton31 = new javax.swing.JButton();
-        jButton32 = new javax.swing.JButton();
+        txtCategoryName = new javax.swing.JTextField();
+        btnMoveFirst = new javax.swing.JButton();
+        btnCreate = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDeleteForm = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        btnMovePrevious = new javax.swing.JButton();
+        btnMoveNext = new javax.swing.JButton();
+        btnMoveLast = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        txtDesc = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        rdoActive = new javax.swing.JRadioButton();
+        rdoStop = new javax.swing.JRadioButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable5.setModel(new javax.swing.table.DefaultTableModel(
+        tblServiceCategory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -71,24 +89,34 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
-        jScrollPane6.setViewportView(jTable5);
-        if (jTable5.getColumnModel().getColumnCount() > 0) {
-            jTable5.getColumnModel().getColumn(3).setResizable(false);
+        tblServiceCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblServiceCategoryMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(tblServiceCategory);
+        if (tblServiceCategory.getColumnModel().getColumnCount() > 0) {
+            tblServiceCategory.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jButton22.setText("Chọn tất cả");
-        jButton22.addActionListener(new java.awt.event.ActionListener() {
+        btnCheckAll.setText("Chọn tất cả");
+        btnCheckAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton22jButton5ActionPerformed(evt);
+                btnCheckAlljButton5ActionPerformed(evt);
             }
         });
 
-        jButton23.setText("Bỏ Chọn");
-
-        jButton24.setText("Xóa");
-        jButton24.addActionListener(new java.awt.event.ActionListener() {
+        btnUnCheckAll.setText("Bỏ Chọn");
+        btnUnCheckAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton24jButton7ActionPerformed(evt);
+                btnUnCheckAllActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("Xóa");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletejButton7ActionPerformed(evt);
             }
         });
 
@@ -98,11 +126,11 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(315, Short.MAX_VALUE)
-                .addComponent(jButton22)
+                .addComponent(btnCheckAll)
                 .addGap(18, 18, 18)
-                .addComponent(jButton23)
+                .addComponent(btnUnCheckAll)
                 .addGap(18, 18, 18)
-                .addComponent(jButton24)
+                .addComponent(btnDelete)
                 .addGap(69, 69, 69))
             .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING)
         );
@@ -116,117 +144,157 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(308, 308, 308)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton23)
-                            .addComponent(jButton24)
-                            .addComponent(jButton22))))
+                            .addComponent(btnUnCheckAll)
+                            .addComponent(btnDelete)
+                            .addComponent(btnCheckAll))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane4.addTab("Danh Sách ", jPanel7);
+        Tabs.addTab("Danh Sách ", jPanel7);
 
         jLabel5.setText("Mã Dịch Vụ :");
 
         jLabel6.setText("Tên Dịch Vụ:");
 
-        jButton25.setText("|<");
-        jButton25.addActionListener(new java.awt.event.ActionListener() {
+        btnMoveFirst.setText("|<");
+        btnMoveFirst.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton25ActionPerformed(evt);
+                btnMoveFirstActionPerformed(evt);
             }
         });
 
-        jButton26.setText("Thêm");
-
-        jButton27.setText("Cập nhập");
-
-        jButton28.setText("Xóa");
-        jButton28.addActionListener(new java.awt.event.ActionListener() {
+        btnCreate.setText("Thêm");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton28ActionPerformed(evt);
+                btnCreateActionPerformed(evt);
             }
         });
 
-        jButton29.setText("Làm mới");
-        jButton29.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Cập nhập");
+
+        btnDeleteForm.setText("Xóa");
+        btnDeleteForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton29ActionPerformed(evt);
+                btnDeleteFormActionPerformed(evt);
             }
         });
 
-        jButton30.setText("<<");
-        jButton30.addActionListener(new java.awt.event.ActionListener() {
+        btnClear.setText("Làm mới");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton30ActionPerformed(evt);
+                btnClearActionPerformed(evt);
             }
         });
 
-        jButton31.setText(">>");
-        jButton31.addActionListener(new java.awt.event.ActionListener() {
+        btnMovePrevious.setText("<<");
+        btnMovePrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton31ActionPerformed(evt);
+                btnMovePreviousActionPerformed(evt);
             }
         });
 
-        jButton32.setText(">|");
+        btnMoveNext.setText(">>");
+        btnMoveNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoveNextActionPerformed(evt);
+            }
+        });
+
+        btnMoveLast.setText(">|");
+
+        jLabel7.setText("Mô Tả:");
+
+        jLabel2.setText("Trạng Thái:");
+
+        buttonGroup1.add(rdoActive);
+        rdoActive.setText("Hoạt Động");
+
+        buttonGroup1.add(rdoStop);
+        rdoStop.setText("Tạm Ngưng");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jButton26)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton27)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton28)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton29)
-                        .addGap(58, 58, 58)
-                        .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton31, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton32, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
+                        .addGap(37, 37, 37))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtServiceID, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(184, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(btnCreate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDeleteForm)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnClear)
+                        .addGap(58, 58, 58)
+                        .addComponent(btnMoveFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMovePrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMoveNext, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMoveLast, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(67, Short.MAX_VALUE))
+                        .addComponent(rdoActive, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(rdoStop, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtServiceID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(59, 59, 59)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(51, 51, 51)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton26)
-                    .addComponent(jButton27)
-                    .addComponent(jButton28)
-                    .addComponent(jButton29)
-                    .addComponent(jButton25)
-                    .addComponent(jButton30)
-                    .addComponent(jButton31)
-                    .addComponent(jButton32))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(rdoActive)
+                    .addComponent(rdoStop))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCreate)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDeleteForm)
+                    .addComponent(btnClear)
+                    .addComponent(btnMoveFirst)
+                    .addComponent(btnMovePrevious)
+                    .addComponent(btnMoveNext)
+                    .addComponent(btnMoveLast))
+                .addGap(30, 30, 30))
         );
 
-        jTabbedPane4.addTab("Biểu Mẫu", jPanel8);
+        Tabs.addTab("Biểu Mẫu", jPanel8);
 
         jPanel6.setBackground(new java.awt.Color(153, 153, 255));
 
@@ -257,7 +325,7 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,39 +333,63 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane4))
+                .addComponent(Tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton22jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22jButton5ActionPerformed
+    private void btnCheckAlljButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAlljButton5ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton22jButton5ActionPerformed
+        this.checkAll();
+    }//GEN-LAST:event_btnCheckAlljButton5ActionPerformed
 
-    private void jButton24jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24jButton7ActionPerformed
+    private void btnDeletejButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletejButton7ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton24jButton7ActionPerformed
+        this.deleteCheckedItems();
+    }//GEN-LAST:event_btnDeletejButton7ActionPerformed
 
-    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+    private void btnMoveFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveFirstActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton25ActionPerformed
+        this.moveFirst();
+    }//GEN-LAST:event_btnMoveFirstActionPerformed
 
-    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
+    private void btnDeleteFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteFormActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton28ActionPerformed
+        this.delete();
+    }//GEN-LAST:event_btnDeleteFormActionPerformed
 
-    private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton29ActionPerformed
+        this.clear();
+    }//GEN-LAST:event_btnClearActionPerformed
 
-    private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
+    private void btnMovePreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovePreviousActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton30ActionPerformed
+        this.movePrevious();
+    }//GEN-LAST:event_btnMovePreviousActionPerformed
 
-    private void jButton31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton31ActionPerformed
+    private void btnMoveNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveNextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton31ActionPerformed
+        this.moveNext();
+    }//GEN-LAST:event_btnMoveNextActionPerformed
+
+    private void tblServiceCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServiceCategoryMouseClicked
+        // TODO add your handling code here:
+         if (evt.getClickCount() == 2) {
+            this.edit();}
+    }//GEN-LAST:event_tblServiceCategoryMouseClicked
+
+    private void btnUnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnCheckAllActionPerformed
+        // TODO add your handling code here:
+        this.uncheckAll();
+    }//GEN-LAST:event_btnUnCheckAllActionPerformed
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        // TODO add your handling code here:
+        this.create();
+    }//GEN-LAST:event_btnCreateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -342,27 +434,210 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
-    private javax.swing.JButton jButton26;
-    private javax.swing.JButton jButton27;
-    private javax.swing.JButton jButton28;
-    private javax.swing.JButton jButton29;
-    private javax.swing.JButton jButton30;
-    private javax.swing.JButton jButton31;
-    private javax.swing.JButton jButton32;
+    private javax.swing.JTabbedPane Tabs;
+    private javax.swing.JButton btnCheckAll;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDeleteForm;
+    private javax.swing.JButton btnMoveFirst;
+    private javax.swing.JButton btnMoveLast;
+    private javax.swing.JButton btnMoveNext;
+    private javax.swing.JButton btnMovePrevious;
+    private javax.swing.JButton btnUnCheckAll;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTabbedPane jTabbedPane4;
-    private javax.swing.JTable jTable5;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JRadioButton rdoActive;
+    private javax.swing.JRadioButton rdoStop;
+    private javax.swing.JTable tblServiceCategory;
+    private javax.swing.JTextField txtCategoryName;
+    private javax.swing.JTextField txtDesc;
+    private javax.swing.JTextField txtServiceID;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void open() {
+        this.setLocationRelativeTo(null);
+        this.fillToTable();
+        this.clear();
+    }
+
+    @Override
+    public void setForm(ServiceCategory entity) {
+        txtServiceID.setText(String.valueOf(entity.getServiceCategoryID()));
+        txtCategoryName.setText(entity.getCategoryName());
+        txtDesc.setText((entity.getDesc()));
+        rdoActive.setSelected(entity.isActive());
+        rdoStop.setSelected(entity.isActive());
+
+    }
+
+    @Override
+    public ServiceCategory getForm() {
+        ServiceCategory entity = new ServiceCategory();
+        entity.setServiceCategoryID(Integer.valueOf(txtServiceID.getText()));
+        entity.setCategoryName(txtCategoryName.getText());
+        entity.setDesc(txtDesc.getText());
+        entity.setActive(rdoActive.isSelected());
+
+        return entity;
+    }
+
+    @Override
+    public void fillToTable() {
+        DefaultTableModel model = (DefaultTableModel) tblServiceCategory.getModel();
+        model.setRowCount(0);
+        items = Dao.findAll();
+        items.forEach(item -> {
+            Object[] rowData = {
+                item.getServiceCategoryID(),
+                item.getCategoryName(),
+                item.getDesc(),
+                item.isActive(),
+                false
+            };
+            model.addRow(rowData);
+        });
+    }
+
+    @Override
+    public void edit() {
+        ServiceCategory entity = items.get(tblServiceCategory.getSelectedRow());
+        this.setForm(entity);
+        this.setEditable(true);
+        Tabs.setSelectedIndex(1);
+    }
+
+    @Override
+    public void create() {
+
+        ServiceCategory entity = this.getForm();
+        Dao.create(entity);
+        this.fillToTable();
+        this.clear();
+    }
+
+    @Override
+    public void update() {
+        ServiceCategory entity = this.getForm();
+        Dao.update(entity);
+        this.fillToTable();
+        this.clear();
+    }
+
+    @Override
+    public void delete() {
+        int confirm = JOptionPane.showConfirmDialog(
+                null,
+                "Bạn thực sự muốn xóa?",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            String CategoryID = txtServiceID.getText();
+            Dao.deleteById(CategoryID);
+            this.fillToTable();
+            this.clear();
+            JOptionPane.showMessageDialog(null, "Xóa thành công!");
+        }
+    }
+
+    @Override
+    public void clear() {
+        this.setForm(new ServiceCategory());
+        this.setEditable(false);
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+
+        txtServiceID.setEnabled(!editable);
+        btnCreate.setEnabled(!editable);
+        btnUpdate.setEnabled(editable);
+        btnDelete.setEnabled(editable);
+        int rowCount = tblServiceCategory.getRowCount();
+        btnMoveFirst.setEnabled(editable && rowCount > 0);
+        btnMovePrevious.setEnabled(editable && rowCount > 0);
+        btnMoveNext.setEnabled(editable && rowCount > 0);
+        btnMoveLast.setEnabled(editable && rowCount > 0);
+    }
+
+    @Override
+    public void checkAll() {
+        this.setCheckedAll(true);
+    }
+
+    @Override
+    public void uncheckAll() {
+        this.setCheckedAll(false);
+    }
+
+    @Override
+    public void deleteCheckedItems() {
+
+        int confirm = JOptionPane.showConfirmDialog(null,
+                "Bạn thực sự muốn xóa các mục chọn?",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            for (int i = 0; i < tblServiceCategory.getRowCount(); i++) {
+                if ((Boolean) tblServiceCategory.getValueAt(i, 4)) {
+                    Dao.deleteById(String.valueOf(items.get(i).getServiceCategoryID()));
+                }
+            }
+            this.fillToTable();
+        }
+    }
+
+    private void setCheckedAll(boolean checked) {
+        for (int i = 0; i < tblServiceCategory.getRowCount(); i++) {
+            tblServiceCategory.setValueAt(checked, i, 4);
+        }
+    }
+    
+    @Override
+    public void moveFirst() {
+        this.moveTo(0);
+    }
+
+    @Override
+    public void movePrevious() {
+        this.moveTo(tblServiceCategory.getSelectedRow() - 1);
+    }
+
+    @Override
+    public void moveNext() {
+        this.moveTo(tblServiceCategory.getSelectedRow() + 1);
+    }
+
+    @Override
+    public void moveLast() {
+        this.moveTo(tblServiceCategory.getRowCount() - 1);
+    }
+
+    @Override
+    public void moveTo(int index) {
+        if (index < 0) {
+            this.moveLast();
+        } else if (index >= tblServiceCategory.getRowCount()) {
+            this.moveFirst();
+        } else {
+            tblServiceCategory.clearSelection();
+            tblServiceCategory.setRowSelectionInterval(index, index);
+            this.edit();
+        }
+    }
+    
+
 }

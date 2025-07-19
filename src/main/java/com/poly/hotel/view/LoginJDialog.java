@@ -179,6 +179,7 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
+       this.login();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void lbForgotPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbForgotPasswordMouseClicked

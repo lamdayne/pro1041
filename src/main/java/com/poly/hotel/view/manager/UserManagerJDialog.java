@@ -4,6 +4,9 @@
  */
 package com.poly.hotel.view.manager;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author PHUONG LAM
@@ -16,6 +19,8 @@ public class UserManagerJDialog extends javax.swing.JDialog {
     public UserManagerJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/list.png")).getImage();
+            setIconImage(icon);
     }
 
     /**
