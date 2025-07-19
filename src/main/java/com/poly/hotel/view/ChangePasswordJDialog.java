@@ -8,6 +8,8 @@ import com.poly.hotel.dao.UserDAO;
 import com.poly.hotel.dao.impl.UserDAOImpl;
 import com.poly.hotel.entity.User;
 import com.poly.hotel.util.MsgBox;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -23,6 +25,8 @@ public class ChangePasswordJDialog extends javax.swing.JDialog {
     public ChangePasswordJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage();
+        setIconImage(icon);
     }
 
     /**
@@ -153,10 +157,10 @@ public class ChangePasswordJDialog extends javax.swing.JDialog {
         String password = txtOldPassword.getText();
         String newpass = txtNewPassword.getText();
         String confirm = txtConfirmPassword.getText();
-        
+
         UserDAO userDAO = new UserDAOImpl();
         User user = userDAO.findById(username);
-        
+
         user.setPassword(newpass);
         userDAO.update(user);
         MsgBox.alert("Đổi mật khẩu thành công!");
