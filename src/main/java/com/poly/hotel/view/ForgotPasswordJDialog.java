@@ -10,6 +10,7 @@ import com.poly.hotel.entity.User;
 import com.poly.hotel.util.MailService;
 import com.poly.hotel.util.MsgBox;
 import java.awt.Frame;
+import java.util.List;
 
 /**
  *
@@ -18,6 +19,7 @@ import java.awt.Frame;
 public class ForgotPasswordJDialog extends javax.swing.JDialog {
 
     UserDAO dao = new UserDAOImpl();
+    List<User> items = List.of();
 
     /**
      * Creates new form ForgotPasswordJDialog
@@ -145,6 +147,13 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         // TODO add your handling code here:
+        items = dao.findAll();
+        for (User item : items) {
+            if (!txtEmail.getText().equals(item.getEmail())) {
+                MsgBox.alert("Email không tồn tại");
+                return;
+            }
+        }
         MailService.sendEmailResetPassword(txtEmail.getText());
     }//GEN-LAST:event_btnSendActionPerformed
 
