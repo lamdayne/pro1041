@@ -10,6 +10,6 @@ import com.poly.hotel.entity.Room;
  *
  * @author PHUONG LAM
  */
-public interface HomeController extends CrudController<Room> {
-    
+public interface HomeController {
+    void showBookingJDialog();
 }
