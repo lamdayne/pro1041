@@ -11,6 +11,8 @@ import com.poly.hotel.view.manager.RoomManagerJDialog;
 import com.poly.hotel.view.manager.ServiceCategoryManagerJDialog;
 import com.poly.hotel.view.manager.ServiceManagerJDialog;
 import com.poly.hotel.view.manager.UserManagerJDialog;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 
 /**
@@ -28,13 +30,15 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         mainPanel.revalidate();
         mainPanel.repaint();
     }
-    
+
     /**
      * Creates new form HotelJFrame
      */
     public HotelJFrame() {
         initComponents();
         jScrollPane5.getVerticalScrollBar().setUnitIncrement(18); // lướt ổn hơn
+        Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage();
+        setIconImage(icon);
         lbFullName.setText(XAuth.user.getFullName());
         this.init();
     }
@@ -126,6 +130,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         jPopupMenu1.add(jMenuItem2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Trang chủ");
 
         jPanel1.setBackground(new java.awt.Color(255, 102, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -582,7 +587,6 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         setMainPanelFromDialog(new ServiceCategoryManagerJDialog(this, true));
     }//GEN-LAST:event_btnCategoryServiceActionPerformed
 
-    
     @Override
     public void init() {
         this.setLocationRelativeTo(null);
@@ -590,7 +594,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         this.showLoginJDialog(this);
         setMainPanelFromDialog(new HomeJDialog(this, true));
     }
-    
+
     /**
      * @param args the command line arguments
      */

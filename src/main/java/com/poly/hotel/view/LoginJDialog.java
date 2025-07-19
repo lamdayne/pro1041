@@ -11,7 +11,6 @@ import com.poly.hotel.entity.User;
 import com.poly.hotel.util.MsgBox;
 import com.poly.hotel.util.XAuth;
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -29,7 +28,7 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/accept.png")).getImage();
+        Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage();
         setIconImage(icon);
     }
 
@@ -68,6 +67,7 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Đăng nhập");
         setIconImage(null);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -123,9 +123,7 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 26)); // NOI18N
         jLabel5.setText("Đăng nhập");
 
-        txtPassword.setBackground(new java.awt.Color(255, 255, 255));
         txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtPassword.setForeground(new java.awt.Color(0, 0, 0));
         txtPassword.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtPasswordFocusGained(evt);
