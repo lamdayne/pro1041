@@ -65,7 +65,7 @@ public class BillDAOImpl implements BillDAO {
 
     @Override
     public Bill findById(String billID) {
-        return XQuery.getSingleBean(Bill.class, findAllSql, billID);
+        return XQuery.getSingleBean(Bill.class, findByIdSql, billID);
     }
       
 }
