@@ -61,6 +61,6 @@ public class RoomDAOImpl implements RoomDAO{
 
     @Override
     public Room findById(String roomID) {
-        return XQuery.getSingleBean(Room.class, findAllSql, roomID);
+        return XQuery.getSingleBean(Room.class, findByIdSql, roomID);
     }
 }
