@@ -22,28 +22,28 @@ public class RoomDAOImpl implements RoomDAO{
     String findByIdSql = "SELECT * FROM Room WHERE roomID=?";
 
     @Override
-    public Room create(Room bill) {
+    public Room create(Room entity) {
         Object[] values = {
-            bill.getRoomID(),
-            bill.getCategoryID(),
-            bill.getFloor(),
-            bill.getStatus(),
-            bill.getDesc(),
-            bill.isActive()
+            entity.getRoomID(),
+            entity.getCategoryID(),
+            entity.getFloor(),
+            entity.getStatus(),
+            entity.getDesc(),
+            entity.isActive()
         };
         XJdbc.executeUpdate(createSql, values);
-        return bill;
+        return entity;
     }
 
     @Override
-    public void update(Room bill) {
+    public void update(Room entity) {
         Object[] values = {   
-            bill.getCategoryID(),
-            bill.getFloor(),
-            bill.getStatus(),
-            bill.getDesc(),
-            bill.isActive(),
-            bill.getRoomID()
+            entity.getCategoryID(),
+            entity.getFloor(),
+            entity.getStatus(),
+            entity.getDesc(),
+            entity.isActive(),
+            entity.getRoomID()
 
         };
         XJdbc.executeUpdate(updateSql, values);
