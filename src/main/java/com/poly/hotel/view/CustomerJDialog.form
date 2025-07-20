@@ -148,6 +148,7 @@
                 </Column>
               </TableColumnModel>
             </Property>
+            <Property name="rowHeight" type="int" value="25"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
@@ -159,16 +160,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n t&#x1ea5;t c&#x1ea3;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCheckAllActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDeleteItemsChecked">
       <Properties>
         <Property name="text" type="java.lang.String" value="X&#xf3;a m&#x1ee5;c &#x111;&#xe3; ch&#x1ecd;n"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteItemsCheckedActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnUnCheckAll">
       <Properties>
         <Property name="text" type="java.lang.String" value="B&#x1ecf; c&#xe1;c m&#x1ee5;c &#x111;&#xe3; ch&#x1ecd;n"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUnCheckAllActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
