@@ -82,7 +82,7 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -95,9 +95,6 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
             }
         });
         jScrollPane6.setViewportView(tblServiceCategory);
-        if (tblServiceCategory.getColumnModel().getColumnCount() > 0) {
-            tblServiceCategory.getColumnModel().getColumn(3).setResizable(false);
-        }
 
         btnCheckAll.setText("Chọn tất cả");
         btnCheckAll.addActionListener(new java.awt.event.ActionListener() {
@@ -488,7 +485,6 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         entity.setCategoryName(txtCategoryName.getText());
         entity.setDesc(txtDesc.getText());
         entity.setActive(rdoActive.isSelected());
-
         return entity;
     }
 
@@ -502,7 +498,7 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
                 item.getServiceCategoryID(),
                 item.getCategoryName(),
                 item.getDesc(),
-                item.isActive(),
+                item.isActive() ? "Hoạt động" : "Không hoạt động",
                 false
             };
             model.addRow(rowData);
