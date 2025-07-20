@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * @author PHUONG LAM
  */
 public class MsgBox {
-
+    
     public static void alert(String message) {
         JOptionPane.showMessageDialog(null, message, "Hệ thống quản lý khách sạn", JOptionPane.WARNING_MESSAGE);
     }
