@@ -16,11 +16,11 @@ import com.poly.hotel.dao.RoomDAO;
  */
 
 public class RoomDAOImpl implements RoomDAO{
-    String createSql = "INSERT INTO Room (roomID, categoryID, floor, status, desc, isActive AS Active) VALUES (?, ?, ?, ?, ?, ?)";
-    String updateSql = "UPDATE Room SET categoryID=?, floor=?, status=?, desc=?, isActive=? WHERE roomID=?";
+    String createSql = "INSERT INTO Room (roomID, categoryID, floor, status, [desc], isActive AS Active) VALUES (?, ?, ?, ?, ?, ?)";
+    String updateSql = "UPDATE Room SET categoryID=?, floor=?, status=?, [desc]=?, isActive=? WHERE roomID=?";
     String deleteSql = "DELETE FROM Room WHERE roomID=?";
-    String findAllSql = "SELECT roomID, categoryID, floor, status, desc, isActive AS Active FROM Room";
-    String findByIdSql = "SELECT categoryID, floor, status, desc, isActive AS Active FROM Room WHERE roomID=?";
+    String findAllSql = "SELECT roomID, categoryID, floor, status, [desc], isActive AS Active FROM Room";
+    String findByIdSql = "SELECT categoryID, floor, status, [desc], isActive AS Active FROM Room WHERE roomID=?";
 
     @Override
     public Room create(Room entity) {

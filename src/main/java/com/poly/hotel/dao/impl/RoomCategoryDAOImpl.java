@@ -15,8 +15,8 @@ import java.util.List;
  * @author Windows
  */
 public class RoomCategoryDAOImpl implements RoomCategoryDAO{
-    String createSql = "INSERT INTO RoomCategory (CategoryID, CategoryName, desc, baseHourPrice, baseDailyPrice, maxOccupancy, isActive) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    String updateSql = "UPDATE RoomCategory SET CategoryName=?, desc=?, baseHourPrice=?, baseDailyPrice=?, maxOccupancy, isActive=? WHERE CategoryID=?";
+    String createSql = "INSERT INTO RoomCategory (CategoryID, CategoryName, [desc], baseHourPrice, baseDailyPrice, maxOccupancy, isActive) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String updateSql = "UPDATE RoomCategory SET CategoryName=?, [desc]=?, baseHourPrice=?, baseDailyPrice=?, maxOccupancy, isActive=? WHERE CategoryID=?";
     String deleteSql = "DELETE FROM RoomCategory WHERE CategoryID=?";
     String findAllSql = "SELECT * FROM RoomCategory";
     String findByIdSql = "SELECT * FROM RoomCategory WHERE CategoryID=?";
