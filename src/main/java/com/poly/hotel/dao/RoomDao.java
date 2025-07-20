@@ -10,6 +10,6 @@ import com.poly.hotel.entity.Room;
  *
  * @author Windows
  */
-public interface RoomDao extends CrudDAO<Room, String>{
+public interface RoomDAO extends CrudDAO<Room, String>{
     
 }
