@@ -4,12 +4,12 @@
  */
 package com.poly.hotel.dao;
 
-import com.poly.hotel.entity.Room;
+import com.poly.hotel.entity.RoomCategory;
 
 /**
  *
  * @author Windows
  */
-public interface RoomDAO extends CrudDAO<Room, String>{
+public interface RoomCategoryDAO extends CrudDAO<RoomCategory, String>{
     
 }
