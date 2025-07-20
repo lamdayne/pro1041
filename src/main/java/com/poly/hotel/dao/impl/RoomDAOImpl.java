@@ -4,17 +4,17 @@
  */
 package com.poly.hotel.dao.impl;
 
-import com.poly.hotel.dao.RoomDAO;
 import com.poly.hotel.entity.Room;
 import com.poly.hotel.util.XJdbc;
 import com.poly.hotel.util.XQuery;
 import java.util.List;
+import com.poly.hotel.dao.RoomDAO;
 
 /**
  *
  * @author PHUONG LAM
  */
-public class RoomDAOImpl implements RoomDAO{
+public class RoomDAOImpl implements RoomDAO {
     String createSql = "INSERT INTO Room (roomID, categoryID, floor, status, desc, isActive) VALUES (?, ?, ?, ?, ?, ?)";
     String updateSql = "UPDATE Room SET categoryID=?, floor=?, status=?, desc=?, isActive=? WHERE roomID=?";
     String deleteSql = "DELETE FROM Room WHERE roomID=?";
