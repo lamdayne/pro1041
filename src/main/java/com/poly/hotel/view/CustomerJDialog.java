@@ -26,6 +26,7 @@ public class CustomerJDialog extends javax.swing.JDialog implements CustomerCont
     public CustomerJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.open();
     }
 
     /**
@@ -75,13 +76,29 @@ public class CustomerJDialog extends javax.swing.JDialog implements CustomerCont
                 return types [columnIndex];
             }
         });
+        tblCustomer.setRowHeight(25);
         jScrollPane1.setViewportView(tblCustomer);
 
         btnCheckAll.setText("Chọn tất cả");
+        btnCheckAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckAllActionPerformed(evt);
+            }
+        });
 
         btnDeleteItemsChecked.setText("Xóa mục đã chọn");
+        btnDeleteItemsChecked.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteItemsCheckedActionPerformed(evt);
+            }
+        });
 
         btnUnCheckAll.setText("Bỏ các mục đã chọn");
+        btnUnCheckAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUnCheckAllActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,6 +136,21 @@ public class CustomerJDialog extends javax.swing.JDialog implements CustomerCont
         // TODO add your handling code here:
         this.open();
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAllActionPerformed
+        // TODO add your handling code here:
+        this.checkAll();
+    }//GEN-LAST:event_btnCheckAllActionPerformed
+
+    private void btnUnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnCheckAllActionPerformed
+        // TODO add your handling code here:
+        this.unCheckAll();
+    }//GEN-LAST:event_btnUnCheckAllActionPerformed
+
+    private void btnDeleteItemsCheckedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemsCheckedActionPerformed
+        // TODO add your handling code here:
+        this.deleteCheckedItems();
+    }//GEN-LAST:event_btnDeleteItemsCheckedActionPerformed
 
     @Override
     public void open() {
@@ -160,7 +192,7 @@ public class CustomerJDialog extends javax.swing.JDialog implements CustomerCont
     public void deleteCheckedItems() {
         if (MsgBox.comfirm("Bạn thực sự muốn xóa các mục chọn?")) {
             for (int i = 0; i < tblCustomer.getRowCount(); i++) {
-                if ((Boolean) tblCustomer.getValueAt(i, 5)) {
+                if ((Boolean) tblCustomer.getValueAt(i, 7)) {
                     dao.deleteById(String.valueOf(items.get(i).getCustomerID()));
                 }
             }
