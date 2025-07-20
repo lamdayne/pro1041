@@ -5,6 +5,7 @@
 package com.poly.hotel.view;
 
 import com.poly.hotel.controller.HomeController;
+import com.poly.hotel.dao.RoomCategoryDAO;
 import com.poly.hotel.dao.impl.RoomDAOImpl;
 import com.poly.hotel.entity.Booking;
 import com.poly.hotel.entity.Room;
@@ -15,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.JButton;
 import com.poly.hotel.dao.RoomDAO;
+import com.poly.hotel.dao.impl.RoomCategoryDAOImpl;
 
 /**
  *
@@ -23,6 +25,7 @@ import com.poly.hotel.dao.RoomDAO;
 public class HomeJDialog extends javax.swing.JDialog implements HomeController {
 
     RoomDAO dao = new RoomDAOImpl();
+    RoomCategoryDAO categoryDao = new RoomCategoryDAOImpl();
 
     /**
      * Creates new form HomeJDialog
@@ -446,30 +449,27 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
 
     private JButton createButton(Room room) {
         JButton btnRoom = new JButton();
-        btnRoom.setText(String.format("P.%d", room.getRoomID()));
+        btnRoom.setText(String.format("<html><div style='text-align: center; font-size: 12px; font-weight: bold;'>P.%s<br>Loại phòng: %s<div></html>", 
+                room.getRoomID(), 
+                room.getCategoryID()));
         btnRoom.setPreferredSize(new Dimension(120, 80));
         btnRoom.setEnabled(room.isActive());
         switch (room.getStatus()) {
-            case "Available":
+            case "0":
                 btnRoom.setBackground(new Color(0, 255, 0));
                 break;
-            case "Occupie":
+            case "1":
                 btnRoom.setBackground(new Color(255, 51, 51));
                 break;
-            case "Cleaning":
+            case "2":
                 btnRoom.setBackground(new Color(255, 153, 51));
                 break;
-            case "Maintenace":
+            case "3":
                 btnRoom.setBackground(new Color(153, 153, 153));
                 break;
             default:
                 btnRoom.setBackground(Color.LIGHT_GRAY);
         }
-        btnRoom.setToolTipText(String.format(
-                "<html>Phòng: %d<br/>Loại: %s<br/>Trạng thái: %s<br/></html>",
-                room.getRoomID(),
-                room.getCategoryID(),
-                room.getStatus()));
         btnRoom.setActionCommand(String.valueOf(room.getRoomID()));
         btnRoom.addActionListener((ActionEvent e) -> {
             int roomId = Integer.parseInt(e.getActionCommand());
