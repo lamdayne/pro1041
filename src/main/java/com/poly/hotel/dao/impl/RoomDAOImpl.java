@@ -4,10 +4,63 @@
  */
 package com.poly.hotel.dao.impl;
 
+import com.poly.hotel.dao.RoomDAO;
+import com.poly.hotel.entity.Room;
+import com.poly.hotel.util.XJdbc;
+import com.poly.hotel.util.XQuery;
+import java.util.List;
+
 /**
  *
  * @author PHUONG LAM
  */
-public class RoomDAOImpl {
-    
+public class RoomDAOImpl implements RoomDAO{
+    String createSql = "INSERT INTO Room (roomID, categoryID, floor, status, desc, isActive) VALUES (?, ?, ?, ?, ?, ?)";
+    String updateSql = "UPDATE Room SET categoryID=?, floor=?, status=?, desc=?, isActive=? WHERE roomID=?";
+    String deleteSql = "DELETE FROM Room WHERE roomID=?";
+    String findAllSql = "SELECT * FROM Room";
+    String findByIdSql = "SELECT * FROM Room WHERE roomID=?";
+
+    @Override
+    public Room create(Room bill) {
+        Object[] values = {
+            bill.getRoomID(),
+            bill.getCategoryID(),
+            bill.getFloor(),
+            bill.getStatus(),
+            bill.getDesc(),
+            bill.isActive()
+        };
+        XJdbc.executeUpdate(createSql, values);
+        return bill;
+    }
+
+    @Override
+    public void update(Room bill) {
+        Object[] values = {   
+            bill.getCategoryID(),
+            bill.getFloor(),
+            bill.getStatus(),
+            bill.getDesc(),
+            bill.isActive(),
+            bill.getRoomID()
+
+        };
+        XJdbc.executeUpdate(updateSql, values);
+    }
+
+    @Override
+    public void deleteById(String roomID) {
+        XJdbc.executeUpdate(deleteSql, roomID);
+    }
+
+    @Override
+    public List<Room> findAll() {
+        return XQuery.getBeanList(Room.class, findAllSql);
+    }
+
+    @Override
+    public Room findById(String roomID) {
+        return XQuery.getSingleBean(Room.class, findByIdSql, roomID);
+    }
 }
