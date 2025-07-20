@@ -8,6 +8,7 @@ import com.poly.hotel.controller.LoginController;
 import com.poly.hotel.dao.UserDAO;
 import com.poly.hotel.dao.impl.UserDAOImpl;
 import com.poly.hotel.entity.User;
+import com.poly.hotel.util.InputUtil;
 import com.poly.hotel.util.MsgBox;
 import com.poly.hotel.util.XAuth;
 import java.awt.Color;
@@ -290,6 +291,8 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         User user = dao.findById(username);
         if (username.isEmpty()) {
             MsgBox.alert("Tên đăng nhập không được để trống");
+        } else if (username.length() > 40) {
+            MsgBox.alert("Đạt quá giới hạn kí tự nhập vào");
         } else if (user == null) {
             MsgBox.alert("Tài khoản không tồn tại");
         } else if (password.isEmpty()) {

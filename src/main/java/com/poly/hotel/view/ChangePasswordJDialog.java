@@ -160,10 +160,18 @@ public class ChangePasswordJDialog extends javax.swing.JDialog {
 
         UserDAO userDAO = new UserDAOImpl();
         User user = userDAO.findById(username);
-
-        user.setPassword(newpass);
-        userDAO.update(user);
-        MsgBox.alert("Đổi mật khẩu thành công!");
+        
+        if (!user.getPassword().equals(password)) {
+            MsgBox.alert("Mật khẩu hiện tại không dúng");
+        } else if (!newpass.equals(confirm)) {
+            MsgBox.alert("Sai xác nhận mật khẩu");
+        } else if (newpass.length() > 20) {
+            MsgBox.alert("Đạt quá giới hạn kí tự");
+        } else {
+            user.setPassword(newpass);
+            userDAO.update(user);
+            MsgBox.alert("Đổi mật khẩu thành công!");
+        }
     }
 
     /**
