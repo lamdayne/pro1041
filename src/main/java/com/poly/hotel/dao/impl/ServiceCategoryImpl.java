@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class ServiceCategoryImpl implements ServiceCategoryDAO {
 
-    String createSql = "INSERT INTO ServiceCategory VALUES (?, ?, ?, ?)";
+    String createSql = "INSERT INTO ServiceCategory VALUES ( ?, ?, ?)";
     String updateSql = "UPDATE ServiceCategory SET ServiceCategoryID=?, CategoryName=?, Desc=?, isActive AS Active=? WHERE ServiceCategoryID=?";
     String deleteSql = "DELETE FROM ServiceCategory WHERE ServiceCategoryID=?";
 //    String findAllSql = "SELECT * FROM ServiceCategory";
@@ -26,7 +26,7 @@ public class ServiceCategoryImpl implements ServiceCategoryDAO {
     @Override
     public ServiceCategory create(ServiceCategory entity) {
         Object[] value = {
-            entity.getServiceCategoryID(),
+            
             entity.getCategoryName(),
             entity.getDesc(),
             entity.isActive()};
