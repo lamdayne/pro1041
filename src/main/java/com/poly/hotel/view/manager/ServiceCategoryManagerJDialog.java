@@ -560,7 +560,7 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         txtServiceID.setEnabled(!editable);
         btnCreate.setEnabled(!editable);
         btnUpdate.setEnabled(editable);
-        btnDelete.setEnabled(!editable);
+        btnDeleteForm.setEnabled(editable);
         int rowCount = tblServiceCategory.getRowCount();
         btnMoveFirst.setEnabled(editable && rowCount > 0);
         btnMovePrevious.setEnabled(editable && rowCount > 0);
