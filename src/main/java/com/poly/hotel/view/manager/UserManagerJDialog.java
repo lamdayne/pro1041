@@ -8,6 +8,7 @@ import com.poly.hotel.controller.UserController;
 import com.poly.hotel.dao.UserDAO;
 import com.poly.hotel.dao.impl.UserDAOImpl;
 import com.poly.hotel.entity.User;
+import java.awt.Color;
 import java.awt.Image;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -30,6 +31,20 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         this.setLocationRelativeTo(null);
         this.fillToTable();
         this.clear();
+        
+        txtUserName.setForeground(Color.GRAY);
+        txtUserName.setText(placeHolderUsername);
+        txtPassword.setForeground(Color.GRAY);
+            txtPassword.setText(placeHolderPassword);
+            txtFullName.setForeground(Color.GRAY);
+            txtFullName.setText(placeHolderFullName);
+            txtPhoneNumber.setForeground(Color.GRAY);
+            txtPhoneNumber.setText(placeHolderPhoneNumber);
+            txtRole.setForeground(Color.GRAY);
+            txtRole.setText(placeHolderRole);
+            txtEmail.setForeground(Color.GRAY);
+            txtEmail.setText(placeHolderEmail);
+        
     }
 
     @Override
@@ -226,6 +241,15 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         
         this.open();
     }
+    
+    
+    
+    private String placeHolderUsername ="Nhập tên người dùng";
+    private String placeHolderPassword ="Nhập mật khẩu";
+    private String placeHolderFullName= "Nhập họ và tên người dùng";
+    private String placeHolderPhoneNumber="Nhập số điện thoại" ;
+    private String placeHolderEmail ="Nhập Email";
+    private String placeHolderRole ="Nhập vai trò ";
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -358,13 +382,67 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
 
         jLabel1.setText("Tên Đăng Nhập:");
 
+        txtUserName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtUserNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtUserNameFocusLost(evt);
+            }
+        });
+
+        txtPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPasswordFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPasswordFocusLost(evt);
+            }
+        });
+
         jLabel2.setText("Mật Khẩu:");
 
+        txtPhoneNumber.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPhoneNumberFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPhoneNumberFocusLost(evt);
+            }
+        });
+
         jLabel3.setText("Số ĐT:");
+
+        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtEmailFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtEmailFocusLost(evt);
+            }
+        });
 
         jLabel4.setText("Email:");
 
         jLabel8.setText("Họ Và Tên:");
+
+        txtFullName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtFullNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtFullNameFocusLost(evt);
+            }
+        });
+
+        txtRole.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtRoleFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtRoleFocusLost(evt);
+            }
+        });
 
         jLabel10.setText("Vai trò:");
 
@@ -667,6 +745,103 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         // TODO add your handling code here:
         this.moveFirst();   
     }//GEN-LAST:event_btnMoveFirstActionPerformed
+
+    private void txtUserNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserNameFocusGained
+        // TODO add your handling code here:
+        if (txtUserName.getText().equals(placeHolderUsername)) {
+            txtUserName.setText("");
+            txtUserName.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtUserNameFocusGained
+
+    private void txtUserNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserNameFocusLost
+        // TODO add your handling code here:
+        if (txtUserName.getText().isEmpty()) {
+            txtUserName.setForeground(Color.GRAY);
+            txtUserName.setText(placeHolderUsername);
+        }
+    }//GEN-LAST:event_txtUserNameFocusLost
+
+    private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
+        // TODO add your handling code here:
+         if (txtPassword.getText().equals(placeHolderPassword)) {
+            txtPassword.setText("");
+            txtPassword.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtPasswordFocusGained
+
+    private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
+        // TODO add your handling code here:
+        if (txtPassword.getText().isEmpty()) {
+            txtPassword.setForeground(Color.GRAY);
+            txtPassword.setText(placeHolderPassword);
+            
+        }
+    }//GEN-LAST:event_txtPasswordFocusLost
+
+    private void txtFullNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFullNameFocusGained
+        // TODO add your handling code here:
+        if (txtFullName.getText().equals(placeHolderFullName)) {
+            txtFullName.setText("");
+            txtFullName.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtFullNameFocusGained
+
+    private void txtFullNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFullNameFocusLost
+        // TODO add your handling code here:
+        if (txtFullName.getText().isEmpty()) {
+            txtFullName.setForeground(Color.GRAY);
+            txtFullName.setText(placeHolderFullName);
+        }
+    }//GEN-LAST:event_txtFullNameFocusLost
+
+    private void txtPhoneNumberFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneNumberFocusGained
+        // TODO add your handling code here:
+        if (txtPhoneNumber.getText().equals(placeHolderPhoneNumber)) {
+            txtPhoneNumber.setText("");
+            txtPhoneNumber.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtPhoneNumberFocusGained
+
+    private void txtPhoneNumberFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneNumberFocusLost
+        // TODO add your handling code here:
+        if (txtPhoneNumber.getText().isEmpty()) {
+            txtPhoneNumber.setForeground(Color.GRAY);
+            txtPhoneNumber.setText(placeHolderPhoneNumber);
+        }
+    }//GEN-LAST:event_txtPhoneNumberFocusLost
+
+    private void txtRoleFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRoleFocusGained
+        // TODO add your handling code here:
+        if (txtRole.getText().equals(placeHolderRole)) {
+            txtRole.setText("");
+            txtRole.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtRoleFocusGained
+
+    private void txtRoleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRoleFocusLost
+        // TODO add your handling code here:
+        if (txtRole.getText().isEmpty()) {
+            txtRole.setForeground(Color.GRAY);
+            txtRole.setText(placeHolderRole);
+        }
+    }//GEN-LAST:event_txtRoleFocusLost
+
+    private void txtEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusGained
+        // TODO add your handling code here:
+        if (txtEmail.getText().equals(placeHolderEmail)) {
+            txtEmail.setText("");
+            txtEmail.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtEmailFocusGained
+
+    private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
+        // TODO add your handling code here:
+        if (txtEmail.getText().isEmpty()) {
+            txtEmail.setForeground(Color.GRAY);
+            txtEmail.setText(placeHolderEmail);
+        }
+    }//GEN-LAST:event_txtEmailFocusLost
 
     /**
      * @param args the command line arguments

@@ -288,6 +288,10 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JTextField" name="txtServiceID">
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtServiceIDFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtServiceIDFocusLost"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
@@ -300,6 +304,10 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtCategoryName">
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCategoryNameFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCategoryNameFocusLost"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnMoveFirst">
               <Properties>
@@ -365,6 +373,10 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtDesc">
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtDescFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtDescFocusLost"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
