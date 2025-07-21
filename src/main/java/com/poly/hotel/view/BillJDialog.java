@@ -309,6 +309,11 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         btnRemove.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnRemove.setText("Xóa hóa đơn");
         btnRemove.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
 
         txtId.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
         txtId.setMargin(new java.awt.Insets(2, 25, 2, 6));
@@ -350,14 +355,29 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAdd.setText("Tạo hóa đơn mới");
         btnAdd.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnCancel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancel.setText("Hủy hóa đơn");
         btnCancel.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         btnCheckout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCheckout.setText("Thanh toán");
         btnCheckout.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnCheckout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckoutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -488,8 +508,28 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
     }//GEN-LAST:event_txtUsernameFocusLost
 
     private void cbopaymentMethodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbopaymentMethodActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:    
     }//GEN-LAST:event_cbopaymentMethodActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        // TODO add your handling code here:
+        this.delete();
+    }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        this.create();
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
+        // TODO add your handling code here:
+        this.checkAll();
+    }//GEN-LAST:event_btnCheckoutActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
