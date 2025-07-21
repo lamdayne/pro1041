@@ -8,6 +8,7 @@ import com.poly.hotel.controller.ServiceCategoryController;
 import com.poly.hotel.dao.ServiceCategoryDAO;
 import com.poly.hotel.dao.impl.ServiceCategoryImpl;
 import com.poly.hotel.entity.ServiceCategory;
+import java.awt.Color;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -29,7 +30,12 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         initComponents();
         this.open();
     }
-
+    
+    
+    String placeholderServiceCategoryID = "Nhập mã dịch vụ";
+    String placeholderServiceName = "Nhập tên loại dịch vụ";
+    String placeholderDesc = "Nhập mô tả dịch vụ";
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -149,9 +155,27 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
 
         Tabs.addTab("Danh Sách ", jPanel7);
 
+        txtServiceID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtServiceIDFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtServiceIDFocusLost(evt);
+            }
+        });
+
         jLabel5.setText("Mã Dịch Vụ :");
 
         jLabel6.setText("Tên Dịch Vụ:");
+
+        txtCategoryName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCategoryNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCategoryNameFocusLost(evt);
+            }
+        });
 
         btnMoveFirst.setText("|<");
         btnMoveFirst.addActionListener(new java.awt.event.ActionListener() {
@@ -200,6 +224,15 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         btnMoveLast.setText(">|");
 
         jLabel7.setText("Mô Tả:");
+
+        txtDesc.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDescFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDescFocusLost(evt);
+            }
+        });
 
         jLabel2.setText("Trạng Thái:");
 
@@ -388,6 +421,54 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         this.create();
     }//GEN-LAST:event_btnCreateActionPerformed
 
+    private void txtServiceIDFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtServiceIDFocusGained
+        // TODO add your handling code here:
+        if (txtServiceID.getText().equals(placeholderServiceCategoryID)) {
+            txtServiceID.setText("");
+            txtServiceID.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtServiceIDFocusGained
+
+    private void txtServiceIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtServiceIDFocusLost
+        // TODO add your handling code here:
+        if (txtServiceID.getText().isEmpty()) {
+            txtServiceID.setForeground(Color.GRAY);
+            txtServiceID.setText(placeholderServiceCategoryID);
+        }
+    }//GEN-LAST:event_txtServiceIDFocusLost
+
+    private void txtCategoryNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCategoryNameFocusGained
+        // TODO add your handling code here:
+   if (txtCategoryName.getText().equals(placeholderServiceName)) {
+            txtCategoryName.setText("");
+            txtCategoryName.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtCategoryNameFocusGained
+
+    private void txtCategoryNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCategoryNameFocusLost
+        // TODO add your handling code here:
+        if (txtCategoryName.getText().isEmpty()) {
+            txtCategoryName.setForeground(Color.GRAY);
+            txtCategoryName.setText(placeholderServiceName);
+        }
+    }//GEN-LAST:event_txtCategoryNameFocusLost
+
+    private void txtDescFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescFocusGained
+        // TODO add your handling code here:
+         if (txtDesc.getText().equals(placeholderDesc)) {
+            txtDesc.setText("");
+            txtDesc.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtDescFocusGained
+
+    private void txtDescFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescFocusLost
+        // TODO add your handling code here:
+        if (txtDesc.getText().isEmpty()) {
+            txtDesc.setForeground(Color.GRAY);
+            txtDesc.setText(placeholderDesc);
+        }
+    }//GEN-LAST:event_txtDescFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -466,6 +547,12 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         this.setLocationRelativeTo(null);
         this.fillToTable();
         this.clear();
+        txtServiceID.setForeground(Color.GRAY);
+            txtServiceID.setText(placeholderServiceCategoryID);
+            txtCategoryName.setForeground(Color.GRAY);
+            txtCategoryName.setText(placeholderServiceName);
+            txtDesc.setForeground(Color.GRAY);
+            txtDesc.setText(placeholderDesc);
     }
 
     @Override
