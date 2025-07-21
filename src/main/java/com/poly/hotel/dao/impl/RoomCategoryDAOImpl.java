@@ -16,10 +16,10 @@ import java.util.List;
  */
 public class RoomCategoryDAOImpl implements RoomCategoryDAO{
     String createSql = "INSERT INTO RoomCategory (CategoryID, CategoryName, [desc], baseHourPrice, baseDailyPrice, maxOccupancy, isActive) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    String updateSql = "UPDATE RoomCategory SET CategoryName=?, [desc]=?, baseHourPrice=?, baseDailyPrice=?, maxOccupancy, isActive=? WHERE CategoryID=?";
-    String deleteSql = "DELETE FROM RoomCategory WHERE CategoryID=?";
-    String findAllSql = "SELECT * FROM RoomCategory";
-    String findByIdSql = "SELECT * FROM RoomCategory WHERE CategoryID=?";
+    String updateSql = "UPDATE RoomCategory SET CategoryName = ?, [desc] = ?, baseHourPrice = ?, baseDailyPrice = ?, maxOccupancy = ?, isActive = ? WHERE CategoryID = ?";
+    String deleteSql = "DELETE FROM RoomCategory WHERE CategoryID = ?";
+    String findAllSql = "SELECT CategoryID, CategoryName, [desc], baseHourPrice AS BaseHourPrice, baseDailyPrice AS BaseDailyPrice, maxOccupancy, isActive AS Active FROM RoomCategory";
+    String findByIdSql = "SELECT CategoryName, [desc], baseHourPrice AS BaseHourPrice, baseDailyPrice AS BaseDailyPrice, maxOccupancy, isActive AS Active FROM RoomCategory WHERE CategoryID = ?";
 
     @Override
     public RoomCategory create(RoomCategory entity) {

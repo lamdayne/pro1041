@@ -6,9 +6,6 @@ package com.poly.hotel.view.manager;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.*;
-import java.awt.*;
-
 /**
  *
  * @author Windows
