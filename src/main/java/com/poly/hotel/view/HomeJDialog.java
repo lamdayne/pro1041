@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.JButton;
 import com.poly.hotel.dao.RoomDAO;
 import com.poly.hotel.dao.impl.RoomCategoryDAOImpl;
+import com.poly.hotel.entity.RoomCategory;
 
 /**
  *
@@ -400,6 +401,7 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
     public void showBookingJDialog() {
         Booking booking = new Booking();
         BookingJDialog dialog = new BookingJDialog((Frame) this.getOwner(), true);
+        dialog.setVisible(true);
     }
 
     private void loadRoom() {// tải và hiển thị các thẻ lên cửa sổ bán hàng
@@ -448,10 +450,11 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
     }
 
     private JButton createButton(Room room) {
+        RoomCategory roomCategory = categoryDao.findById(String.valueOf(room.getCategoryID()));
         JButton btnRoom = new JButton();
         btnRoom.setText(String.format("<html><div style='text-align: center; font-size: 12px; font-weight: bold;'>P.%s<br>Loại phòng: %s<div></html>", 
                 room.getRoomID(), 
-                room.getCategoryID()));
+                roomCategory.getCategoryName()));
         btnRoom.setPreferredSize(new Dimension(120, 80));
         btnRoom.setEnabled(room.isActive());
         switch (room.getStatus()) {
