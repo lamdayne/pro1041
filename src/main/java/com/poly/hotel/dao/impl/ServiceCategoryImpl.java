@@ -26,7 +26,6 @@ public class ServiceCategoryImpl implements ServiceCategoryDAO {
     @Override
     public ServiceCategory create(ServiceCategory entity) {
         Object[] value = {
-           
             entity.getCategoryName(),
             entity.getDesc(),
             entity.isActive()};

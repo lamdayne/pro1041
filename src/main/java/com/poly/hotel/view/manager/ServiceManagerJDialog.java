@@ -128,7 +128,7 @@ public class ServiceManagerJDialog extends javax.swing.JDialog {
                 {null, null, null, null, null}
             },
             new String [] {
-                "MADV", "TENDV", "PHIDV", "TRANGTHAI", ""
+                "Mã dịch vụ", "Tên dịch vụ", "Phí dịch vụ", "Trạng thái", ""
             }
         ) {
             Class[] types = new Class [] {
@@ -145,9 +145,9 @@ public class ServiceManagerJDialog extends javax.swing.JDialog {
         jLabel9.setForeground(new java.awt.Color(51, 51, 255));
         jLabel9.setText("TÌM KIẾM DỊCH VỤ:");
 
-        jButton1.setText("TIỀM KIẾM");
+        jButton1.setText("Tìm kiếm");
 
-        jButton2.setText("HỦY");
+        jButton2.setText("Hủy");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -157,12 +157,12 @@ public class ServiceManagerJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addGap(40, 40, 40))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,7 +192,7 @@ public class ServiceManagerJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 88, Short.MAX_VALUE)
+                        .addGap(0, 96, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50))
                     .addGroup(jPanel1Layout.createSequentialGroup()
