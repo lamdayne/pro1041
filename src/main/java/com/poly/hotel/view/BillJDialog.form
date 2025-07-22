@@ -223,9 +223,6 @@
           </Border>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtAmountActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="cbopaymentMethod">
       <Properties>
@@ -380,9 +377,6 @@
           <Insets value="[2, 25, 2, 6]"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIdActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtBookingID">
       <Properties>
@@ -394,9 +388,6 @@
           </Border>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBookingIDActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPaymentDate">
       <Properties>
@@ -408,9 +399,6 @@
           </Border>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPaymentDateActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtUsername">
       <Properties>
@@ -425,7 +413,6 @@
       <Events>
         <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtUsernameFocusGained"/>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtUsernameFocusLost"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUsernameActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAdd">
