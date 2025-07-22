@@ -263,11 +263,6 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         jLabel8.setText("Tên người dùng: ");
 
         txtAmount.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
-        txtAmount.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAmountActionPerformed(evt);
-            }
-        });
 
         cbopaymentMethod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbopaymentMethod.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
@@ -317,25 +312,10 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
 
         txtId.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
         txtId.setMargin(new java.awt.Insets(2, 25, 2, 6));
-        txtId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
-            }
-        });
 
         txtBookingID.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
-        txtBookingID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBookingIDActionPerformed(evt);
-            }
-        });
 
         txtPaymentDate.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
-        txtPaymentDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPaymentDateActionPerformed(evt);
-            }
-        });
 
         txtUsername.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
         txtUsername.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -344,11 +324,6 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtUsernameFocusLost(evt);
-            }
-        });
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
             }
         });
 
@@ -467,29 +442,9 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAmountActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAmountActionPerformed
-
     private void cbopaymentStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbopaymentStatusActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbopaymentStatusActionPerformed
-
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
-
-    private void txtBookingIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBookingIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBookingIDActionPerformed
-
-    private void txtPaymentDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPaymentDateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPaymentDateActionPerformed
-
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void txtUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusGained
         // TODO add your handling code here:
