@@ -183,6 +183,11 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         });
 
         btnUpdate.setText("Cập nhập");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDeleteForm.setText("Xóa");
         btnDeleteForm.addActionListener(new java.awt.event.ActionListener() {
@@ -443,6 +448,11 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
             txtDesc.setText(placeholderDesc);
         }
     }//GEN-LAST:event_txtDescFocusLost
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        this.update();
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     /**
      * @param args the command line arguments

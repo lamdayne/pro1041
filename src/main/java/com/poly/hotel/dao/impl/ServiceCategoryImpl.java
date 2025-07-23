@@ -17,7 +17,7 @@ import java.util.List;
 public class ServiceCategoryImpl implements ServiceCategoryDAO {
 
     String createSql = "INSERT INTO ServiceCategory VALUES ( ?, ?, ?)";
-    String updateSql = "UPDATE ServiceCategory SET ServiceCategoryID=?, CategoryName=?, Desc=?, isActive AS Active=? WHERE ServiceCategoryID=?";
+    String updateSql = "UPDATE ServiceCategory SET CategoryName=?, [desc]=?, isActive =? WHERE ServiceCategoryID=?";
     String deleteSql = "DELETE FROM ServiceCategory WHERE ServiceCategoryID=?";
 //    String findAllSql = "SELECT * FROM ServiceCategory";
     String findAllSql = "SELECT serviceCategoryID, categoryName, [desc], isActive AS Active FROM ServiceCategory;";
