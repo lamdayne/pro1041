@@ -302,7 +302,7 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         } else if (!user.isActive()) {
             MsgBox.alert("Tài khoản của bạn đang tạm dừng!");
         } else {
-            MsgBox.alert("Đăng nhập thành công");
+            MsgBox.alertSuccess("Đăng nhập thành công");
             XAuth.user = user; // duy trì user đăng nhập
             this.dispose();
         }
