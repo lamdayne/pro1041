@@ -32,7 +32,7 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
     }
     
     
-    String placeholderServiceCategoryID = "Nhập mã dịch vụ";
+    
     String placeholderServiceName = "Nhập tên loại dịch vụ";
     String placeholderDesc = "Nhập mô tả dịch vụ";
     
@@ -154,15 +154,6 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         );
 
         Tabs.addTab("Danh Sách ", jPanel7);
-
-        txtServiceID.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtServiceIDFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtServiceIDFocusLost(evt);
-            }
-        });
 
         jLabel5.setText("Mã Dịch Vụ :");
 
@@ -421,22 +412,6 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         this.create();
     }//GEN-LAST:event_btnCreateActionPerformed
 
-    private void txtServiceIDFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtServiceIDFocusGained
-        // TODO add your handling code here:
-        if (txtServiceID.getText().equals(placeholderServiceCategoryID)) {
-            txtServiceID.setText("");
-            txtServiceID.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtServiceIDFocusGained
-
-    private void txtServiceIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtServiceIDFocusLost
-        // TODO add your handling code here:
-        if (txtServiceID.getText().isEmpty()) {
-            txtServiceID.setForeground(Color.GRAY);
-            txtServiceID.setText(placeholderServiceCategoryID);
-        }
-    }//GEN-LAST:event_txtServiceIDFocusLost
-
     private void txtCategoryNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCategoryNameFocusGained
         // TODO add your handling code here:
    if (txtCategoryName.getText().equals(placeholderServiceName)) {
@@ -548,7 +523,7 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         this.fillToTable();
         this.clear();
         txtServiceID.setForeground(Color.GRAY);
-            txtServiceID.setText(placeholderServiceCategoryID);
+            
             txtCategoryName.setForeground(Color.GRAY);
             txtCategoryName.setText(placeholderServiceName);
             txtDesc.setForeground(Color.GRAY);
@@ -644,7 +619,7 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
     @Override
     public void setEditable(boolean editable) {
 
-        txtServiceID.setEnabled(!editable);
+        txtServiceID.setEnabled(editable);
         btnCreate.setEnabled(!editable);
         btnUpdate.setEnabled(editable);
         btnDeleteForm.setEnabled(editable);
