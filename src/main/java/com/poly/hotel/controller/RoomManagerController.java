@@ -4,10 +4,12 @@
  */
 package com.poly.hotel.controller;
 
+import com.poly.hotel.entity.Room;
+
 /**
  *
  * @author Windows
  */
-public interface RoomManagerController {
+public interface RoomManagerController extends CrudController<Room>{
     
 }

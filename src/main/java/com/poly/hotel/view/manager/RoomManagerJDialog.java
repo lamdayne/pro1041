@@ -4,11 +4,21 @@
  */
 package com.poly.hotel.view.manager;
 
+import com.poly.hotel.controller.RoomManagerController;
+import com.poly.hotel.dao.RoomDAO;
+import com.poly.hotel.dao.impl.RoomDAOImpl;
+import com.poly.hotel.entity.Room;
+import java.awt.Image;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Windows
  */
-public class RoomManagerJDialog extends javax.swing.JDialog {
+public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManagerController{
 
     /**
      * Creates new form RoomJDialog
@@ -16,6 +26,154 @@ public class RoomManagerJDialog extends javax.swing.JDialog {
     public RoomManagerJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        try {
+            Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage();
+            setIconImage(icon);
+        } catch (Exception e) {
+            System.out.println("Không thể tải logo: " + e.getMessage());
+        }
+        fillToTable();
+    }
+    
+    RoomDAO dao = new RoomDAOImpl();
+    List<Room> items = List.of();
+
+
+    @Override
+    public void open() {
+        this.setLocationRelativeTo(null);
+        this.fillToTable();
+        this.clear();
+    }
+
+    @Override
+    public void fillToTable() {
+        DefaultTableModel model = (DefaultTableModel) tblRoom.getModel();
+        model.setRowCount(0);
+        items = dao.findAll();
+        items.forEach(item -> {
+            Object[] rowData = {
+                item.getRoomID(),
+                item.getCategoryID(),        
+                item.getFloor(),
+                item.getStatus(),
+                item.getDesc(),       
+                false
+            };
+            model.addRow(rowData);
+        });
+    }
+
+    @Override
+    public void edit() {
+        int selectedRow = tblRoom.getSelectedRow();
+        if (selectedRow >= 0) {
+            Room entity = items.get(selectedRow);
+            this.setForm(entity);
+            this.setEditable(true);
+        }
+    }
+
+    @Override
+    public void checkAll() {
+        this.setCheckedAll(true);
+    }
+
+    @Override
+    public void uncheckAll() {
+        this.setCheckedAll(false);
+    }
+
+    private void setCheckedAll(boolean checked) {
+        for (int i = 0; i < tblRoom.getRowCount(); i++) {
+            tblRoom.setValueAt(checked, i, 6);
+        }
+    }
+
+    @Override
+    public void deleteCheckedItems() {
+        if (JOptionPane.showConfirmDialog(this, "Bạn thực sự muốn xóa các mục chọn?", "Xác nhận",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            for (int i = 0; i < tblRoom.getRowCount(); i++) {
+                if ((Boolean) tblRoom.getValueAt(i, 6)) {
+                    dao.deleteById(String.valueOf(items.get(i).getCategoryID()));
+                }
+            }
+            this.fillToTable();
+            JOptionPane.showMessageDialog(this, "Xóa các mục đã chọn thành công!");
+        }
+    }
+
+    @Override
+    public void setForm(Room entity) {
+        txtRoomId.setText(entity.getRoomID());
+        cboRoomCategory.setSelectedItem(entity.getCategoryID());
+        cboFloor.setSelectedItem(String.valueOf(entity.getFloor()));
+        cboStatus.setSelectedItem(entity.getStatus());
+        txtDesc.setText(entity.getDesc());
+    }
+
+    @Override
+    public Room getForm() {
+        Room entity = new Room();
+        entity.setRoomID(txtRoomId.getText());
+        entity.setCategoryID(Integer.parseInt((String) cboRoomCategory.getSelectedItem()));
+        entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
+        entity.setStatus((String) cboStatus.getSelectedItem());
+        entity.setDesc(txtDesc.getText());
+        return entity;
+    }
+
+    @Override
+    public void create() {
+        try {
+            Room entity = this.getForm();
+            dao.create(entity);
+            this.fillToTable();
+            this.clear();
+            JOptionPane.showMessageDialog(this, "Tạo loại phòng thành công!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi tạo loại phòng: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void update() {
+        try {
+            Room entity = this.getForm();
+            dao.update(entity);
+            this.fillToTable();
+            JOptionPane.showMessageDialog(this, "Cập nhật loại phòng thành công!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật loại phòng: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete() {
+        if (JOptionPane.showConfirmDialog(this, "Bạn thực sự muốn xóa?", "Xác nhận",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            String id = txtRoomId.getText();
+            dao.deleteById(id);
+            this.fillToTable();
+            this.clear();
+            JOptionPane.showMessageDialog(this, "Xóa loại phòng thành công!");
+        }
+    }
+
+    @Override
+    public void clear() {
+        this.setForm(new Room());
+        this.setEditable(false);
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        txtRoomId.setEnabled(!editable);
+        btnAdd.setEnabled(!editable);
+        btnUpdate.setEnabled(editable);
+        btnDelete.setEnabled(editable);
+        btnClear.setEnabled(true);
     }
 
     /**
@@ -30,23 +188,23 @@ public class RoomManagerJDialog extends javax.swing.JDialog {
         jButton6 = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblRoom = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtRoomId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cboRoomCategory = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cboStatus = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        txtDesc = new javax.swing.JTextField();
+        cboFloor = new javax.swing.JComboBox<>();
+        btnAdd = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnCheckAll = new javax.swing.JButton();
         btnUncheckAll = new javax.swing.JButton();
@@ -57,7 +215,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(102, 204, 0));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblRoom.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -76,18 +234,18 @@ public class RoomManagerJDialog extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblRoom);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Phòng");
+        jLabel2.setText("Mã Phòng");
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        txtRoomId.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Loại phòng");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        cboRoomCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboRoomCategory.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -103,32 +261,32 @@ public class RoomManagerJDialog extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Trạng thái");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox4.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        cboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboStatus.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Ghi chú");
 
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        txtDesc.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        cboFloor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboFloor.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setText("Thêm");
-        jButton2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAdd.setText("Thêm");
+        btnAdd.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton5.setText("Sửa");
-        jButton5.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUpdate.setText("Sửa");
+        btnUpdate.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
-        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton7.setText("Xóa");
-        jButton7.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDelete.setText("Xóa");
+        btnDelete.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton9.setText("Mới");
-        jButton9.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnClear.setText("Mới");
+        btnClear.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         btnCheckAll.setText("Chọn tất cả");
         btnCheckAll.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
@@ -167,42 +325,42 @@ public class RoomManagerJDialog extends javax.swing.JDialog {
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2)
+                            .addComponent(txtDesc)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtRoomId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cboRoomCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cboFloor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cboStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCheckAll, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(91, 91, 91)
+                .addGap(50, 50, 50)
                 .addComponent(btnUncheckAll, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(34, 34, 34)
                 .addComponent(btnDeleteCheckedItems, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,39 +371,39 @@ public class RoomManagerJDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtRoomId, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 26, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboRoomCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
                         .addGap(101, 101, 101)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(38, 38, 38))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUncheckAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDeleteCheckedItems, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCheckAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDeleteCheckedItems, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnUncheckAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -311,17 +469,17 @@ public class RoomManagerJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCheckAll;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDeleteCheckedItems;
     private javax.swing.JButton btnUncheckAll;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cboFloor;
+    private javax.swing.JComboBox<String> cboRoomCategory;
+    private javax.swing.JComboBox<String> cboStatus;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -332,8 +490,8 @@ public class RoomManagerJDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tblRoom;
+    private javax.swing.JTextField txtDesc;
+    private javax.swing.JTextField txtRoomId;
     // End of variables declaration//GEN-END:variables
 }
