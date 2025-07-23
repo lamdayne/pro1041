@@ -4,6 +4,7 @@
  */
 package com.poly.hotel.util;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,9 +12,19 @@ import javax.swing.JOptionPane;
  * @author PHUONG LAM
  */
 public class MsgBox {
-    
+        
     public static void alert(String message) {
         JOptionPane.showMessageDialog(null, message, "Hệ thống quản lý khách sạn", JOptionPane.WARNING_MESSAGE);
+    }
+    
+    public static void alertSuccess(String message) {
+        ImageIcon icon = new ImageIcon(MsgBox.class.getResource("/com/poly/hotel/icons/accept.png"));
+        JOptionPane.showMessageDialog(null, message, "Hệ thống quản lý khách sạn", JOptionPane.WARNING_MESSAGE, icon);
+    }
+    
+    public static void alertFail(String message) {
+        ImageIcon icon = new ImageIcon(MsgBox.class.getResource("/com/poly/hotel/icons/close.png"));
+        JOptionPane.showMessageDialog(null, message, "Hệ thống quản lý khách sạn", JOptionPane.WARNING_MESSAGE, icon);
     }
 
     public static boolean comfirm(String message) {
