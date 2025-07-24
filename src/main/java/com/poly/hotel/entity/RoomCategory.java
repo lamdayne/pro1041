@@ -21,8 +21,8 @@ public class RoomCategory {
     private int CategoryID ;
     private String CategoryName ;
     private String desc;
-    private float baseHourPrice ;
-    private float baseDailyPrice ;
+    private double baseHourPrice ;
+    private double baseDailyPrice ;
     private int maxOccupancy;
     private boolean isActive;
 }
