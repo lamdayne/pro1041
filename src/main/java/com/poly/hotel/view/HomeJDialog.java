@@ -398,9 +398,11 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
-    public void showBookingJDialog() {
+    public void showBookingJDialog(String roomId) {
         Booking booking = new Booking();
+        Room room = dao.findById(roomId);
         BookingJDialog dialog = new BookingJDialog((Frame) this.getOwner(), true);
+        dialog.setRoom(room);
         dialog.setVisible(true);
     }
 
@@ -473,10 +475,10 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
             default:
                 btnRoom.setBackground(Color.LIGHT_GRAY);
         }
-        btnRoom.setActionCommand(String.valueOf(room.getRoomID()));
+        btnRoom.setActionCommand(room.getRoomID());
         btnRoom.addActionListener((ActionEvent e) -> {
-            int roomId = Integer.parseInt(e.getActionCommand());
-            HomeJDialog.this.showBookingJDialog();
+            String roomId = e.getActionCommand();
+            HomeJDialog.this.showBookingJDialog(roomId);
         });
         return btnRoom;
     }
