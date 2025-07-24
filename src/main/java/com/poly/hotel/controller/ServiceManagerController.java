@@ -11,5 +11,5 @@ import com.poly.hotel.entity.Service;
  * @author Lenovo
  */
 public interface ServiceManagerController extends CrudController<Service> {
-    
+    void fillCategoryService();
 }
