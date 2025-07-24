@@ -4,12 +4,11 @@
  */
 package com.poly.hotel.controller;
 
-import com.poly.hotel.entity.Room;
 
 /**
  *
  * @author PHUONG LAM
  */
 public interface HomeController {
-    void showBookingJDialog();
+    void showBookingJDialog(String roomId);
 }
