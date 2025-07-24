@@ -5,11 +5,12 @@
 package com.poly.hotel.dao;
 
 import com.poly.hotel.entity.Service;
+import java.util.List;
 
 /**
  *
  * @author Lenovo
  */
 public interface ServiceDAO extends CrudDAO<Service, String> {
-
+    List<Service> findByCategoryId(int categoryId);
 }
