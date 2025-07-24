@@ -22,6 +22,7 @@ public class ServiceManagerImpl implements ServiceDAO {
     String deleteSql = "DELETE FROM Service WHERE serviceID=?";
     String findAllSql = "SELECT serviceName, serviceCategoryID, price, unit, description, isActive AS Active FROM Service";
     String findByIdSql = "SELECT serviceName, serviceCategoryID, price, unit, description, isActive AS Active FROM Service WHERE serviceID=?";
+    String findByCategoryId = "SELECT serviceID AS ServiceID, serviceName AS ServiceName, serviceCategoryID AS ServiceCategoryID, price AS Price, unit AS Unit, description AS Description, isActive AS Active FROM Service WHERE serviceCategoryID = ?";
 
     @Override
     public Service create(Service entity) {
@@ -66,5 +67,10 @@ public class ServiceManagerImpl implements ServiceDAO {
     @Override
     public Service findById(String id) {
         return XQuery.getSingleBean(Service.class, findByIdSql, id);
+    }
+    
+    @Override
+    public List<Service> findByCategoryId(int categoryId) {
+        return XQuery.getBeanList(Service.class, findByCategoryId, categoryId);
     }
 }
