@@ -21,7 +21,7 @@ public class Service {
     private String serviceID;
     private String serviceName;
     private int serviceCategoryID;
-    private float price;
+    private double price;
     private String unit;
     private String description;
     private boolean isActive;

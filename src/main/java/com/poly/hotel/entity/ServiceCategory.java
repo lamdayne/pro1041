@@ -23,4 +23,8 @@ public class ServiceCategory {
     private String desc;
     private boolean isActive;
     
+    @Override
+    public String toString() {
+        return this.categoryName;
+    }
 }
