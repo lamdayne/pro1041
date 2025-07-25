@@ -8,6 +8,7 @@ import com.poly.hotel.controller.RoomCategoryManagerController;
 import com.poly.hotel.dao.RoomCategoryDAO;
 import com.poly.hotel.dao.impl.RoomCategoryDAOImpl;
 import com.poly.hotel.entity.RoomCategory;
+import com.poly.hotel.util.MsgBox;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -93,7 +94,7 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
                 }
             }
             fillToTable();
-            JOptionPane.showMessageDialog(this, "Xóa các mục đã chọn thành công!");
+            MsgBox.alertSuccess("Xóa các mục đã chọn thành công!");
         }
     }
 
@@ -129,9 +130,9 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
             dao.create(entity);
             fillToTable();
             clear();
-            JOptionPane.showMessageDialog(this, "Tạo loại phòng thành công!");
+            MsgBox.alertSuccess("Tạo loại phòng thành công!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi tạo loại phòng: " + e.getMessage());
+            MsgBox.alertFail("Lỗi khi tạo loại phòng: " + e.getMessage());
         }
     }
 
@@ -141,9 +142,9 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
             RoomCategory entity = getForm();
             dao.update(entity);
             fillToTable();
-            JOptionPane.showMessageDialog(this, "Cập nhật loại phòng thành công!");
+            MsgBox.alertSuccess("Cập nhật loại phòng thành công!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật loại phòng: " + e.getMessage());
+            MsgBox.alertFail("Lỗi khi cập nhật loại phòng: " + e.getMessage());
         }
     }
 
@@ -154,7 +155,7 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
             dao.deleteById(id);
             fillToTable();
             clear();
-            JOptionPane.showMessageDialog(this, "Xóa loại phòng thành công!");
+            MsgBox.alertSuccess("Xóa loại phòng thành công!");
         }
     }
 

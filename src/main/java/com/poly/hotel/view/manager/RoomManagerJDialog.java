@@ -11,6 +11,7 @@ import com.poly.hotel.dao.impl.RoomCategoryDAOImpl;
 import com.poly.hotel.dao.impl.RoomDAOImpl;
 import com.poly.hotel.entity.Room;
 import com.poly.hotel.entity.RoomCategory;
+import com.poly.hotel.util.MsgBox;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -165,9 +166,9 @@ private RoomDAO dao = new RoomDAOImpl();
             dao.create(entity);
             fillToTable();
             clear();
-            JOptionPane.showMessageDialog(this, "Tạo phòng thành công!");
+            MsgBox.alertSuccess("Tạo phòng thành công!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi tạo phòng: " + e.getMessage());
+            MsgBox.alertFail("Lỗi khi tạo phòng: ");
         }
     }
 
@@ -177,9 +178,9 @@ private RoomDAO dao = new RoomDAOImpl();
             Room entity = getForm();
             dao.update(entity);
             fillToTable();
-            JOptionPane.showMessageDialog(this, "Cập nhật phòng thành công!");
+            MsgBox.alertSuccess("Cập nhật phòng thành công!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật phòng: " + e.getMessage());
+            MsgBox.alertFail("Lỗi khi cập nhật phòng: ");
         }
     }
 
@@ -190,7 +191,7 @@ private RoomDAO dao = new RoomDAOImpl();
             dao.deleteById(id);
             fillToTable();
             clear();
-            JOptionPane.showMessageDialog(this, "Xóa phòng thành công!");
+            MsgBox.alertSuccess("Xóa phòng thành công!");
         }
     }
 
