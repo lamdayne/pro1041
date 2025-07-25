@@ -5,11 +5,15 @@
 package com.poly.hotel.dao;
 
 import com.poly.hotel.entity.Room;
+import java.util.List;
 
 /**
  *
  * @author Windows
  */
-public interface RoomDAO extends CrudDAO<Room, String>{
-    
+public interface RoomDAO extends CrudDAO<Room, String> {
+
+    List<Integer> findDistinctFloors();
+
+    List<String> findDistinctStatuses();
 }

@@ -5,10 +5,14 @@
 package com.poly.hotel.view.manager;
 
 import com.poly.hotel.controller.RoomManagerController;
+import com.poly.hotel.dao.RoomCategoryDAO;
 import com.poly.hotel.dao.RoomDAO;
+import com.poly.hotel.dao.impl.RoomCategoryDAOImpl;
 import com.poly.hotel.dao.impl.RoomDAOImpl;
 import com.poly.hotel.entity.Room;
-import java.awt.Image;
+import com.poly.hotel.entity.RoomCategory;
+import com.poly.hotel.util.MsgBox;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -18,32 +22,63 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Windows
  */
-public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManagerController{
+public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManagerController {
+private RoomDAO dao = new RoomDAOImpl();
+    private RoomCategoryDAO categoryDao = new RoomCategoryDAOImpl();
+    private List<Room> items = new ArrayList<>();
 
-    /**
-     * Creates new form RoomJDialog
-     */
     public RoomManagerJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         try {
-            Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage();
-            setIconImage(icon);
+            setIconImage(new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage());
         } catch (Exception e) {
             System.out.println("Không thể tải logo: " + e.getMessage());
         }
+        fillCategories();
+        fillFloors();
+        fillStatuses();
         fillToTable();
     }
-    
-    RoomDAO dao = new RoomDAOImpl();
-    List<Room> items = List.of();
 
+    private void fillCategories() {
+        cboRoomCategory.removeAllItems();
+        try {
+            for (RoomCategory category : categoryDao.findAll()) {
+                cboRoomCategory.addItem(String.valueOf(category.getCategoryID()));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi thêm loại phòng!");
+        }
+    }
+
+    private void fillFloors() {
+        cboFloor.removeAllItems();
+        try {
+            for (Integer floor : dao.findDistinctFloors()) {
+                cboFloor.addItem(String.valueOf(floor));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi thêm tầng!");
+        }
+    }
+
+    private void fillStatuses() {
+        cboStatus.removeAllItems();
+        try {
+            for (String status : dao.findDistinctStatuses()) {
+                cboStatus.addItem(status);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi thêm trạng thái!");
+        }
+    }
 
     @Override
     public void open() {
-        this.setLocationRelativeTo(null);
-        this.fillToTable();
-        this.clear();
+        setLocationRelativeTo(null);
+        fillToTable();
+        clear();
     }
 
     @Override
@@ -52,15 +87,15 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         model.setRowCount(0);
         items = dao.findAll();
         items.forEach(item -> {
-            Object[] rowData = {
+            model.addRow(new Object[]{
                 item.getRoomID(),
-                item.getCategoryID(),        
+                item.getCategoryID(),
                 item.getFloor(),
                 item.getStatus(),
-                item.getDesc(),       
+                item.getDesc(),
+                item.isActive(),
                 false
-            };
-            model.addRow(rowData);
+            });
         });
     }
 
@@ -69,37 +104,34 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         int selectedRow = tblRoom.getSelectedRow();
         if (selectedRow >= 0) {
             Room entity = items.get(selectedRow);
-            this.setForm(entity);
-            this.setEditable(true);
+            setForm(entity);
+            setEditable(true);
         }
     }
 
     @Override
     public void checkAll() {
-        this.setCheckedAll(true);
+        for (int i = 0; i < tblRoom.getRowCount(); i++) {
+            tblRoom.setValueAt(true, i, 6);
+        }
     }
 
     @Override
     public void uncheckAll() {
-        this.setCheckedAll(false);
-    }
-
-    private void setCheckedAll(boolean checked) {
         for (int i = 0; i < tblRoom.getRowCount(); i++) {
-            tblRoom.setValueAt(checked, i, 6);
+            tblRoom.setValueAt(false, i, 6);
         }
     }
 
     @Override
     public void deleteCheckedItems() {
-        if (JOptionPane.showConfirmDialog(this, "Bạn thực sự muốn xóa các mục chọn?", "Xác nhận",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, "Bạn thực sự muốn xóa các mục chọn?", "Xác nhận", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             for (int i = 0; i < tblRoom.getRowCount(); i++) {
                 if ((Boolean) tblRoom.getValueAt(i, 6)) {
-                    dao.deleteById(String.valueOf(items.get(i).getCategoryID()));
+                    dao.deleteById(items.get(i).getRoomID());
                 }
             }
-            this.fillToTable();
+            fillToTable();
             JOptionPane.showMessageDialog(this, "Xóa các mục đã chọn thành công!");
         }
     }
@@ -107,10 +139,12 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
     @Override
     public void setForm(Room entity) {
         txtRoomId.setText(entity.getRoomID());
-        cboRoomCategory.setSelectedItem(entity.getCategoryID());
+        cboRoomCategory.setSelectedItem(String.valueOf(entity.getCategoryID()));
         cboFloor.setSelectedItem(String.valueOf(entity.getFloor()));
         cboStatus.setSelectedItem(entity.getStatus());
         txtDesc.setText(entity.getDesc());
+        rdoActive.setSelected(entity.isActive());
+        rdoStopped.setSelected(!entity.isActive());
     }
 
     @Override
@@ -121,50 +155,50 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
         entity.setStatus((String) cboStatus.getSelectedItem());
         entity.setDesc(txtDesc.getText());
+        entity.setActive(rdoActive.isSelected());
         return entity;
     }
 
     @Override
     public void create() {
         try {
-            Room entity = this.getForm();
+            Room entity = getForm();
             dao.create(entity);
-            this.fillToTable();
-            this.clear();
-            JOptionPane.showMessageDialog(this, "Tạo loại phòng thành công!");
+            fillToTable();
+            clear();
+            MsgBox.alertSuccess("Tạo phòng thành công!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi tạo loại phòng: " + e.getMessage());
+            MsgBox.alertFail("Lỗi khi tạo phòng: ");
         }
     }
 
     @Override
     public void update() {
         try {
-            Room entity = this.getForm();
+            Room entity = getForm();
             dao.update(entity);
-            this.fillToTable();
-            JOptionPane.showMessageDialog(this, "Cập nhật loại phòng thành công!");
+            fillToTable();
+            MsgBox.alertSuccess("Cập nhật phòng thành công!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật loại phòng: " + e.getMessage());
+            MsgBox.alertFail("Lỗi khi cập nhật phòng: ");
         }
     }
 
     @Override
     public void delete() {
-        if (JOptionPane.showConfirmDialog(this, "Bạn thực sự muốn xóa?", "Xác nhận",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, "Bạn thực sự muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             String id = txtRoomId.getText();
             dao.deleteById(id);
-            this.fillToTable();
-            this.clear();
-            JOptionPane.showMessageDialog(this, "Xóa loại phòng thành công!");
+            fillToTable();
+            clear();
+            MsgBox.alertSuccess("Xóa phòng thành công!");
         }
     }
 
     @Override
     public void clear() {
-        this.setForm(new Room());
-        this.setEditable(false);
+        setForm(new Room());
+        setEditable(false);
     }
 
     @Override
@@ -187,6 +221,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
 
         jButton6 = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblRoom = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -209,6 +244,9 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         btnCheckAll = new javax.swing.JButton();
         btnUncheckAll = new javax.swing.JButton();
         btnDeleteCheckedItems = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        rdoActive = new javax.swing.JRadioButton();
+        rdoStopped = new javax.swing.JRadioButton();
 
         jButton6.setText("Thêm");
 
@@ -217,17 +255,17 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
 
         tblRoom.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Phòng", "Loại phòng", "Tầng", "Trạng thái", "Mô tả", ""
+                "Mã Phòng", "Mã Loại Phòng", "Tầng", "Trạng thái", "Mô tả", "Tình trạng", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -242,9 +280,8 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         txtRoomId.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setText("Loại phòng");
+        jLabel3.setText("Mã Loại phòng");
 
-        cboRoomCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboRoomCategory.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
@@ -259,9 +296,8 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         jLabel4.setText("Tầng");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("Trạng thái");
+        jLabel5.setText("Tình trạng");
 
-        cboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboStatus.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -269,24 +305,43 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
 
         txtDesc.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
-        cboFloor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboFloor.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAdd.setText("Thêm");
         btnAdd.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdate.setText("Sửa");
         btnUpdate.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDelete.setText("Xóa");
         btnDelete.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setText("Mới");
         btnClear.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnCheckAll.setText("Chọn tất cả");
         btnCheckAll.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
@@ -312,6 +367,15 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setText("Trạng thái");
+
+        buttonGroup1.add(rdoActive);
+        rdoActive.setText("Hoạt động");
+
+        buttonGroup1.add(rdoStopped);
+        rdoStopped.setText("Ngưng HĐ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -328,28 +392,33 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDesc)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboRoomCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cboFloor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cboStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtRoomId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(cboRoomCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cboFloor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cboStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(rdoActive, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(rdoStopped, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11))))
@@ -382,13 +451,18 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
                             .addComponent(cboFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(cboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
-                        .addGap(101, 101, 101)
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(rdoActive)
+                            .addComponent(rdoStopped))
+                        .addGap(63, 63, 63)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -412,18 +486,41 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
 
     private void btnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAllActionPerformed
         // TODO add your handling code here:
-
+        this.checkAll();
+        
     }//GEN-LAST:event_btnCheckAllActionPerformed
 
     private void btnUncheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUncheckAllActionPerformed
         // TODO add your handling code here:
+        this.uncheckAll();
 
     }//GEN-LAST:event_btnUncheckAllActionPerformed
 
     private void btnDeleteCheckedItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCheckedItemsActionPerformed
         // TODO add your handling code here:
+        this.deleteCheckedItems();
 
     }//GEN-LAST:event_btnDeleteCheckedItemsActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        this.create();
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        this.update();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        this.delete();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        this.clear();
+    }//GEN-LAST:event_btnClearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -476,6 +573,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
     private javax.swing.JButton btnDeleteCheckedItems;
     private javax.swing.JButton btnUncheckAll;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboFloor;
     private javax.swing.JComboBox<String> cboRoomCategory;
     private javax.swing.JComboBox<String> cboStatus;
@@ -486,10 +584,13 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JRadioButton rdoActive;
+    private javax.swing.JRadioButton rdoStopped;
     private javax.swing.JTable tblRoom;
     private javax.swing.JTextField txtDesc;
     private javax.swing.JTextField txtRoomId;
