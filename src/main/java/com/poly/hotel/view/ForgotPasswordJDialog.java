@@ -173,12 +173,10 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         // TODO add your handling code here:
-        items = dao.findAll();
-        for (User item : items) {
-            if (!txtEmail.getText().equals(item.getEmail())) {
-                MsgBox.alert("Email không tồn tại");
-                return;
-            }
+        User user = dao.findByEmail(txtEmail.getText().trim());
+        if (user == null) {
+            MsgBox.alert("Email không tồn tại");
+            return;
         }
         MailService.sendEmailResetPassword(txtEmail.getText());
     }//GEN-LAST:event_btnSendActionPerformed
