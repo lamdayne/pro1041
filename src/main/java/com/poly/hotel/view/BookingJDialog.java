@@ -88,6 +88,10 @@ public class BookingJDialog extends javax.swing.JDialog {
         jLabel23 = new javax.swing.JLabel();
         dcsTime = new com.toedter.calendar.JDateChooser();
         btnAddService = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JSeparator();
+        btnCancel = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnCheckout = new javax.swing.JButton();
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -385,7 +389,7 @@ public class BookingJDialog extends javax.swing.JDialog {
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1080, -1));
 
         jSeparator2.setForeground(new java.awt.Color(0, 153, 153));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 1080, 10));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 810, 1080, 10));
 
         tblRoomService.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -489,6 +493,7 @@ public class BookingJDialog extends javax.swing.JDialog {
         dcsTime.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(0, 220, 255)));
         dcsTime.setDateFormatString("yyyy-MM-dd HH:mm:ss");
 
+        btnAddService.setBackground(new java.awt.Color(204, 204, 255));
         btnAddService.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddService.setText("Thêm dịch vụ");
 
@@ -559,6 +564,24 @@ public class BookingJDialog extends javax.swing.JDialog {
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 1080, 190));
 
+        jSeparator4.setForeground(new java.awt.Color(0, 153, 153));
+        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 1080, 10));
+
+        btnCancel.setBackground(new java.awt.Color(255, 204, 204));
+        btnCancel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCancel.setText("Cancel");
+        jPanel1.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 820, 120, 40));
+
+        btnSave.setBackground(new java.awt.Color(204, 255, 153));
+        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSave.setText("Lưu");
+        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 820, 80, 40));
+
+        btnCheckout.setBackground(new java.awt.Color(153, 255, 204));
+        btnCheckout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCheckout.setText("Trả phòng");
+        jPanel1.add(btnCheckout, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 820, 120, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -567,7 +590,7 @@ public class BookingJDialog extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE)
         );
 
         pack();
@@ -629,8 +652,11 @@ public class BookingJDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddService;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnCheckout;
     private javax.swing.JButton btnDeleteService;
     private javax.swing.ButtonGroup btnGroup;
+    private javax.swing.JButton btnSave;
     private javax.swing.JCheckBox cbDailyRent;
     private javax.swing.JCheckBox cbHourlyRent;
     private javax.swing.JComboBox<String> cboService;
@@ -672,6 +698,7 @@ public class BookingJDialog extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JRadioButton rdoFemale;
     private javax.swing.JRadioButton rdoMale;
     private javax.swing.JTable tblRoomDetail;
