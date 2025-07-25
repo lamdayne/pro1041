@@ -33,7 +33,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         setLocationRelativeTo(null);
         Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage();
         setIconImage(icon);
-//        fillToTable();
+
     }
     BillDAO billDao = new BillDAOImpl();
 
@@ -483,7 +483,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnCancelActionPerformed
 
     /**

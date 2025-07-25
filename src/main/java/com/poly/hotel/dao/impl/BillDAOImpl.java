@@ -67,5 +67,5 @@ public class BillDAOImpl implements BillDAO {
     public Bill findById(String billID) {
         return XQuery.getSingleBean(Bill.class, findByIdSql, billID);
     }
-      
+
 }
