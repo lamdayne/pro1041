@@ -8,7 +8,7 @@ import com.poly.hotel.controller.RoomCategoryManagerController;
 import com.poly.hotel.dao.RoomCategoryDAO;
 import com.poly.hotel.dao.impl.RoomCategoryDAOImpl;
 import com.poly.hotel.entity.RoomCategory;
-import java.awt.Image;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -20,18 +20,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements RoomCategoryManagerController {
 
-    /**
-     * Creates new form RoomCategoryManagerJDialog
-     */
-    RoomCategoryDAO dao = new RoomCategoryDAOImpl();
-    List<RoomCategory> items = List.of();
+    private RoomCategoryDAO dao = new RoomCategoryDAOImpl();
+    private List<RoomCategory> items = new ArrayList<>();
 
     public RoomCategoryManagerJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         try {
-            Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage();
-            setIconImage(icon);
+            setIconImage(new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage());
         } catch (Exception e) {
             System.out.println("Không thể tải logo: " + e.getMessage());
         }
@@ -40,9 +36,9 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
 
     @Override
     public void open() {
-        this.setLocationRelativeTo(null);
-        this.fillToTable();
-        this.clear();
+        setLocationRelativeTo(null);
+        fillToTable();
+        clear();
     }
 
     @Override
@@ -51,16 +47,16 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
         model.setRowCount(0);
         items = dao.findAll();
         items.forEach(item -> {
-            Object[] rowData = {
+            model.addRow(new Object[]{
                 item.getCategoryID(),
                 item.getCategoryName(),
                 item.getDesc(),
                 item.getBaseHourPrice(),
                 item.getBaseDailyPrice(),
                 item.getMaxOccupancy(),
+                item.isActive(),
                 false
-            };
-            model.addRow(rowData);
+            });
         });
     }
 
@@ -69,37 +65,34 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
         int selectedRow = tblCategories.getSelectedRow();
         if (selectedRow >= 0) {
             RoomCategory entity = items.get(selectedRow);
-            this.setForm(entity);
-            this.setEditable(true);
+            setForm(entity);
+            setEditable(true);
         }
     }
 
     @Override
     public void checkAll() {
-        this.setCheckedAll(true);
+        for (int i = 0; i < tblCategories.getRowCount(); i++) {
+            tblCategories.setValueAt(true, i, 7);
+        }
     }
 
     @Override
     public void uncheckAll() {
-        this.setCheckedAll(false);
-    }
-
-    private void setCheckedAll(boolean checked) {
         for (int i = 0; i < tblCategories.getRowCount(); i++) {
-            tblCategories.setValueAt(checked, i, 6);
+            tblCategories.setValueAt(false, i, 7);
         }
     }
 
     @Override
     public void deleteCheckedItems() {
-        if (JOptionPane.showConfirmDialog(this, "Bạn thực sự muốn xóa các mục chọn?", "Xác nhận",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, "Bạn thực sự muốn xóa các mục chọn?", "Xác nhận", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             for (int i = 0; i < tblCategories.getRowCount(); i++) {
-                if ((Boolean) tblCategories.getValueAt(i, 6)) {
+                if ((Boolean) tblCategories.getValueAt(i, 7)) {
                     dao.deleteById(String.valueOf(items.get(i).getCategoryID()));
                 }
             }
-            this.fillToTable();
+            fillToTable();
             JOptionPane.showMessageDialog(this, "Xóa các mục đã chọn thành công!");
         }
     }
@@ -112,6 +105,8 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
         txtHourPrice.setText(String.valueOf(entity.getBaseHourPrice()));
         txtDailyPrice.setText(String.valueOf(entity.getBaseDailyPrice()));
         txtOccupancy.setText(String.valueOf(entity.getMaxOccupancy()));
+        rdoActive.setSelected(entity.isActive());
+        rdoStopped.setSelected(!entity.isActive());
     }
 
     @Override
@@ -120,19 +115,20 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
         entity.setCategoryID(txtId.getText().isEmpty() ? 0 : Integer.parseInt(txtId.getText()));
         entity.setCategoryName(txtRoomName.getText());
         entity.setDesc(txtDescription.getText());
-        entity.setBaseHourPrice(Float.parseFloat(txtHourPrice.getText()));
-        entity.setBaseDailyPrice(Float.parseFloat(txtDailyPrice.getText()));
+        entity.setBaseHourPrice(txtHourPrice.getText().isEmpty() ? 0 : Float.parseFloat(txtHourPrice.getText()));
+        entity.setBaseDailyPrice(txtDailyPrice.getText().isEmpty() ? 0 : Float.parseFloat(txtDailyPrice.getText()));
         entity.setMaxOccupancy(txtOccupancy.getText().isEmpty() ? 0 : Integer.parseInt(txtOccupancy.getText()));
+        entity.setActive(rdoActive.isSelected());
         return entity;
     }
 
     @Override
     public void create() {
         try {
-            RoomCategory entity = this.getForm();
+            RoomCategory entity = getForm();
             dao.create(entity);
-            this.fillToTable();
-            this.clear();
+            fillToTable();
+            clear();
             JOptionPane.showMessageDialog(this, "Tạo loại phòng thành công!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi khi tạo loại phòng: " + e.getMessage());
@@ -142,9 +138,9 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
     @Override
     public void update() {
         try {
-            RoomCategory entity = this.getForm();
+            RoomCategory entity = getForm();
             dao.update(entity);
-            this.fillToTable();
+            fillToTable();
             JOptionPane.showMessageDialog(this, "Cập nhật loại phòng thành công!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật loại phòng: " + e.getMessage());
@@ -153,20 +149,19 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
 
     @Override
     public void delete() {
-        if (JOptionPane.showConfirmDialog(this, "Bạn thực sự muốn xóa?", "Xác nhận",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, "Bạn thực sự muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             String id = txtId.getText();
             dao.deleteById(id);
-            this.fillToTable();
-            this.clear();
+            fillToTable();
+            clear();
             JOptionPane.showMessageDialog(this, "Xóa loại phòng thành công!");
         }
     }
 
     @Override
     public void clear() {
-        this.setForm(new RoomCategory());
-        this.setEditable(false);
+        setForm(new RoomCategory());
+        setEditable(false);
     }
 
     @Override
@@ -211,6 +206,9 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
         btnCheckAll = new javax.swing.JButton();
         btnUncheckAll = new javax.swing.JButton();
         btnDeleteCheckedItems = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        rdoActive = new javax.swing.JRadioButton();
+        rdoStopped = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -276,17 +274,17 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
 
         tblCategories.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Loại Phòng", "Tên Loại phòng", "Mô tả", "Giá theo giờ", "Giá theo ngày", "Sức chứa", ""
+                "Mã Loại Phòng", "Tên Loại phòng", "Mô tả", "Giá theo giờ", "Giá theo ngày", "Sức chứa", "Tình trạng", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -333,6 +331,13 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setText("Tình trạng");
+
+        rdoActive.setText("Hoạt động");
+
+        rdoStopped.setText("Ngưng HĐ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -344,24 +349,6 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDailyPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                                    .addComponent(txtOccupancy)
-                                    .addComponent(txtDescription)
-                                    .addComponent(txtHourPrice)
-                                    .addComponent(txtRoomName)))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 2, Short.MAX_VALUE)
                                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -369,13 +356,39 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
                                 .addGap(18, 18, 18)
                                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel2)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addGap(41, 41, 41)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(rdoActive, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(rdoStopped, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtDailyPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                                        .addComponent(txtOccupancy)
+                                        .addComponent(txtDescription)
+                                        .addComponent(txtHourPrice)
+                                        .addComponent(txtRoomName)))))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jSeparator1)
-                        .addContainerGap())))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator1))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCheckAll, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -415,14 +428,22 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(57, 57, 57)
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(rdoActive)
+                                .addComponent(rdoStopped)))
+                        .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -538,9 +559,12 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JRadioButton rdoActive;
+    private javax.swing.JRadioButton rdoStopped;
     private javax.swing.JTable tblCategories;
     private javax.swing.JTextField txtDailyPrice;
     private javax.swing.JTextField txtDescription;
