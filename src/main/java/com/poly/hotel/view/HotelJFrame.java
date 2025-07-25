@@ -14,6 +14,7 @@ import com.poly.hotel.view.manager.UserManagerJDialog;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 /**
  *
@@ -40,6 +41,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         setIconImage(icon);
         lbFullName.setText(XAuth.user.getFullName());
         this.init();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -318,6 +320,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         this.showWelcomeJDialog(this);
         this.showLoginJDialog(this);
         setMainPanelFromDialog(new HomeJDialog(this, true));
+        lbFullName.setText(XAuth.user.getFullName());
         if (!XAuth.user.getRole().equals("manager")) {
             btnRoomCategoryManager.setVisible(false);
             btnRoomManager.setVisible(false);
