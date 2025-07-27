@@ -307,7 +307,7 @@ public class BookingJDialog extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel24)
@@ -319,8 +319,9 @@ public class BookingJDialog extends javax.swing.JDialog {
                                 .addComponent(cbDailyRent)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cbHourlyRent))
-                            .addComponent(txtPrepay, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtOccupancy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtOccupancy, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtPrepay, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -342,7 +343,7 @@ public class BookingJDialog extends javax.swing.JDialog {
                     .addComponent(txtOccupancy, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
@@ -372,24 +373,24 @@ public class BookingJDialog extends javax.swing.JDialog {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1080, 280));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 1080, 260));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(153, 0, 0));
         jLabel2.setText("Thông tin khách hàng");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         jSeparator1.setForeground(new java.awt.Color(0, 153, 153));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1080, -1));
 
         jSeparator2.setForeground(new java.awt.Color(0, 153, 153));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 810, 1080, 10));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 750, 1080, 10));
 
         tblRoomService.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -431,20 +432,20 @@ public class BookingJDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 1080, 210));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 1080, 210));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 0, 0));
         jLabel5.setText("Chi tiết phòng và dịch vụ");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 590, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
 
         jSeparator3.setForeground(new java.awt.Color(0, 153, 153));
-        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 1080, 10));
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 1080, 10));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(153, 0, 0));
         jLabel6.setText("Chi tiết phòng và dịch vụ");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 153));
@@ -559,28 +560,28 @@ public class BookingJDialog extends javax.swing.JDialog {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 1080, 190));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 580, 1080, 170));
 
         jSeparator4.setForeground(new java.awt.Color(0, 153, 153));
-        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 1080, 10));
+        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 1080, 10));
 
         btnCancel.setBackground(new java.awt.Color(255, 204, 204));
         btnCancel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancel.setText("Cancel");
-        jPanel1.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 820, 120, 40));
+        jPanel1.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 760, 120, 40));
 
         btnSave.setBackground(new java.awt.Color(204, 255, 153));
         btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSave.setText("Lưu");
-        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 820, 80, 40));
+        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 760, 80, 40));
 
         btnCheckout.setBackground(new java.awt.Color(153, 255, 204));
         btnCheckout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCheckout.setText("Trả phòng");
-        jPanel1.add(btnCheckout, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 820, 120, 40));
+        jPanel1.add(btnCheckout, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 760, 120, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -590,7 +591,7 @@ public class BookingJDialog extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
