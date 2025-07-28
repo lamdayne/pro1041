@@ -811,22 +811,6 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         }
     }//GEN-LAST:event_txtPhoneNumberFocusLost
 
-    private void txtRoleFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRoleFocusGained
-        // TODO add your handling code here:
-        if (txtRole.getText().equals(placeHolderRole)) {
-            txtRole.setText("");
-            txtRole.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtRoleFocusGained
-
-    private void txtRoleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRoleFocusLost
-        // TODO add your handling code here:
-        if (txtRole.getText().isEmpty()) {
-            txtRole.setForeground(Color.GRAY);
-            txtRole.setText(placeHolderRole);
-        }
-    }//GEN-LAST:event_txtRoleFocusLost
-
     private void txtEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusGained
         // TODO add your handling code here:
         if (txtEmail.getText().equals(placeHolderEmail)) {
@@ -842,6 +826,22 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             txtEmail.setText(placeHolderEmail);
         }
     }//GEN-LAST:event_txtEmailFocusLost
+
+    private void txtRoleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRoleFocusLost
+        // TODO add your handling code here:
+        if (txtRole.getText().isEmpty()) {
+            txtRole.setForeground(Color.GRAY);
+            txtRole.setText(placeHolderRole);
+        }
+    }//GEN-LAST:event_txtRoleFocusLost
+
+    private void txtRoleFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRoleFocusGained
+        // TODO add your handling code here:
+        if (txtRole.getText().equals(placeHolderRole)) {
+            txtRole.setText("");
+            txtRole.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtRoleFocusGained
 
     /**
      * @param args the command line arguments

@@ -16,14 +16,14 @@ import javax.swing.JOptionPane;
  *
  * @author ADMIN
  */
-public class SignupJDialog extends javax.swing.JDialog {
+public class SignUPJDialog extends javax.swing.JDialog {
 
     private final UserDAO userDAO = new UserDAOImpl();
 
     /**
      * Creates new form SignUPJDialog
      */
-    public SignupJDialog(java.awt.Frame parent, boolean modal) {
+    public SignUPJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage());
@@ -224,13 +224,13 @@ public class SignupJDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignupJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUPJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignupJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUPJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignupJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUPJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignupJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUPJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -238,7 +238,7 @@ public class SignupJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SignupJDialog dialog = new SignupJDialog(new javax.swing.JFrame(), true);
+                SignUPJDialog dialog = new SignUPJDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
