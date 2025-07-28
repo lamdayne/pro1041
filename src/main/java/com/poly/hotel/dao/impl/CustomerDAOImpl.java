@@ -16,16 +16,16 @@ import java.util.List;
  */
 public class CustomerDAOImpl implements CustomerDAO {
     
-    String createSql = "INSERT INTO Customer VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String createSql = "INSERT INTO Customer VALUES (?, ?, ?, ?, ?, ?)";
     String updateSql = "UPDATE Customer SET fullName=?, gender=?, phoneNumber=?, email=?, idNumber=?, address=? WHERE customerID=?";
     String deleteSql = "DELETE FROM Customer WHERE customerID=?";
     String findAllSql = "SELECT * FROM Customer";
     String findByIdSql = "SELECT * FROM Customer WHERE customerId=?";
+    String findByPhoneSql = "SELECT * FROM Customer WHERE phoneNumber=?";
 
     @Override
     public Customer create(Customer entity) {
         Object[] values = {
-            entity.getCustomerID(),
             entity.getFullName(),
             entity.isGender(),
             entity.getPhoneNumber(),
@@ -64,6 +64,11 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public Customer findById(String id) {
         return XQuery.getSingleBean(Customer.class, findByIdSql, id);
+    }
+    
+    @Override
+    public Customer findByPhone(String phone) {
+        return XQuery.getSingleBean(Customer.class, findByPhoneSql, phone);
     }
     
 }

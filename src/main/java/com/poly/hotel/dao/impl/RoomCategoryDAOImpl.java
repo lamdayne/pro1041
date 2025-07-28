@@ -19,7 +19,7 @@ public class RoomCategoryDAOImpl implements RoomCategoryDAO{
     String updateSql = "UPDATE RoomCategory SET CategoryName = ?, [desc] = ?, baseHourPrice = ?, baseDailyPrice = ?, maxOccupancy = ?, isActive = ? WHERE CategoryID = ?";
     String deleteSql = "DELETE FROM RoomCategory WHERE CategoryID = ?";
     String findAllSql = "SELECT CategoryID, CategoryName, [desc], baseHourPrice AS BaseHourPrice, baseDailyPrice AS BaseDailyPrice, maxOccupancy, isActive AS Active FROM RoomCategory";
-    String findByIdSql = "SELECT CategoryName, [desc], baseHourPrice AS BaseHourPrice, baseDailyPrice AS BaseDailyPrice, maxOccupancy, isActive AS Active FROM RoomCategory WHERE CategoryID = ?";
+    String findByIdSql = "SELECT CategoryID, CategoryName, [desc], baseHourPrice AS BaseHourPrice, baseDailyPrice AS BaseDailyPrice, maxOccupancy, isActive AS Active FROM RoomCategory WHERE CategoryID = ?";
 
     @Override
     public RoomCategory create(RoomCategory entity) {

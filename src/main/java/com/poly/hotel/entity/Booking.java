@@ -27,7 +27,7 @@ public class Booking {
     private Date checkOutDate;
     private Date bookingDate ;
     private String status;
-    private float totalRoomAmount;
-    private float totalServiceAmount;
-    private float totalAmount;
+    private double totalRoomAmount;
+    private double totalServiceAmount;
+    private double totalAmount;
 }

@@ -20,8 +20,8 @@ public class ServiceManagerImpl implements ServiceDAO {
     String createSql = "INSERT INTO Service VALUES (?, ?, ?, ?, ?, ?, ?)";
     String updateSql = "UPDATE Service SET serviceName=?, serviceCategoryID=?, price=?, unit=?, description=?, isActive=? WHERE serviceID=?";
     String deleteSql = "DELETE FROM Service WHERE serviceID=?";
-    String findAllSql = "SELECT serviceName, serviceCategoryID, price, unit, description, isActive AS Active FROM Service";
-    String findByIdSql = "SELECT serviceName, serviceCategoryID, price, unit, description, isActive AS Active FROM Service WHERE serviceID=?";
+    String findAllSql = "SELECT serviceID, serviceName, serviceCategoryID, price, unit, description, isActive AS Active FROM Service";
+    String findByIdSql = "SELECT serviceID, serviceName, serviceCategoryID, price, unit, description, isActive AS Active FROM Service WHERE serviceID=?";
     String findByCategoryId = "SELECT serviceID AS ServiceID, serviceName AS ServiceName, serviceCategoryID AS ServiceCategoryID, price AS Price, unit AS Unit, description AS Description, isActive AS Active FROM Service WHERE serviceCategoryID = ?";
 
     @Override

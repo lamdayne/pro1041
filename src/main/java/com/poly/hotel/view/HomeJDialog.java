@@ -403,6 +403,7 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
         Room room = dao.findById(roomId);
         BookingJDialog dialog = new BookingJDialog((Frame) this.getOwner(), true);
         dialog.setRoom(room);
+        dialog.fillRoomDetail(room);
         dialog.setVisible(true);
     }
 

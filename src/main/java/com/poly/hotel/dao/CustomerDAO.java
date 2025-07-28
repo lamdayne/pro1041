@@ -11,5 +11,5 @@ import com.poly.hotel.entity.Customer;
  * @author Lenovo
  */
 public interface CustomerDAO extends CrudDAO<Customer, String> {
-
+    Customer findByPhone(String phone);
 }

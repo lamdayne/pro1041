@@ -4,15 +4,45 @@
  */
 package com.poly.hotel.view;
 
+import com.poly.hotel.controller.BookingController;
+import com.poly.hotel.dao.BookingDAO;
+import com.poly.hotel.dao.CustomerDAO;
+import com.poly.hotel.dao.RoomCategoryDAO;
+import com.poly.hotel.dao.RoomDAO;
+import com.poly.hotel.dao.ServiceDAO;
+import com.poly.hotel.dao.impl.BookingDAOImpl;
+import com.poly.hotel.dao.impl.CustomerDAOImpl;
+import com.poly.hotel.dao.impl.RoomCategoryDAOImpl;
+import com.poly.hotel.dao.impl.RoomDAOImpl;
+import com.poly.hotel.dao.impl.ServiceManagerImpl;
+import com.poly.hotel.entity.Booking;
+import com.poly.hotel.entity.Customer;
 import com.poly.hotel.entity.Room;
+import com.poly.hotel.entity.RoomCategory;
+import com.poly.hotel.entity.Service;
+import com.poly.hotel.util.MsgBox;
+import com.poly.hotel.util.XAuth;
+import com.poly.hotel.util.XDate;
+import java.util.Date;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 import lombok.Setter;
 
 /**
  *
  * @author Windows
  */
-public class BookingJDialog extends javax.swing.JDialog {
+public class BookingJDialog extends javax.swing.JDialog implements BookingController {
+
+    RoomDAO roomDao = new RoomDAOImpl();
+    RoomCategoryDAO roomCategoryDao = new RoomCategoryDAOImpl();
+    ServiceDAO serviceDao = new ServiceManagerImpl();
+    List<Service> services = List.of();
+    CustomerDAO customerDao = new CustomerDAOImpl();
+    BookingDAO booking = new BookingDAOImpl();
+
     @Setter
     Room room;
 
@@ -27,6 +57,7 @@ public class BookingJDialog extends javax.swing.JDialog {
         } catch (Exception e) {
             System.out.println("Không thể tải logo: " + e.getMessage());
         }
+        fillService();
     }
 
     /**
@@ -414,6 +445,11 @@ public class BookingJDialog extends javax.swing.JDialog {
         btnDeleteService.setBackground(new java.awt.Color(153, 177, 244));
         btnDeleteService.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDeleteService.setText("Xóa dịch vụ");
+        btnDeleteService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteServiceActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -503,6 +539,11 @@ public class BookingJDialog extends javax.swing.JDialog {
         btnAddService.setBackground(new java.awt.Color(204, 204, 255));
         btnAddService.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddService.setText("Thêm dịch vụ");
+        btnAddService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddServiceActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -582,6 +623,11 @@ public class BookingJDialog extends javax.swing.JDialog {
         btnSave.setBackground(new java.awt.Color(204, 255, 153));
         btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSave.setText("Lưu");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 740, 80, 40));
 
         btnCheckout.setBackground(new java.awt.Color(153, 255, 204));
@@ -615,6 +661,130 @@ public class BookingJDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtOccupancyActionPerformed
 
+    private void btnAddServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddServiceActionPerformed
+        // TODO add your handling code here:
+        fillRoomService((Service) cboService.getSelectedItem());
+    }//GEN-LAST:event_btnAddServiceActionPerformed
+
+    private void btnDeleteServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteServiceActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblRoomService.getSelectedRow();
+        if (selectedRow >= 0) {
+            DefaultTableModel model = (DefaultTableModel) tblRoomService.getModel();
+            model.removeRow(selectedRow);
+            MsgBox.alertSuccess("Xóa dịch vụ thành công");
+        } else {
+            MsgBox.alert("Vui lòng chọn dịch vụ cần xóa");
+        }
+    }//GEN-LAST:event_btnDeleteServiceActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        this.bookingRoom();
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    @Override
+    public void fillRoomService(Service service) {
+        DefaultTableModel model = (DefaultTableModel) tblRoomService.getModel();
+        Object[] rowData = {
+            room.getRoomID(),
+            room.getFloor(),
+            service.getServiceName(),
+            service.getPrice(),
+            XDate.format(new Date(), XDate.PATTERN_FULL)
+        };
+        model.addRow(rowData);
+    }
+
+    @Override
+    public void fillService() {
+        DefaultComboBoxModel cboModel = (DefaultComboBoxModel) cboService.getModel();
+        cboModel.removeAllElements();
+        services = serviceDao.findAll();
+        services.forEach(service -> {
+            cboModel.addElement(service);
+        });
+    }
+
+    @Override
+    public void fillRoomDetail(Room room) {
+        DefaultTableModel model = (DefaultTableModel) tblRoomDetail.getModel();
+        model.setRowCount(0);
+        String nameCategory = roomCategoryDao.findById(String.valueOf(room.getCategoryID())).getCategoryName();
+        Object[] rowData = {
+            room.getFloor(),
+            room.getRoomID(),
+            nameCategory
+        };
+        model.addRow(rowData);
+        fillRoomSelected(room);
+    }
+    
+    @Override
+    public void fillRoomSelected(Room room) {
+        DefaultTableModel model = (DefaultTableModel) tblRoomSelected.getModel();
+        model.setRowCount(0);
+        RoomCategory roomCategory = roomCategoryDao.findById(String.valueOf(room.getCategoryID()));
+        Object[] rowData = {
+            room.getFloor(),
+            room.getRoomID(),
+            roomCategory.getCategoryName(),
+            roomCategory.getBaseDailyPrice(),
+            roomCategory.getBaseHourPrice()
+        };
+        model.addRow(rowData);
+    }
+    
+    @Override
+    public Customer getCustomerInfo() {
+        Customer entity = new Customer();
+        entity.setFullName(txtName.getText());
+        entity.setGender(rdoMale.isSelected());
+        entity.setPhoneNumber(txtPhoneNumber.getText());
+        entity.setEmail(txtEmail.getText());
+        entity.setIdNumber(txtPassport.getText());
+        entity.setAddress(txtAddress.getText());
+        return entity;
+    }
+   
+    @Override
+    public void bookingRoom() {
+        Customer customer = this.getCustomerInfo();
+        customer = customerDao.create(customer);
+        Customer customerEntity = customerDao.findByPhone(customer.getPhoneNumber());
+        Booking entity = new Booking();
+        entity.setCustomerID(customerEntity.getCustomerID());
+        entity.setRoomID(room.getRoomID());
+        entity.setUserName(XAuth.user.getUsername());
+        entity.setCheckInDate(dcsCheckin.getDate());
+        entity.setBookingDate(XDate.now());
+        entity.setStatus("Chưa thanh toán");
+        double priceRoom = 0;
+        if (cbDailyRent.isSelected()) {
+            priceRoom = roomCategoryDao.findById(String.valueOf(room.getCategoryID())).getBaseDailyPrice();
+            entity.setTotalRoomAmount(priceRoom); 
+        } else {
+            priceRoom = roomCategoryDao.findById(String.valueOf(room.getCategoryID())).getBaseHourPrice();
+            entity.setTotalRoomAmount(priceRoom);
+        }
+        double priceService = 0;
+        if (tblRoomService.getRowCount() == 0) {
+            entity.setTotalServiceAmount(priceService);
+        } else {
+            priceService = 10;
+            entity.setTotalServiceAmount(priceService);
+        }
+        entity.setTotalAmount(priceRoom + priceService);
+        booking.create(entity);
+        room.setStatus("1");
+        roomDao.update(room);
+        MsgBox.alertSuccess("Tạo booking thành công");
+        this.dispose();
+    }
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
