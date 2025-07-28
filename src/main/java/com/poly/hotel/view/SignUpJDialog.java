@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
  */
 public class SignUpJDialog extends javax.swing.JDialog {
 
-
     private final UserDAO userDAO = new UserDAOImpl();
 
     /**
