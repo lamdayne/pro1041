@@ -400,10 +400,7 @@ public class BookingJDialog extends javax.swing.JDialog {
 
         tblRoomService.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Số phòng", "Số tầng", "Dịch vụ", "Phí DV", "Thời gian gọi"
