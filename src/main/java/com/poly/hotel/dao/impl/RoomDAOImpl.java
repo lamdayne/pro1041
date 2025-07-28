@@ -22,7 +22,7 @@ public class RoomDAOImpl implements RoomDAO {
     String updateSql = "UPDATE Room SET categoryID=?, floor=?, status=?, [desc]=?, isActive=? WHERE roomID=?";
     String deleteSql = "DELETE FROM Room WHERE roomID=?";
     String findAllSql = "SELECT roomID, categoryID, floor, status, [desc], isActive AS Active FROM Room";
-    String findByIdSql = "SELECT categoryID, floor, status, [desc], isActive AS Active FROM Room WHERE roomID=?";
+    String findByIdSql = "SELECT roomID, categoryID, floor, status, [desc], isActive AS Active FROM Room WHERE roomID=?";
 
     @Override
     public Room create(Room entity) {

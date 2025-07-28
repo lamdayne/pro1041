@@ -26,5 +26,8 @@ public class Service {
     private String description;
     private boolean isActive;
     
-    
+    @Override
+    public String toString() {
+        return this.serviceName;
+    }
 }

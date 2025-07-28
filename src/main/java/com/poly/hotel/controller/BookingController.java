@@ -4,12 +4,19 @@
  */
 package com.poly.hotel.controller;
 
-import com.poly.hotel.entity.Booking;
+import com.poly.hotel.entity.Customer;
+import com.poly.hotel.entity.Room;
+import com.poly.hotel.entity.Service;
 
 /**
  *
  * @author PHUONG LAM
  */
-public interface BookingController extends CrudController<Booking> {
-    
+public interface BookingController {
+    void fillRoomDetail(Room room);
+    void fillService();
+    void fillRoomService(Service service);
+    void fillRoomSelected(Room room);
+    Customer getCustomerInfo();
+    void bookingRoom();
 }

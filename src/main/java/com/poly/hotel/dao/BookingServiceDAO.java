@@ -4,12 +4,12 @@
  */
 package com.poly.hotel.dao;
 
-import com.poly.hotel.entity.Customer;
+import com.poly.hotel.entity.BookingService;
 
 /**
  *
- * @author Lenovo
+ * @author PHUONG LAM
  */
-public interface CustomerDAO extends CrudDAO<Customer, String> {
-    Customer findByPhone(String phone);
+public interface BookingServiceDAO extends CrudDAO<BookingService, String> {
+    
 }
