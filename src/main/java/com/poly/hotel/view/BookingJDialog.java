@@ -16,6 +16,7 @@ import com.poly.hotel.dao.impl.RoomCategoryDAOImpl;
 import com.poly.hotel.dao.impl.RoomDAOImpl;
 import com.poly.hotel.dao.impl.ServiceManagerImpl;
 import com.poly.hotel.entity.Booking;
+import com.poly.hotel.entity.BookingService;
 import com.poly.hotel.entity.Customer;
 import com.poly.hotel.entity.Room;
 import com.poly.hotel.entity.RoomCategory;
@@ -23,6 +24,7 @@ import com.poly.hotel.entity.Service;
 import com.poly.hotel.util.MsgBox;
 import com.poly.hotel.util.XAuth;
 import com.poly.hotel.util.XDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -716,7 +718,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         model.addRow(rowData);
         fillRoomSelected(room);
     }
-    
+
     @Override
     public void fillRoomSelected(Room room) {
         DefaultTableModel model = (DefaultTableModel) tblRoomSelected.getModel();
@@ -731,7 +733,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         };
         model.addRow(rowData);
     }
-    
+
     @Override
     public Customer getCustomerInfo() {
         Customer entity = new Customer();
@@ -743,7 +745,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         entity.setAddress(txtAddress.getText());
         return entity;
     }
-   
+
     @Override
     public void bookingRoom() {
         Customer customer = this.getCustomerInfo();
@@ -759,7 +761,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         double priceRoom = 0;
         if (cbDailyRent.isSelected()) {
             priceRoom = roomCategoryDao.findById(String.valueOf(room.getCategoryID())).getBaseDailyPrice();
-            entity.setTotalRoomAmount(priceRoom); 
+            entity.setTotalRoomAmount(priceRoom);
         } else {
             priceRoom = roomCategoryDao.findById(String.valueOf(room.getCategoryID())).getBaseHourPrice();
             entity.setTotalRoomAmount(priceRoom);
@@ -778,10 +780,33 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         MsgBox.alertSuccess("Tạo booking thành công");
         this.dispose();
     }
-    
-    
-    
-    
+
+    private List<BookingService> getBookingServicesFromTable() {
+        List<BookingService> bookingServices = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) tblRoomService.getModel();
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String serviceName = (String) model.getValueAt(i, 2); // Tên dịch vụ
+            double servicePrice = ((Number) model.getValueAt(i, 3)).doubleValue(); // Giá dịch vụ
+            String callTime = (String) model.getValueAt(i, 4); // Thời gian gọi
+
+            // Tìm Service bằng vòng lặp
+            Service foundService = null;
+            for (Service service : services) {
+                if (service.getServiceName().equals(serviceName)) {
+                    foundService = service;
+                    break;
+                }
+            }
+
+            if (foundService != null) {
+                BookingService bookingService = new BookingService();
+                bookingService.setServiceID(foundService.getServiceID());
+            }
+        }
+        return bookingServices;
+    }
+
     /**
      * @param args the command line arguments
      */
