@@ -19,32 +19,29 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author PHUONG LAM
  */
-public class UserManagerJDialog extends javax.swing.JDialog implements UserController   {
+public class UserManagerJDialog extends javax.swing.JDialog implements UserController {
 
-        UserDAO Dao = new UserDAOImpl();
+    UserDAO Dao = new UserDAOImpl();
     List<User> items = List.of();
-
- 
 
     @Override
     public void open() {
         this.setLocationRelativeTo(null);
         this.fillToTable();
         this.clear();
-        
+
         txtUserName.setForeground(Color.GRAY);
         txtUserName.setText(placeHolderUsername);
         txtPassword.setForeground(Color.GRAY);
-            txtPassword.setText(placeHolderPassword);
-            txtFullName.setForeground(Color.GRAY);
-            txtFullName.setText(placeHolderFullName);
-            txtPhoneNumber.setForeground(Color.GRAY);
-            txtPhoneNumber.setText(placeHolderPhoneNumber);
-            txtRole.setForeground(Color.GRAY);
-            txtRole.setText(placeHolderRole);
-            txtEmail.setForeground(Color.GRAY);
-            txtEmail.setText(placeHolderEmail);
-        
+        txtPassword.setText(placeHolderPassword);
+        txtFullName.setForeground(Color.GRAY);
+        txtFullName.setText(placeHolderFullName);
+        txtPhoneNumber.setForeground(Color.GRAY);
+        txtPhoneNumber.setText(placeHolderPhoneNumber);
+
+        txtEmail.setForeground(Color.GRAY);
+        txtEmail.setText(placeHolderEmail);
+
     }
 
     @Override
@@ -56,7 +53,8 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         rdoFemale.setSelected(!entity.isGender());
         txtPhoneNumber.setText(entity.getPhoneNumber());
         txtEmail.setText(entity.getEmail());
-        txtRole.setText(entity.getRole());
+        rdoManager.setSelected("manager".equals(entity.getRole()));
+        rdoStaff.setSelected("staff".equals(entity.getRole()));
         rdoActive.setSelected(entity.isActive());
         rdoUnActive.setSelected(!entity.isActive());
 
@@ -71,9 +69,12 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         entity.setGender(rdoMale.isSelected());
         entity.setPhoneNumber(txtPhoneNumber.getText());
         entity.setEmail(txtEmail.getText());
-        entity.setRole(txtRole.getText());
+        if (rdoManager.isSelected()) {
+            entity.setRole("manager");
+        } else {
+            entity.setRole("staff");
+        }
         entity.setActive(rdoActive.isSelected());
-        
 
         return entity;
     }
@@ -195,7 +196,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             tblUser.setValueAt(checked, i, 8);
         }
     }
-    
+
     @Override
     public void moveFirst() {
         this.moveTo(0);
@@ -228,7 +229,6 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             this.edit();
         }
     }
-    
 
     /**
      * Creates new form UserManagerJDialog
@@ -238,18 +238,15 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         initComponents();
         Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/list.png")).getImage();
         setIconImage(icon);
-        
+
         this.open();
     }
-    
-    
-    
-    private String placeHolderUsername ="Nhập tên người dùng";
-    private String placeHolderPassword ="Nhập mật khẩu";
-    private String placeHolderFullName= "Nhập họ và tên người dùng";
-    private String placeHolderPhoneNumber="Nhập số điện thoại" ;
-    private String placeHolderEmail ="Nhập Email";
-    private String placeHolderRole ="Nhập vai trò ";
+
+    private String placeHolderUsername = "Nhập tên người dùng";
+    private String placeHolderPassword = "Nhập mật khẩu";
+    private String placeHolderFullName = "Nhập họ và tên người dùng";
+    private String placeHolderPhoneNumber = "Nhập số điện thoại";
+    private String placeHolderEmail = "Nhập Email";
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -262,6 +259,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         Tabs = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -280,7 +278,6 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtFullName = new javax.swing.JTextField();
-        txtRole = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         rdoMale = new javax.swing.JRadioButton();
@@ -296,6 +293,8 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         btnMoveFirst = new javax.swing.JButton();
         btnMoveNext = new javax.swing.JButton();
         btnMoveLast = new javax.swing.JButton();
+        rdoManager = new javax.swing.JRadioButton();
+        rdoStaff = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -435,15 +434,6 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             }
         });
 
-        txtRole.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtRoleFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtRoleFocusLost(evt);
-            }
-        });
-
         jLabel10.setText("Vai trò:");
 
         jLabel5.setText("Giới Tính: ");
@@ -518,6 +508,12 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             }
         });
 
+        buttonGroup3.add(rdoManager);
+        rdoManager.setText("Manager");
+
+        buttonGroup3.add(rdoStaff);
+        rdoStaff.setText("Staff");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -531,21 +527,25 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE))
+                                    .addComponent(txtUserName))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel8)
                                     .addGap(34, 34, 34)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtRole, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-                                        .addComponent(txtFullName))))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel10)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(txtFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
-                                    .addGap(34, 34, 34)
-                                    .addComponent(rdoActive, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(rdoUnActive))))
+                                    .addComponent(jLabel10))
+                                .addGap(34, 34, 34)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(rdoActive, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(rdoUnActive))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(rdoManager, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(rdoStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(117, 117, 117)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -602,10 +602,11 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(txtFullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(45, 45, 45)
+                        .addGap(46, 46, 46)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(rdoManager)
+                            .addComponent(rdoStaff)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -698,7 +699,8 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     private void tblUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUserMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            this.edit();}
+            this.edit();
+        }
     }//GEN-LAST:event_tblUserMouseClicked
 
     private void btnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAllActionPerformed
@@ -738,12 +740,12 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
 
     private void btnMovePreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovePreviousActionPerformed
         // TODO add your handling code here:
-        this.movePrevious();    
+        this.movePrevious();
     }//GEN-LAST:event_btnMovePreviousActionPerformed
 
     private void btnMoveFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveFirstActionPerformed
         // TODO add your handling code here:
-        this.moveFirst();   
+        this.moveFirst();
     }//GEN-LAST:event_btnMoveFirstActionPerformed
 
     private void txtUserNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserNameFocusGained
@@ -764,7 +766,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
 
     private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
         // TODO add your handling code here:
-         if (txtPassword.getText().equals(placeHolderPassword)) {
+        if (txtPassword.getText().equals(placeHolderPassword)) {
             txtPassword.setText("");
             txtPassword.setForeground(Color.BLACK);
         }
@@ -775,7 +777,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         if (txtPassword.getText().isEmpty()) {
             txtPassword.setForeground(Color.GRAY);
             txtPassword.setText(placeHolderPassword);
-            
+
         }
     }//GEN-LAST:event_txtPasswordFocusLost
 
@@ -810,22 +812,6 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             txtPhoneNumber.setText(placeHolderPhoneNumber);
         }
     }//GEN-LAST:event_txtPhoneNumberFocusLost
-
-    private void txtRoleFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRoleFocusGained
-        // TODO add your handling code here:
-        if (txtRole.getText().equals(placeHolderRole)) {
-            txtRole.setText("");
-            txtRole.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtRoleFocusGained
-
-    private void txtRoleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRoleFocusLost
-        // TODO add your handling code here:
-        if (txtRole.getText().isEmpty()) {
-            txtRole.setForeground(Color.GRAY);
-            txtRole.setText(placeHolderRole);
-        }
-    }//GEN-LAST:event_txtRoleFocusLost
 
     private void txtEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusGained
         // TODO add your handling code here:
@@ -900,6 +886,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -916,13 +903,14 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     private javax.swing.JRadioButton rdoActive;
     private javax.swing.JRadioButton rdoFemale;
     private javax.swing.JRadioButton rdoMale;
+    private javax.swing.JRadioButton rdoManager;
+    private javax.swing.JRadioButton rdoStaff;
     private javax.swing.JRadioButton rdoUnActive;
     private javax.swing.JTable tblUser;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFullName;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtPhoneNumber;
-    private javax.swing.JTextField txtRole;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }
