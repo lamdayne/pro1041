@@ -9,5 +9,5 @@ package com.poly.hotel.util;
  * @author PHUONG LAM
  */
 public class InputUtil {
-    
+
 }
