@@ -27,6 +27,8 @@ public class BookingServiceDAOImpl implements BookingServiceDAO {
     String findAllSql = "SELECT * FROM BookingService";
 
     String findByIdSql = "SELECT * FROM BookingService WHERE bookingServiceID=?";
+    
+    String findByBookingIdSql = "SELECT * FROM BookingService WHERE bookingID=?";
 
     @Override
     public BookingService create(BookingService entity) {
@@ -69,6 +71,11 @@ public class BookingServiceDAOImpl implements BookingServiceDAO {
     @Override
     public BookingService findById(String id) {
         return XQuery.getSingleBean(BookingService.class, findByIdSql, id);
+    }
+    
+    @Override
+    public List<BookingService> findByBookingId(int bookingId) {
+        return XQuery.getBeanList(BookingService.class, findByBookingIdSql, bookingId);
     }
 
 }
