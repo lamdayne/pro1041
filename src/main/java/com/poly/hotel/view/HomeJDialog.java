@@ -5,6 +5,7 @@
 package com.poly.hotel.view;
 
 import com.poly.hotel.controller.HomeController;
+import com.poly.hotel.dao.BookingDAO;
 import com.poly.hotel.dao.RoomCategoryDAO;
 import com.poly.hotel.dao.impl.RoomDAOImpl;
 import com.poly.hotel.entity.Booking;
@@ -16,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.JButton;
 import com.poly.hotel.dao.RoomDAO;
+import com.poly.hotel.dao.impl.BookingDAOImpl;
 import com.poly.hotel.dao.impl.RoomCategoryDAOImpl;
 import com.poly.hotel.entity.RoomCategory;
 
@@ -27,6 +29,7 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
 
     RoomDAO dao = new RoomDAOImpl();
     RoomCategoryDAO categoryDao = new RoomCategoryDAOImpl();
+    BookingDAO bookingDao = new BookingDAOImpl();
 
     /**
      * Creates new form HomeJDialog
@@ -405,6 +408,7 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
         dialog.setRoom(room);
         dialog.fillRoomDetail(room);
         dialog.setVisible(true);
+        this.loadRoom();
     }
 
     private void loadRoom() {// tải và hiển thị các thẻ lên cửa sổ bán hàng
@@ -455,8 +459,8 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
     private JButton createButton(Room room) {
         RoomCategory roomCategory = categoryDao.findById(String.valueOf(room.getCategoryID()));
         JButton btnRoom = new JButton();
-        btnRoom.setText(String.format("<html><div style='text-align: center; font-size: 12px; font-weight: bold;'>P.%s<br>Loại phòng: %s<div></html>", 
-                room.getRoomID(), 
+        btnRoom.setText(String.format("<html><div style='text-align: center; font-size: 12px; font-weight: bold;'>P.%s<br>Loại phòng: %s<div></html>",
+                room.getRoomID(),
                 roomCategory.getCategoryName()));
         btnRoom.setPreferredSize(new Dimension(120, 80));
         btnRoom.setEnabled(room.isActive());
@@ -479,9 +483,30 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
         btnRoom.setActionCommand(room.getRoomID());
         btnRoom.addActionListener((ActionEvent e) -> {
             String roomId = e.getActionCommand();
-            HomeJDialog.this.showBookingJDialog(roomId);
+            Room roomItem = dao.findById(roomId);
+            if (roomItem.getStatus().equals("1")) {
+                HomeJDialog.this.showBookingCheckout(roomId);
+            } else {
+                HomeJDialog.this.showBookingJDialog(roomId);
+            }
         });
         return btnRoom;
+    }
+
+    private void showBookingCheckout(String roomId) {
+        List<Booking> items = bookingDao.findByRoomID(roomId);
+        items.forEach(item -> {
+            if (item.getStatus().equals("Chưa thanh toán")) {
+                Room room = dao.findById(roomId);
+                BookingJDialog dialog = new BookingJDialog((Frame) this.getOwner(), true);
+                dialog.setRoom(room);
+                dialog.showBooking(item.getBookingID());
+                dialog.fillRoomDetail(room);
+                dialog.setVisible(true);
+                this.loadRoom();
+            }
+        });
+
     }
 
     /**
