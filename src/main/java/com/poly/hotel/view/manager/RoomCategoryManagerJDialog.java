@@ -116,8 +116,8 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
         entity.setCategoryID(txtId.getText().isEmpty() ? 0 : Integer.parseInt(txtId.getText()));
         entity.setCategoryName(txtRoomName.getText());
         entity.setDesc(txtDescription.getText());
-        entity.setBaseHourPrice(txtHourPrice.getText().isEmpty() ? 0 : Float.parseFloat(txtHourPrice.getText()));
-        entity.setBaseDailyPrice(txtDailyPrice.getText().isEmpty() ? 0 : Float.parseFloat(txtDailyPrice.getText()));
+        entity.setBaseHourPrice(txtHourPrice.getText().isEmpty() ? 0.0 : Double.parseDouble(txtHourPrice.getText()));
+        entity.setBaseDailyPrice(txtDailyPrice.getText().isEmpty() ? 0.0 : Double.parseDouble(txtDailyPrice.getText()));
         entity.setMaxOccupancy(txtOccupancy.getText().isEmpty() ? 0 : Integer.parseInt(txtOccupancy.getText()));
         entity.setActive(rdoActive.isSelected());
         return entity;
@@ -183,6 +183,7 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtDescription = new javax.swing.JTextField();
@@ -292,6 +293,11 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
                 return types [columnIndex];
             }
         });
+        tblCategories.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCategoriesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblCategories);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -335,8 +341,10 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Tình trạng");
 
+        buttonGroup1.add(rdoActive);
         rdoActive.setText("Hoạt động");
 
+        buttonGroup1.add(rdoStopped);
         rdoStopped.setText("Ngưng HĐ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -495,6 +503,13 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
         this.clear();
     }//GEN-LAST:event_btnNewActionPerformed
 
+    private void tblCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriesMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            this.edit();
+        }
+    }//GEN-LAST:event_tblCategoriesMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -553,6 +568,7 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnUncheckAll;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
