@@ -48,6 +48,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
     CustomerDAO customerDao = new CustomerDAOImpl();
     BookingDAO booking = new BookingDAOImpl();
     BookingServiceDAO bookingServiceDao = new BookingServiceDAOImpl();
+    boolean isDailyCheck = false;
 
     @Setter
     Room room;
@@ -741,10 +742,6 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
             MsgBox.alert("Vui lòng chọn ngày check-in");
             return false;
         }
-        if (dcsCheckin.getDate().after(dcsCheckout.getDate())) {
-            MsgBox.alert("Ngày check-out phải sau ngày check-in");
-            return false;
-        }
         if (!cbDailyRent.isSelected() && !cbHourlyRent.isSelected()) {
             MsgBox.alert("Vui lòng chọn hình thức thuê");
             return false;
@@ -916,6 +913,20 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
             };
             model.addRow(rowData);
         });
+        setCustomerBooking(bookingId);
+    }
+    
+    public void setCustomerBooking(int bookingId) {
+        Booking bk = booking.findById(String.valueOf(bookingId));
+        Customer cus = customerDao.findById(String.valueOf(bk.getCustomerID()));
+        dcsCheckin.setDate(bk.getCheckInDate());
+        txtName.setText(cus.getFullName());
+        txtPassport.setText(cus.getIdNumber());
+        txtPhoneNumber.setText(cus.getPhoneNumber());
+        txtAddress.setText(cus.getAddress());
+        txtEmail.setText(cus.getEmail());
+        rdoMale.setSelected(cus.isGender());
+        txtPrepay.setText(String.valueOf(bk.getTotalAmount()));
     }
 
     /**
