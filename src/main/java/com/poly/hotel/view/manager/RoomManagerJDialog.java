@@ -272,6 +272,11 @@ private RoomDAO dao = new RoomDAOImpl();
                 return types [columnIndex];
             }
         });
+        tblRoom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRoomMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblRoom);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -521,6 +526,13 @@ private RoomDAO dao = new RoomDAOImpl();
         // TODO add your handling code here:
         this.clear();
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void tblRoomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRoomMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            this.edit();
+        }
+    }//GEN-LAST:event_tblRoomMouseClicked
 
     /**
      * @param args the command line arguments
