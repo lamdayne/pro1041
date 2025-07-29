@@ -23,6 +23,6 @@ public class BookingService {
     private int bookingID;
     private String serviceID;
     private int quantity;
-    private float unitPrice;
-    private float totalPrice;
+    private double unitPrice;
+    private double totalPrice;
 }
