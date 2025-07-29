@@ -6,11 +6,13 @@ package com.poly.hotel.view;
 
 import com.poly.hotel.controller.BookingController;
 import com.poly.hotel.dao.BookingDAO;
+import com.poly.hotel.dao.BookingServiceDAO;
 import com.poly.hotel.dao.CustomerDAO;
 import com.poly.hotel.dao.RoomCategoryDAO;
 import com.poly.hotel.dao.RoomDAO;
 import com.poly.hotel.dao.ServiceDAO;
 import com.poly.hotel.dao.impl.BookingDAOImpl;
+import com.poly.hotel.dao.impl.BookingServiceDAOImpl;
 import com.poly.hotel.dao.impl.CustomerDAOImpl;
 import com.poly.hotel.dao.impl.RoomCategoryDAOImpl;
 import com.poly.hotel.dao.impl.RoomDAOImpl;
@@ -24,6 +26,7 @@ import com.poly.hotel.entity.Service;
 import com.poly.hotel.util.MsgBox;
 import com.poly.hotel.util.XAuth;
 import com.poly.hotel.util.XDate;
+import com.poly.hotel.util.XStr;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +47,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
     List<Service> services = List.of();
     CustomerDAO customerDao = new CustomerDAOImpl();
     BookingDAO booking = new BookingDAOImpl();
+    BookingServiceDAO bookingServiceDao = new BookingServiceDAOImpl();
 
     @Setter
     Room room;
@@ -301,8 +305,18 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         jLabel24.setText("Hình thức thuê:");
 
         cbDailyRent.setText("Thuê theo ngày");
+        cbDailyRent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbDailyRentMouseClicked(evt);
+            }
+        });
 
         cbHourlyRent.setText("Thuê theo giờ");
+        cbHourlyRent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbHourlyRentMouseClicked(evt);
+            }
+        });
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -679,8 +693,75 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        this.bookingRoom();
+        if (validateInput()) {
+            this.bookingRoom();
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void cbDailyRentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbDailyRentMouseClicked
+        // TODO add your handling code here:
+        if (cbDailyRent.isSelected()) {
+            cbHourlyRent.setEnabled(false);
+        } else {
+            cbHourlyRent.setEnabled(true);
+        }
+    }//GEN-LAST:event_cbDailyRentMouseClicked
+
+    private void cbHourlyRentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbHourlyRentMouseClicked
+        // TODO add your handling code here:
+        if (cbHourlyRent.isSelected()) {
+            cbDailyRent.setEnabled(false);
+        } else {
+            cbDailyRent.setEnabled(true);
+        }
+    }//GEN-LAST:event_cbHourlyRentMouseClicked
+
+    private boolean validateInput() {
+        if (txtName.getText().trim().isEmpty()) {
+            MsgBox.alert("Tên khách hàng không được để trống");
+            return false;
+        }
+        if (!txtPhoneNumber.getText().matches("0\\d{9}")) {
+            MsgBox.alert("Số điện thoại phải là 10 số và bắt đầu bằng 0");
+            return false;
+        }
+        if (!txtEmail.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            MsgBox.alert("Email không hợp lệ");
+            return false;
+        }
+        if (txtPassport.getText().trim().isEmpty()) {
+            MsgBox.alert("CMND/Hộ chiếu không được để trống");
+            return false;
+        }
+        if (txtAddress.getText().trim().isEmpty()) {
+            MsgBox.alert("Địa chỉ không được để trống");
+            return false;
+        }
+        if (dcsCheckin.getDate() == null) {
+            MsgBox.alert("Vui lòng chọn ngày check-in");
+            return false;
+        }
+        if (dcsCheckin.getDate().after(dcsCheckout.getDate())) {
+            MsgBox.alert("Ngày check-out phải sau ngày check-in");
+            return false;
+        }
+        if (!cbDailyRent.isSelected() && !cbHourlyRent.isSelected()) {
+            MsgBox.alert("Vui lòng chọn hình thức thuê");
+            return false;
+        }
+        try {
+            int occupancy = Integer.parseInt(txtOccupancy.getText());
+            RoomCategory category = roomCategoryDao.findById(String.valueOf(room.getCategoryID()));
+            if (occupancy <= 0) {
+                MsgBox.alert("Số người phải lớn hơn 0 ");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            MsgBox.alert("Số người phải là số nguyên dương");
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public void fillRoomService(Service service) {
@@ -748,9 +829,11 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
 
     @Override
     public void bookingRoom() {
+        // Them khach hang
         Customer customer = this.getCustomerInfo();
         customer = customerDao.create(customer);
-        Customer customerEntity = customerDao.findByPhone(customer.getPhoneNumber());
+        Customer customerEntity = customerDao.findByPhone(customer.getPhoneNumber()); // dung de lay id
+
         Booking entity = new Booking();
         entity.setCustomerID(customerEntity.getCustomerID());
         entity.setRoomID(room.getRoomID());
@@ -758,6 +841,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         entity.setCheckInDate(dcsCheckin.getDate());
         entity.setBookingDate(XDate.now());
         entity.setStatus("Chưa thanh toán");
+        // Tinh tien phong
         double priceRoom = 0;
         if (cbDailyRent.isSelected()) {
             priceRoom = roomCategoryDao.findById(String.valueOf(room.getCategoryID())).getBaseDailyPrice();
@@ -766,45 +850,72 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
             priceRoom = roomCategoryDao.findById(String.valueOf(room.getCategoryID())).getBaseHourPrice();
             entity.setTotalRoomAmount(priceRoom);
         }
-        double priceService = 0;
-        if (tblRoomService.getRowCount() == 0) {
-            entity.setTotalServiceAmount(priceService);
-        } else {
-            priceService = 10;
-            entity.setTotalServiceAmount(priceService);
+        entity = booking.create(entity);
+        // tao entity de lay bookingID
+        Booking bookingEntity = booking.findByCustomerID(entity.getCustomerID());
+
+        List<BookingService> bookingServices = this.getServiceBooking(customer.getPhoneNumber(), bookingEntity.getBookingID());
+
+        for (BookingService item : bookingServices) {
+            bookingServiceDao.create(item);
         }
+
+        double priceService = getPriceService();
+        entity.setTotalServiceAmount(priceService);
         entity.setTotalAmount(priceRoom + priceService);
-        booking.create(entity);
+
         room.setStatus("1");
         roomDao.update(room);
-        MsgBox.alertSuccess("Tạo booking thành công");
+        booking.update(entity);
+        MsgBox.alertSuccess("Tạo booking thành công\nBookingID: " + bookingEntity.getBookingID());
         this.dispose();
     }
 
-    private List<BookingService> getBookingServicesFromTable() {
-        List<BookingService> bookingServices = new ArrayList<>();
+    private double getPriceService() {
+        double servicePrice = 0;
         DefaultTableModel model = (DefaultTableModel) tblRoomService.getModel();
 
         for (int i = 0; i < model.getRowCount(); i++) {
-            String serviceName = (String) model.getValueAt(i, 2); // Tên dịch vụ
-            double servicePrice = ((Number) model.getValueAt(i, 3)).doubleValue(); // Giá dịch vụ
-            String callTime = (String) model.getValueAt(i, 4); // Thời gian gọi
+            servicePrice += (double) model.getValueAt(i, 3);
+        }
+        return servicePrice;
+    }
 
-            // Tìm Service bằng vòng lặp
-            Service foundService = null;
-            for (Service service : services) {
-                if (service.getServiceName().equals(serviceName)) {
-                    foundService = service;
-                    break;
-                }
-            }
-
-            if (foundService != null) {
-                BookingService bookingService = new BookingService();
-                bookingService.setServiceID(foundService.getServiceID());
-            }
+    private List<BookingService> getServiceBooking(String phoneNumber, int bookingId) {
+        List<BookingService> bookingServices = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) tblRoomService.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            BookingService bookingService = new BookingService();
+            bookingService.setBookingServiceID(XStr.getKey((phoneNumber) + "_" + i));
+            bookingService.setBookingID(bookingId);
+            String serviceName = (String) model.getValueAt(i, 2);
+            Service service = serviceDao.findServiceByName(serviceName);
+            bookingService.setServiceID(service.getServiceID());
+            int quantity = 1;
+            bookingService.setQuantity(quantity);
+            double price = (double) model.getValueAt(i, 3);
+            bookingService.setUnitPrice(price);
+            bookingService.setTotalPrice(price * quantity);
+            bookingServices.add(bookingService);
         }
         return bookingServices;
+    }
+    
+    public void showBooking(int bookingId) {
+        DefaultTableModel model = (DefaultTableModel) tblRoomService.getModel();
+        List<BookingService> items = bookingServiceDao.findByBookingId(bookingId);
+        items.forEach(item -> {
+            Service service = serviceDao.findById(item.getServiceID());
+            Booking bookingItem = booking.findById(String.valueOf(bookingId));
+            Room room = roomDao.findById(bookingItem.getRoomID());
+            Object[] rowData = {
+                bookingItem.getRoomID(),
+                room.getFloor(),
+                service.getServiceName(),
+                service.getPrice()
+            };
+            model.addRow(rowData);
+        });
     }
 
     /**

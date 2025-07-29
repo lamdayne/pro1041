@@ -510,11 +510,17 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Thu&#xea; theo ng&#xe0;y"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cbDailyRentMouseClicked"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="cbHourlyRent">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Thu&#xea; theo gi&#x1edd;"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cbHourlyRentMouseClicked"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel25">
                   <Properties>
