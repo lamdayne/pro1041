@@ -26,6 +26,8 @@ public class BookingDAOImpl implements BookingDAO {
     String deleteSql = "DELETE FROM Booking WHERE bookingID=?";
     String findAllSql = "SELECT * FROM Booking";
     String findByIdSql = "SELECT * FROM Booking WHERE bookingID=?";
+    String findByCustomerIDSql = "SELECT * FROM Booking WHERE customerID=?";
+    String findByRoomIDSql = "SELECT * FROM Booking WHERE roomID=?";
 
     @Override
     public Booking create(Booking entity) {
@@ -76,5 +78,15 @@ public class BookingDAOImpl implements BookingDAO {
     @Override
     public Booking findById(String id) {
         return XQuery.getSingleBean(Booking.class, findByIdSql, id);
+    }
+
+    @Override
+    public Booking findByCustomerID(int customerID) {
+        return XQuery.getSingleBean(Booking.class, findByCustomerIDSql, customerID);
+    }
+    
+    @Override
+    public List<Booking> findByRoomID(String roomId) {
+        return XQuery.getBeanList(Booking.class, findByRoomIDSql, roomId);
     }
 }

@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface ServiceDAO extends CrudDAO<Service, String> {
     List<Service> findByCategoryId(int categoryId);
+    Service findServiceByName(String name);
 }

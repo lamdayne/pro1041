@@ -5,11 +5,13 @@
 package com.poly.hotel.dao;
 
 import com.poly.hotel.entity.Booking;
+import java.util.List;
 
 /**
  *
  * @author Lenovo
  */
 public interface BookingDAO extends CrudDAO<Booking, String> {
-
+    Booking findByCustomerID(int customerID);
+    List<Booking> findByRoomID(String roomId);
 }
