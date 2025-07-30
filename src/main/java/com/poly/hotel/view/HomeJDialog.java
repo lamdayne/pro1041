@@ -506,7 +506,6 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
                 this.loadRoom();
             }
         });
-
     }
 
     /**
