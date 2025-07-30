@@ -42,7 +42,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         setLocationRelativeTo(null);
         Image icon = new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage();
         setIconImage(icon);
-
+        fillToTable();
     }
     BillDAO billDao = new BillDAOImpl();
 
@@ -70,8 +70,8 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         Bill bill = new Bill();
         bill.setBillID(txtId.getText());
         bill.setBookingID(Integer.parseInt(txtBookingID.getText()));
-        bill.setPaymentDate(XDate.parse(txtPaymentDate.getText()));
-        bill.setAmount(Float.parseFloat(txtAmount.getText()));
+        bill.setPaymentDate(XDate.parse(txtPaymentDate.getText(), XDate.PATTERN_FULL));
+        bill.setAmount(Double.parseDouble(txtAmount.getText()));
         bill.setPaymentMethod(cbopaymentMethod.getSelectedItem().toString());
         bill.setPaymentStatus(cbopaymentStatus.getSelectedItem().toString());
         bill.setUsername(txtUsername.getText());

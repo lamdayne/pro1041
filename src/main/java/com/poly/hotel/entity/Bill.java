@@ -22,7 +22,7 @@ public class Bill {
 
     private String billID;
     private int bookingID;
-    private float amount;
+    private double amount;
     private String paymentMethod;
     private Date paymentDate;
     private String paymentStatus;
