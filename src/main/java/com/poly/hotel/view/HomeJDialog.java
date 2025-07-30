@@ -495,17 +495,24 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
 
     private void showBookingCheckout(String roomId) {
         List<Booking> items = bookingDao.findByRoomID(roomId);
-        items.forEach(item -> {
+        Booking latestUnpaidBooking = null;
+        for (Booking item : items) {
             if (item.getStatus().equals("Chưa thanh toán")) {
-                Room room = dao.findById(roomId);
-                BookingJDialog dialog = new BookingJDialog((Frame) this.getOwner(), true);
-                dialog.setRoom(room);
-                dialog.showBooking(item.getBookingID());
-                dialog.fillRoomDetail(room);
-                dialog.setVisible(true);
-                this.loadRoom();
+                latestUnpaidBooking = item;
             }
-        });
+        }
+        if (latestUnpaidBooking != null) {
+            Room room = dao.findById(roomId);
+            BookingJDialog dialog = new BookingJDialog((Frame) this.getOwner(), true);
+            dialog.setRoom(room);
+            dialog.showBooking(latestUnpaidBooking.getBookingID());
+            dialog.fillRoomDetail(room);
+            dialog.setVisible(true);
+            if (!dialog.isVisible()) {
+                dialog.setVisible(false);
+            }
+            this.loadRoom();
+        }
     }
 
     /**
