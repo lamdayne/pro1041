@@ -6,9 +6,16 @@ package com.poly.hotel.view;
 
 import com.poly.hotel.controller.BillController;
 import com.poly.hotel.dao.BillDAO;
+import com.poly.hotel.dao.BookingDAO;
+import com.poly.hotel.dao.RoomDAO;
 import com.poly.hotel.dao.impl.BillDAOImpl;
+import com.poly.hotel.dao.impl.BookingDAOImpl;
+import com.poly.hotel.dao.impl.RoomDAOImpl;
 import com.poly.hotel.entity.Bill;
+import com.poly.hotel.entity.Booking;
+import com.poly.hotel.entity.Room;
 import com.poly.hotel.util.XDate;
+import com.poly.hotel.util.XStr;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.List;
@@ -23,6 +30,8 @@ import javax.swing.table.DefaultTableModel;
 public class BillJDialog extends javax.swing.JDialog implements BillController {
 
     String placeholder = "ex: khiemloq12345";
+    BookingDAO dao = new BookingDAOImpl();
+    RoomDAO roomDao = new RoomDAOImpl();
 
     /**
      * Creates new form BillJDialog
@@ -79,11 +88,12 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
             model.addRow(new Object[]{
                 b.getBillID(),
                 b.getBookingID(),
+                b.getPaymentDate(),
                 b.getAmount(),
                 b.getPaymentMethod(),
-                b.getPaymentDate(),
                 b.getPaymentStatus(),
-                b.getUsername()
+                b.getUsername(),
+                false
             });
         }
     }
@@ -104,7 +114,14 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
     @Override
     public void create() {
         Bill bill = getForm();
+        Booking booking = dao.findById(String.valueOf(bill.getBookingID()));
+        booking.setCheckOutDate(XDate.parse(XDate.format(XDate.now(), XDate.PATTERN_FULL), XDate.PATTERN_FULL));
+        booking.setStatus("Đã thanh toán");
+        Room room = roomDao.findById(booking.getRoomID());
+        room.setStatus("0");
         try {
+            roomDao.update(room);
+            dao.update(booking);
             billDao.create(bill);
             fillToTable();
             clear();
@@ -188,6 +205,15 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         }
         fillToTable();
         JOptionPane.showMessageDialog(this, "Đã xóa các hóa đơn được chọn!");
+    }
+    
+    public void setFormToCheckout(int bookingId) {
+        Booking item = dao.findById(String.valueOf(bookingId));
+        txtId.setText(XStr.getKey(String.valueOf(item.getBookingID() + item.getCustomerID())));
+        txtBookingID.setText(String.valueOf(item.getBookingID()));
+        txtPaymentDate.setText(XDate.format(XDate.now(), XDate.PATTERN_FULL));
+        txtAmount.setText(String.valueOf(item.getTotalAmount()));
+        txtUsername.setText(item.getUserName());
     }
 
     /**
