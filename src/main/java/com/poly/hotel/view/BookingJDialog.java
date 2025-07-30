@@ -27,6 +27,7 @@ import com.poly.hotel.util.MsgBox;
 import com.poly.hotel.util.XAuth;
 import com.poly.hotel.util.XDate;
 import com.poly.hotel.util.XStr;
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -647,6 +648,11 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         btnCheckout.setBackground(new java.awt.Color(153, 255, 204));
         btnCheckout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCheckout.setText("Trả phòng");
+        btnCheckout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckoutActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnCheckout, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 740, 120, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -716,6 +722,16 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
             cbDailyRent.setEnabled(true);
         }
     }//GEN-LAST:event_cbHourlyRentMouseClicked
+
+    private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
+        // TODO add your handling code here:
+        List<Booking> bookings = booking.findByRoomID(room.getRoomID());
+        for (Booking book : bookings) {
+            if (book.getStatus().equals("Chưa thanh toán")) {
+                checkOut(book.getBookingID());
+            }
+        }
+    }//GEN-LAST:event_btnCheckoutActionPerformed
 
     private boolean validateInput() {
         if (txtName.getText().trim().isEmpty()) {
@@ -927,6 +943,14 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         txtEmail.setText(cus.getEmail());
         rdoMale.setSelected(cus.isGender());
         txtPrepay.setText(String.valueOf(bk.getTotalAmount()));
+    }
+    
+    public void checkOut(int bookingId) {
+        BillJDialog dialog = new BillJDialog((Frame) this.getOwner(), true);
+        this.dispose();
+        dialog.setFormToCheckout(bookingId);
+        dialog.setVisible(true);
+        this.dispose();
     }
 
     /**
