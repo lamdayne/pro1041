@@ -847,6 +847,15 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         customer = customerDao.create(customer);
         Customer customerEntity = customerDao.findByPhone(customer.getPhoneNumber()); // dung de lay id
 
+        // Tinh tien phong
+        double priceRoom = 0;
+        if (cbDailyRent.isSelected()) {
+            priceRoom = roomCategoryDao.findById(String.valueOf(room.getCategoryID())).getBaseDailyPrice();
+        } else {
+            priceRoom = roomCategoryDao.findById(String.valueOf(room.getCategoryID())).getBaseHourPrice();
+        }
+        double priceService = getPriceService();
+
         Booking entity = new Booking();
         entity.setCustomerID(customerEntity.getCustomerID());
         entity.setRoomID(room.getRoomID());
@@ -854,15 +863,10 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         entity.setCheckInDate(dcsCheckin.getDate());
         entity.setBookingDate(XDate.now());
         entity.setStatus("Chưa thanh toán");
-        // Tinh tien phong
-        double priceRoom = 0;
-        if (cbDailyRent.isSelected()) {
-            priceRoom = roomCategoryDao.findById(String.valueOf(room.getCategoryID())).getBaseDailyPrice();
-            entity.setTotalRoomAmount(priceRoom);
-        } else {
-            priceRoom = roomCategoryDao.findById(String.valueOf(room.getCategoryID())).getBaseHourPrice();
-            entity.setTotalRoomAmount(priceRoom);
-        }
+        entity.setTotalRoomAmount(priceRoom);
+        entity.setTotalServiceAmount(priceService);
+        entity.setTotalAmount(priceRoom + priceService);
+
         entity = booking.create(entity);
         // tao entity de lay bookingID
         Booking bookingEntity = booking.findByCustomerID(entity.getCustomerID());
@@ -873,7 +877,6 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
             bookingServiceDao.create(item);
         }
 
-        double priceService = getPriceService();
         entity.setTotalServiceAmount(priceService);
         entity.setTotalAmount(priceRoom + priceService);
 
@@ -913,7 +916,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         }
         return bookingServices;
     }
-    
+
     public void showBooking(int bookingId) {
         DefaultTableModel model = (DefaultTableModel) tblRoomService.getModel();
         List<BookingService> items = bookingServiceDao.findByBookingId(bookingId);
@@ -931,7 +934,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         });
         setCustomerBooking(bookingId);
     }
-    
+
     public void setCustomerBooking(int bookingId) {
         Booking bk = booking.findById(String.valueOf(bookingId));
         Customer cus = customerDao.findById(String.valueOf(bk.getCustomerID()));
@@ -944,7 +947,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         rdoMale.setSelected(cus.isGender());
         txtPrepay.setText(String.valueOf(bk.getTotalAmount()));
     }
-    
+
     public void checkOut(int bookingId) {
         BillJDialog dialog = new BillJDialog((Frame) this.getOwner(), true);
         this.dispose();
