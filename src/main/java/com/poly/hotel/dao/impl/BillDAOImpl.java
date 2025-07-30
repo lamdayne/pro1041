@@ -20,8 +20,8 @@ public class BillDAOImpl implements BillDAO {
     String createSql = "INSERT INTO BILL (billID, bookingID, amount, paymentMethod, paymentDate, paymentStatus, username) VALUES (?, ?, ?, ?, ?, ?, ?)";
     String updateSql = "UPDATE Bill SET bookingID=?, amount=?, paymentMethod=?, paymentDate=?, paymentStatus=?, username=? WHERE billID=?";
     String deleteSql = "DELETE FROM BILL WHERE billID=?";
-    String findAllSql = "SELECT * FROM Bill";
-    String findByIdSql = "SELECT * FROM Bill WHERE billID=?";
+    String findAllSql = "SELECT billID, bookingID, amount AS Amount, paymentMethod, paymentDate, paymentStatus, username FROM Bill";
+    String findByIdSql = "SELECT billID, bookingID, amount AS Amount, paymentMethod, paymentDate, paymentStatus, username FROM Bill WHERE billID=?";
 
     @Override
     public Bill create(Bill bill) {
