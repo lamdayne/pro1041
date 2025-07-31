@@ -60,9 +60,61 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
 
     }
 
+    private boolean isValidEmail(String email) {
+        String regex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        return email.matches(regex);
+    }
+
+    private boolean isValidPhoneNumber(String phone) {
+        String regex = "^0\\d{9}$";  // 10 chữ số, bắt đầu bằng 0
+        return phone.matches(regex);
+    }
+
     @Override
     public User getForm() {
         User entity = new User();
+        String username = txtUserName.getText().trim();
+        String password = txtPassword.getText().trim();
+        String fullName = txtFullName.getText().trim();
+        String phone = txtPhoneNumber.getText().trim();
+        String email = txtEmail.getText().trim();
+        if (username.isEmpty() || username.equals("Nhập tên người dùng")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập hợp lệ!");
+            return null;
+        }
+        if (username.contains(" ")) {
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập không được chứa khoảng trắng!");
+            return null;
+        }
+
+        if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu!");
+            return null;
+        }
+        if (password.contains(" ")) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu không được chứa khoảng trắng!");
+            return null;
+        }
+
+        if (fullName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập họ tên!");
+            return null;
+        }
+
+        if (phone.isEmpty() || !isValidPhoneNumber(phone)) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ! (Phải có 10 số, bắt đầu bằng 0)");
+            return null;
+        }
+
+        if (email.isEmpty() || !isValidEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Email không đúng định dạng!");
+            return null;
+        }
+        
+        if (!rdoManager.isSelected() && !rdoManager.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn vai trò!");
+            return null;
+        }
         entity.setUsername(txtUserName.getText());
         entity.setPassword(txtPassword.getText());
         entity.setFullName(txtFullName.getText());

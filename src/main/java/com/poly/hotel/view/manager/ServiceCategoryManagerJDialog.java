@@ -30,12 +30,10 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         initComponents();
         this.open();
     }
-    
-    
-    
+
     String placeholderServiceName = "Nhập tên loại dịch vụ";
     String placeholderDesc = "Nhập mô tả dịch vụ";
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -403,8 +401,9 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
 
     private void tblServiceCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServiceCategoryMouseClicked
         // TODO add your handling code here:
-         if (evt.getClickCount() == 2) {
-            this.edit();}
+        if (evt.getClickCount() == 2) {
+            this.edit();
+        }
     }//GEN-LAST:event_tblServiceCategoryMouseClicked
 
     private void btnUnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnCheckAllActionPerformed
@@ -419,7 +418,7 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
 
     private void txtCategoryNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCategoryNameFocusGained
         // TODO add your handling code here:
-   if (txtCategoryName.getText().equals(placeholderServiceName)) {
+        if (txtCategoryName.getText().equals(placeholderServiceName)) {
             txtCategoryName.setText("");
             txtCategoryName.setForeground(Color.BLACK);
         }
@@ -435,7 +434,7 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
 
     private void txtDescFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescFocusGained
         // TODO add your handling code here:
-         if (txtDesc.getText().equals(placeholderDesc)) {
+        if (txtDesc.getText().equals(placeholderDesc)) {
             txtDesc.setText("");
             txtDesc.setForeground(Color.BLACK);
         }
@@ -533,11 +532,11 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         this.fillToTable();
         this.clear();
         txtServiceID.setForeground(Color.GRAY);
-            
-            txtCategoryName.setForeground(Color.GRAY);
-            txtCategoryName.setText(placeholderServiceName);
-            txtDesc.setForeground(Color.GRAY);
-            txtDesc.setText(placeholderDesc);
+
+        txtCategoryName.setForeground(Color.GRAY);
+        txtCategoryName.setText(placeholderServiceName);
+        txtDesc.setForeground(Color.GRAY);
+        txtDesc.setText(placeholderDesc);
     }
 
     @Override
@@ -552,6 +551,25 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
 
     @Override
     public ServiceCategory getForm() {
+
+        String CategoryName = txtCategoryName.getText().trim();
+        String Desc = txtDesc.getText().trim();
+
+        if (CategoryName.isEmpty() || CategoryName.equals("Nhập tên loại dịch vụ")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên loại dịch vụ hợp lệ!");
+            return null;
+        }
+
+        if (Desc.isEmpty() || Desc.equals("Nhập mô tả dịch vụ")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập Mô Tả dịch vụ!");
+            return null;
+        }
+
+        if (!rdoActive.isSelected() && !rdoActive.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn Trạng Thái!");
+            return null;
+        }
+
         ServiceCategory entity = new ServiceCategory();
         entity.setServiceCategoryID(Integer.valueOf(txtServiceID.getText()));
         entity.setCategoryName(txtCategoryName.getText());
@@ -673,7 +691,7 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
             tblServiceCategory.setValueAt(checked, i, 4);
         }
     }
-    
+
     @Override
     public void moveFirst() {
         this.moveTo(0);
@@ -706,6 +724,5 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
             this.edit();
         }
     }
-    
 
 }
