@@ -5,8 +5,10 @@
 package com.poly.hotel.controller;
 
 import com.poly.hotel.util.MsgBox;
+import com.poly.hotel.view.HotelJFrame;
 import com.poly.hotel.view.LoginJDialog;
 import com.poly.hotel.view.WelcomeJDialog;
+import java.awt.Frame;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
@@ -15,11 +17,16 @@ import javax.swing.JFrame;
  * @author PHUONG LAM
  */
 public interface HotelJFrameController {
+    
     void init();
+    
+    Frame getFrame();
 
     default void exit() {
         if (MsgBox.comfirm("Bạn muốn đăng xuất tài khoản?")) {
-            System.exit(0);
+            getFrame().dispose(); // đóng frame hiện tại
+            JFrame newFrame = new HotelJFrame();
+            newFrame.setVisible(true); // hiển thị lại
         }
     }
     

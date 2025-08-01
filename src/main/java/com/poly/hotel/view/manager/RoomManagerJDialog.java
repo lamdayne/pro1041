@@ -39,6 +39,18 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         }
         fillToTable();
     }
+
+    private void fillCategories() {
+        cboRoomCategory.removeAllItems();
+        try {
+            for (RoomCategory category : categoryDao.findAll()) {
+                cboRoomCategory.addItem(String.valueOf(category.getCategoryID()));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi thêm loại phòng!");
+        }
+    }
+
     @Override
     public void open() {
         setLocationRelativeTo(null);
