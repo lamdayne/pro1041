@@ -111,7 +111,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             return null;
         }
         
-        if (!rdoManager.isSelected() && !rdoManager.isSelected()) {
+        if (!rdoManager.isSelected() && !rdoStaff.isSelected()) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn vai trò!");
             return null;
         }
