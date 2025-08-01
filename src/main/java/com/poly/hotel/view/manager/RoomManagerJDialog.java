@@ -23,7 +23,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Windows
  */
 public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManagerController {
-private RoomDAO dao = new RoomDAOImpl();
+
+    private RoomDAO dao = new RoomDAOImpl();
     private RoomCategoryDAO categoryDao = new RoomCategoryDAOImpl();
     private List<Room> items = new ArrayList<>();
 
@@ -63,13 +64,15 @@ private RoomDAO dao = new RoomDAOImpl();
         model.setRowCount(0);
         items = dao.findAll();
         items.forEach(item -> {
+            RoomCategory category = categoryDao.findById(String.valueOf(item.getCategoryID()));
+            String categoryName = category.getCategoryName();
             model.addRow(new Object[]{
                 item.getRoomID(),
-                item.getCategoryID(),
+                categoryName,
                 item.getFloor(),
                 item.getStatus(),
                 item.getDesc(),
-                item.isActive(),
+                item.isActive() ? "Hoạt động" : "Ngưng HĐ",
                 false
             });
         });
@@ -108,14 +111,15 @@ private RoomDAO dao = new RoomDAOImpl();
                 }
             }
             fillToTable();
-            JOptionPane.showMessageDialog(this, "Xóa các mục đã chọn thành công!");
+            MsgBox.alertSuccess("Xóa các mục đã chọn thành công!");
         }
     }
 
     @Override
     public void setForm(Room entity) {
         txtRoomId.setText(entity.getRoomID());
-        cboRoomCategory.setSelectedItem(String.valueOf(entity.getCategoryID()));
+        RoomCategory category = categoryDao.findById(String.valueOf(entity.getCategoryID()));
+        cboRoomCategory.setSelectedItem(category.getCategoryID());
         cboFloor.setSelectedItem(String.valueOf(entity.getFloor()));
         cboStatus.setSelectedItem(entity.getStatus());
         txtDesc.setText(entity.getDesc());
@@ -127,8 +131,14 @@ private RoomDAO dao = new RoomDAOImpl();
     public Room getForm() {
         Room entity = new Room();
         entity.setRoomID(txtRoomId.getText());
-        entity.setCategoryID(Integer.parseInt((String) cboRoomCategory.getSelectedItem()));
-        entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
+        String categoryName = (String) cboRoomCategory.getSelectedItem();
+        RoomCategory category = categoryDao.findByName(categoryName);
+        entity.setCategoryID((int)cboRoomCategory.getSelectedItem());
+        try {
+            entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
+        } catch (NumberFormatException e) {
+            entity.setFloor(0);
+        }
         entity.setStatus((String) cboStatus.getSelectedItem());
         entity.setDesc(txtDesc.getText());
         entity.setActive(rdoActive.isSelected());
@@ -139,12 +149,45 @@ private RoomDAO dao = new RoomDAOImpl();
     public void create() {
         try {
             Room entity = getForm();
+            if (entity.getRoomID() == null || entity.getRoomID().trim().isEmpty()) {
+                MsgBox.alertFail("Mã phòng không được để trống!");
+                return;
+            }
+            if (cboRoomCategory.getSelectedItem() == null) {
+                MsgBox.alertFail("Vui lòng chọn loại phòng!");
+                return;
+            }
+            if (entity.getCategoryID() == 0) {
+                MsgBox.alertFail("Loại phòng không hợp lệ!");
+                return;
+            }
+            if (cboFloor.getSelectedItem() == null) {
+                MsgBox.alertFail("Vui lòng chọn tầng!");
+                return;
+            }
+            if (entity.getFloor() <= 0) {
+                MsgBox.alertFail("Tầng phải là số dương!");
+                return;
+            }
+            if (cboStatus.getSelectedItem() == null) {
+                MsgBox.alertFail("Vui lòng chọn trạng thái!");
+                return;
+            }
+            if (entity.getDesc() == null || entity.getDesc().trim().isEmpty()) {
+                MsgBox.alertFail("Mô tả không được để trống!");
+                return;
+            }
+            if (!rdoActive.isSelected() && !rdoStopped.isSelected()) {
+                MsgBox.alertFail("Vui lòng chọn trạng thái hoạt động!");
+                return;
+            }
+
             dao.create(entity);
             fillToTable();
             clear();
             MsgBox.alertSuccess("Tạo phòng thành công!");
         } catch (Exception e) {
-            MsgBox.alertFail("Lỗi khi tạo phòng: ");
+            MsgBox.alertFail("Lỗi khi tạo phòng: " + e.getMessage());
         }
     }
 
@@ -156,7 +199,7 @@ private RoomDAO dao = new RoomDAOImpl();
             fillToTable();
             MsgBox.alertSuccess("Cập nhật phòng thành công!");
         } catch (Exception e) {
-            MsgBox.alertFail("Lỗi khi cập nhật phòng: ");
+            MsgBox.alertFail("Lỗi khi cập nhật phòng: " + e.getMessage());
         }
     }
 
@@ -279,6 +322,7 @@ private RoomDAO dao = new RoomDAOImpl();
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Tình trạng");
 
+        cboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3" }));
         cboStatus.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -286,6 +330,7 @@ private RoomDAO dao = new RoomDAOImpl();
 
         txtDesc.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
+        cboFloor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
         cboFloor.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -468,7 +513,7 @@ private RoomDAO dao = new RoomDAOImpl();
     private void btnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAllActionPerformed
         // TODO add your handling code here:
         this.checkAll();
-        
+
     }//GEN-LAST:event_btnCheckAllActionPerformed
 
     private void btnUncheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUncheckAllActionPerformed

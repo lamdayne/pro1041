@@ -11,5 +11,5 @@ import com.poly.hotel.entity.RoomCategory;
  * @author Windows
  */
 public interface RoomCategoryDAO extends CrudDAO<RoomCategory, String>{
-    
+    RoomCategory findByName(String name);
 }
