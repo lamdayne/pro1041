@@ -37,46 +37,8 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         } catch (Exception e) {
             System.out.println("Không thể tải logo: " + e.getMessage());
         }
-        fillCategories();
-        fillFloors();
-        fillStatuses();
         fillToTable();
     }
-
-    private void fillCategories() {
-        cboRoomCategory.removeAllItems();
-        try {
-            for (RoomCategory category : categoryDao.findAll()) {
-                cboRoomCategory.addItem(category.getCategoryName());
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi thêm loại phòng: " + e.getMessage());
-        }
-    }
-
-    private void fillFloors() {
-        cboFloor.removeAllItems();
-        try {
-            for (Integer floor : dao.findDistinctFloors()) {
-                cboFloor.addItem(String.valueOf(floor));
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi thêm tầng: " + e.getMessage());
-        }
-    }
-
-    private void fillStatuses() {
-        cboStatus.removeAllItems();
-        try {
-            List<String> statuses = List.of("Trống", "Đang thuê", "Đang dọn dẹp", "Đang sửa chữa");
-            for (String status : statuses) {
-                cboStatus.addItem(status);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi thêm trạng thái: " + e.getMessage());
-        }
-    }
-
     @Override
     public void open() {
         setLocationRelativeTo(null);
@@ -175,7 +137,6 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
     public void create() {
         try {
             Room entity = getForm();
-            // Kiểm tra các trường không được để trống hoặc không hợp lệ
             if (entity.getRoomID() == null || entity.getRoomID().trim().isEmpty()) {
                 MsgBox.alertFail("Mã phòng không được để trống!");
                 return;
@@ -349,6 +310,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Tình trạng");
 
+        cboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3" }));
         cboStatus.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
