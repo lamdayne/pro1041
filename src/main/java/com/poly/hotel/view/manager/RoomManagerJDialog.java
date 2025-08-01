@@ -116,34 +116,27 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
     }
 
     @Override
-    public void setForm(Room entity) {
-        txtRoomId.setText(entity.getRoomID());
-        RoomCategory category = categoryDao.findById(String.valueOf(entity.getCategoryID()));
-        cboRoomCategory.setSelectedItem(category.getCategoryID());
-        cboFloor.setSelectedItem(String.valueOf(entity.getFloor()));
-        cboStatus.setSelectedItem(entity.getStatus());
-        txtDesc.setText(entity.getDesc());
-        rdoActive.setSelected(entity.isActive());
-        rdoStopped.setSelected(!entity.isActive());
-    }
+public void setForm(Room entity) {
+    txtRoomId.setText(entity.getRoomID());
+    cboRoomCategory.setSelectedItem(String.valueOf(entity.getCategoryID()));
+    cboFloor.setSelectedItem(String.valueOf(entity.getFloor()));
+    cboStatus.setSelectedItem(entity.getStatus());
+    txtDesc.setText(entity.getDesc());
+    rdoActive.setSelected(entity.isActive());
+    rdoStopped.setSelected(!entity.isActive());
+}
 
-    @Override
-    public Room getForm() {
-        Room entity = new Room();
-        entity.setRoomID(txtRoomId.getText());
-        String categoryName = (String) cboRoomCategory.getSelectedItem();
-        RoomCategory category = categoryDao.findByName(categoryName);
-        entity.setCategoryID((int)cboRoomCategory.getSelectedItem());
-        try {
-            entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
-        } catch (NumberFormatException e) {
-            entity.setFloor(0);
-        }
-        entity.setStatus((String) cboStatus.getSelectedItem());
-        entity.setDesc(txtDesc.getText());
-        entity.setActive(rdoActive.isSelected());
-        return entity;
-    }
+@Override
+public Room getForm() {
+    Room entity = new Room();
+    entity.setRoomID(txtRoomId.getText());
+    entity.setCategoryID(Integer.parseInt((String) cboRoomCategory.getSelectedItem()));
+    entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
+    entity.setStatus((String) cboStatus.getSelectedItem());
+    entity.setDesc(txtDesc.getText());
+    entity.setActive(rdoActive.isSelected());
+    return entity;
+}
 
     @Override
     public void create() {
@@ -188,6 +181,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
             MsgBox.alertSuccess("Tạo phòng thành công!");
         } catch (Exception e) {
             MsgBox.alertFail("Lỗi khi tạo phòng: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

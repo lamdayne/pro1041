@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class RoomDAOImpl implements RoomDAO {
 
-    String createSql = "INSERT INTO Room (roomID, categoryID, floor, status, [desc], isActive AS Active) VALUES (?, ?, ?, ?, ?, ?)";
+    String createSql = "INSERT INTO Room (roomID, categoryID, floor, status, [desc], isActive) VALUES (?, ?, ?, ?, ?, ?)";
     String updateSql = "UPDATE Room SET categoryID=?, floor=?, status=?, [desc]=?, isActive=? WHERE roomID=?";
     String deleteSql = "DELETE FROM Room WHERE roomID=?";
     String findAllSql = "SELECT roomID, categoryID, floor, status, [desc], isActive AS Active FROM Room";
