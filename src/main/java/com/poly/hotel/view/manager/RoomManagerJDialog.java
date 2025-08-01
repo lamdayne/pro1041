@@ -36,8 +36,6 @@ private RoomDAO dao = new RoomDAOImpl();
             System.out.println("Không thể tải logo: " + e.getMessage());
         }
         fillCategories();
-        fillFloors();
-        fillStatuses();
         fillToTable();
     }
 
@@ -49,28 +47,6 @@ private RoomDAO dao = new RoomDAOImpl();
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi thêm loại phòng!");
-        }
-    }
-
-    private void fillFloors() {
-        cboFloor.removeAllItems();
-        try {
-            for (Integer floor : dao.findDistinctFloors()) {
-                cboFloor.addItem(String.valueOf(floor));
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi thêm tầng!");
-        }
-    }
-
-    private void fillStatuses() {
-        cboStatus.removeAllItems();
-        try {
-            for (String status : dao.findDistinctStatuses()) {
-                cboStatus.addItem(status);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi thêm trạng thái!");
         }
     }
 

@@ -13,7 +13,4 @@ import java.util.List;
  */
 public interface RoomDAO extends CrudDAO<Room, String> {
 
-    List<Integer> findDistinctFloors();
-
-    List<String> findDistinctStatuses();
 }
