@@ -4,6 +4,8 @@
 
 package com.poly.hotel.hotelmanager;
 
+import com.poly.hotel.view.HotelJFrame;
+
 /**
  *
  * @author PHUONG LAM
@@ -11,6 +13,10 @@ package com.poly.hotel.hotelmanager;
 public class Hotelmanager {
 
     public static void main(String[] args) {
-        System.out.println("Hello World! 1");
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new HotelJFrame().setVisible(true);
+            }
+        });
     }
 }
