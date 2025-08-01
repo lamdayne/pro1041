@@ -14,7 +14,6 @@ import com.poly.hotel.entity.RoomCategory;
 import com.poly.hotel.util.MsgBox;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -37,6 +36,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         } catch (Exception e) {
             System.out.println("Không thể tải logo: " + e.getMessage());
         }
+        fillCategories();
         fillToTable();
     }
 
@@ -64,8 +64,8 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         model.setRowCount(0);
         items = dao.findAll();
         items.forEach(item -> {
-            Optional<RoomCategory> category = Optional.ofNullable(categoryDao.findById(String.valueOf(item.getCategoryID())));
-            String categoryName = category.map(RoomCategory::getCategoryName).orElse("Không xác định");
+            RoomCategory category = categoryDao.findById(String.valueOf(item.getCategoryID()));
+            String categoryName = category.getCategoryName();
             model.addRow(new Object[]{
                 item.getRoomID(),
                 categoryName,
@@ -118,8 +118,8 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
     @Override
     public void setForm(Room entity) {
         txtRoomId.setText(entity.getRoomID());
-        Optional<RoomCategory> category = Optional.ofNullable(categoryDao.findById(String.valueOf(entity.getCategoryID())));
-        cboRoomCategory.setSelectedItem(category.map(RoomCategory::getCategoryName).orElse(null));
+        RoomCategory category = categoryDao.findById(String.valueOf(entity.getCategoryID()));
+        cboRoomCategory.setSelectedItem(category.getCategoryID());
         cboFloor.setSelectedItem(String.valueOf(entity.getFloor()));
         cboStatus.setSelectedItem(entity.getStatus());
         txtDesc.setText(entity.getDesc());
@@ -132,8 +132,8 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         Room entity = new Room();
         entity.setRoomID(txtRoomId.getText());
         String categoryName = (String) cboRoomCategory.getSelectedItem();
-        Optional<RoomCategory> category = categoryDao.findByName(categoryName);
-        entity.setCategoryID(category.map(RoomCategory::getCategoryID).orElse(0));
+        RoomCategory category = categoryDao.findByName(categoryName);
+        entity.setCategoryID((int)cboRoomCategory.getSelectedItem());
         try {
             entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
         } catch (NumberFormatException e) {
@@ -330,6 +330,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
 
         txtDesc.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
+        cboFloor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
         cboFloor.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         btnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N

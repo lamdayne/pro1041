@@ -5,12 +5,11 @@
 package com.poly.hotel.dao;
 
 import com.poly.hotel.entity.RoomCategory;
-import java.util.Optional;
 
 /**
  *
  * @author Windows
  */
 public interface RoomCategoryDAO extends CrudDAO<RoomCategory, String>{
-    Optional<RoomCategory> findByName(String name);
+    RoomCategory findByName(String name);
 }

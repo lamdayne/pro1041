@@ -65,9 +65,8 @@ public class RoomCategoryDAOImpl implements RoomCategoryDAO{
     public RoomCategory findById(String CategoryID) {
         return XQuery.getSingleBean(RoomCategory.class, findByIdSql, CategoryID);
     }
-     @Override
-    public Optional<RoomCategory> findByName(String name) {
-        RoomCategory category = XQuery.getSingleBean(RoomCategory.class, findByNameSql, name);
-        return Optional.ofNullable(category);
+    @Override
+    public RoomCategory findByName(String name) {
+        return XQuery.getSingleBean(RoomCategory.class, findByNameSql, name);
     }
 }
