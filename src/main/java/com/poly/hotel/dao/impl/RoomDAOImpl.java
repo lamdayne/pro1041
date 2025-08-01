@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class RoomDAOImpl implements RoomDAO {
 
-    String createSql = "INSERT INTO Room (roomID, categoryID, floor, status, [desc], isActive AS Active) VALUES (?, ?, ?, ?, ?, ?)";
+    String createSql = "INSERT INTO Room (roomID, categoryID, floor, status, [desc], isActive) VALUES (?, ?, ?, ?, ?, ?)";
     String updateSql = "UPDATE Room SET categoryID=?, floor=?, status=?, [desc]=?, isActive=? WHERE roomID=?";
     String deleteSql = "DELETE FROM Room WHERE roomID=?";
     String findAllSql = "SELECT roomID, categoryID, floor, status, [desc], isActive AS Active FROM Room";
@@ -50,30 +50,6 @@ public class RoomDAOImpl implements RoomDAO {
 
         };
         XJdbc.executeUpdate(updateSql, values);
-    }
-
-    public List<Integer> findDistinctFloors() {
-        List<Integer> floors = new ArrayList<>();
-        try (ResultSet rs = XJdbc.executeQuery("SELECT DISTINCT floor FROM Room WHERE isActive = 1 ORDER BY floor")) {
-            while (rs.next()) {
-                floors.add(rs.getInt("floor"));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return floors;
-    }
-
-    public List<String> findDistinctStatuses() {
-        List<String> statuses = new ArrayList<>();
-        try (ResultSet rs = XJdbc.executeQuery("SELECT DISTINCT status FROM Room WHERE isActive = 1 ORDER BY status")) {
-            while (rs.next()) {
-                statuses.add(rs.getString("status"));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return statuses;
     }
 
     @Override

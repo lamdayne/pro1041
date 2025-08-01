@@ -8,7 +8,6 @@ import com.poly.hotel.controller.LoginController;
 import com.poly.hotel.dao.UserDAO;
 import com.poly.hotel.dao.impl.UserDAOImpl;
 import com.poly.hotel.entity.User;
-import com.poly.hotel.util.InputUtil;
 import com.poly.hotel.util.MsgBox;
 import com.poly.hotel.util.XAuth;
 import java.awt.Color;
@@ -55,6 +54,7 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         jLabel5 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         lbForgotPassword = new javax.swing.JLabel();
+        lbCreateUser = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -142,6 +142,15 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
             }
         });
 
+        lbCreateUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbCreateUser.setForeground(new java.awt.Color(51, 51, 255));
+        lbCreateUser.setText("Tạo tài khoản");
+        lbCreateUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbCreateUserMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -164,6 +173,10 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
                             .addComponent(jLabel3)
                             .addComponent(txtPassword))))
                 .addContainerGap(58, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lbCreateUser)
+                .addGap(209, 209, 209))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +197,9 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
                     .addComponent(lbForgotPassword))
                 .addGap(18, 18, 18)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(lbCreateUser)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -274,6 +289,13 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         }
     }//GEN-LAST:event_showPasswordActionPerformed
 
+    private void lbCreateUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbCreateUserMouseClicked
+        // TODO add your handling code here:
+        SignUpJDialog dialog = new SignUpJDialog((Frame) this.getOwner(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_lbCreateUserMouseClicked
+
     @Override
     public void open() {
         this.setLocationRelativeTo(null);
@@ -360,6 +382,7 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lbCreateUser;
     private javax.swing.JLabel lbForgotPassword;
     private javax.swing.JCheckBox showPassword;
     private javax.swing.JPasswordField txtPassword;
