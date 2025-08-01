@@ -11,6 +11,7 @@ import com.poly.hotel.view.manager.RoomManagerJDialog;
 import com.poly.hotel.view.manager.ServiceCategoryManagerJDialog;
 import com.poly.hotel.view.manager.ServiceManagerJDialog;
 import com.poly.hotel.view.manager.UserManagerJDialog;
+import java.awt.Frame;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -328,6 +329,11 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
             btnServiceManager.setVisible(false);
             btnUserManager.setVisible(false);
         }
+    }
+    
+    @Override
+    public Frame getFrame() {
+        return this;
     }
 
     /**
