@@ -55,7 +55,7 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
                 item.getBaseHourPrice(),
                 item.getBaseDailyPrice(),
                 item.getMaxOccupancy(),
-                item.isActive(),
+                item.isActive() ? "Hoạt động" : "Ngưng HĐ",
                 false
             });
         });
@@ -127,6 +127,57 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
     public void create() {
         try {
             RoomCategory entity = getForm();
+            if (entity.getCategoryName() == null || entity.getCategoryName().trim().isEmpty()) {
+                MsgBox.alertFail("Tên loại phòng không được để trống!");
+                return;
+            }
+            if (entity.getDesc() == null || entity.getDesc().trim().isEmpty()) {
+                MsgBox.alertFail("Mô tả không được để trống!");
+                return;
+            }
+            if (txtHourPrice.getText().trim().isEmpty()) {
+                MsgBox.alertFail("Giá theo giờ không được để trống!");
+                return;
+            }
+            try {
+                if (entity.getBaseHourPrice() <= 0) {
+                    MsgBox.alertFail("Giá theo giờ phải là số dương!");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                MsgBox.alertFail("Giá theo giờ phải là số hợp lệ!");
+                return;
+            }
+            if (txtDailyPrice.getText().trim().isEmpty()) {
+                MsgBox.alertFail("Giá theo ngày không được để trống!");
+                return;
+            }
+            try {
+                if (entity.getBaseDailyPrice() <= 0) {
+                    MsgBox.alertFail("Giá theo ngày phải là số dương!");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                MsgBox.alertFail("Giá theo ngày phải là số hợp lệ!");
+                return;
+            }
+            if (txtOccupancy.getText().trim().isEmpty()) {
+                MsgBox.alertFail("Sức chứa không được để trống!");
+                return;
+            }
+            try {
+                if (entity.getMaxOccupancy() <= 0) {
+                    MsgBox.alertFail("Sức chứa phải là số dương!");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                MsgBox.alertFail("Sức chứa phải là số hợp lệ!");
+                return;
+            }
+            if (!rdoActive.isSelected() && !rdoStopped.isSelected()) {
+                MsgBox.alertFail("Vui lòng chọn trạng thái hoạt động!");
+                return;
+            }
             dao.create(entity);
             fillToTable();
             clear();
@@ -223,6 +274,11 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
         txtDescription.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
 
         txtId.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(204, 218, 255)));
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Tên Loại phòng");
@@ -509,6 +565,10 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
             this.edit();
         }
     }//GEN-LAST:event_tblCategoriesMouseClicked
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdActionPerformed
 
     /**
      * @param args the command line arguments

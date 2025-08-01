@@ -9,6 +9,7 @@ import com.poly.hotel.entity.RoomCategory;
 import com.poly.hotel.util.XJdbc;
 import com.poly.hotel.util.XQuery;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -20,7 +21,7 @@ public class RoomCategoryDAOImpl implements RoomCategoryDAO{
     String deleteSql = "DELETE FROM RoomCategory WHERE CategoryID = ?";
     String findAllSql = "SELECT CategoryID, CategoryName, [desc], baseHourPrice AS BaseHourPrice, baseDailyPrice AS BaseDailyPrice, maxOccupancy, isActive AS Active FROM RoomCategory";
     String findByIdSql = "SELECT CategoryID, CategoryName, [desc], baseHourPrice AS BaseHourPrice, baseDailyPrice AS BaseDailyPrice, maxOccupancy, isActive AS Active FROM RoomCategory WHERE CategoryID = ?";
-
+    String findByNameSql = "SELECT CategoryID, CategoryName, [desc], baseHourPrice AS BaseHourPrice, baseDailyPrice AS BaseDailyPrice, maxOccupancy, isActive AS Active FROM RoomCategory WHERE CategoryName = ?";
     @Override
     public RoomCategory create(RoomCategory entity) {
         Object[] values = { 
@@ -63,5 +64,10 @@ public class RoomCategoryDAOImpl implements RoomCategoryDAO{
     @Override
     public RoomCategory findById(String CategoryID) {
         return XQuery.getSingleBean(RoomCategory.class, findByIdSql, CategoryID);
+    }
+     @Override
+    public Optional<RoomCategory> findByName(String name) {
+        RoomCategory category = XQuery.getSingleBean(RoomCategory.class, findByNameSql, name);
+        return Optional.ofNullable(category);
     }
 }

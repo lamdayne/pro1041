@@ -14,6 +14,7 @@ import com.poly.hotel.entity.RoomCategory;
 import com.poly.hotel.util.MsgBox;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -23,7 +24,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Windows
  */
 public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManagerController {
-private RoomDAO dao = new RoomDAOImpl();
+
+    private RoomDAO dao = new RoomDAOImpl();
     private RoomCategoryDAO categoryDao = new RoomCategoryDAOImpl();
     private List<Room> items = new ArrayList<>();
 
@@ -45,10 +47,10 @@ private RoomDAO dao = new RoomDAOImpl();
         cboRoomCategory.removeAllItems();
         try {
             for (RoomCategory category : categoryDao.findAll()) {
-                cboRoomCategory.addItem(String.valueOf(category.getCategoryID()));
+                cboRoomCategory.addItem(category.getCategoryName());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi thêm loại phòng!");
+            JOptionPane.showMessageDialog(this, "Lỗi thêm loại phòng: " + e.getMessage());
         }
     }
 
@@ -59,18 +61,19 @@ private RoomDAO dao = new RoomDAOImpl();
                 cboFloor.addItem(String.valueOf(floor));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi thêm tầng!");
+            JOptionPane.showMessageDialog(this, "Lỗi thêm tầng: " + e.getMessage());
         }
     }
 
     private void fillStatuses() {
         cboStatus.removeAllItems();
         try {
-            for (String status : dao.findDistinctStatuses()) {
+            List<String> statuses = List.of("Trống", "Đang thuê", "Đang dọn dẹp", "Đang sửa chữa");
+            for (String status : statuses) {
                 cboStatus.addItem(status);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi thêm trạng thái!");
+            JOptionPane.showMessageDialog(this, "Lỗi thêm trạng thái: " + e.getMessage());
         }
     }
 
@@ -87,13 +90,15 @@ private RoomDAO dao = new RoomDAOImpl();
         model.setRowCount(0);
         items = dao.findAll();
         items.forEach(item -> {
+            Optional<RoomCategory> category = Optional.ofNullable(categoryDao.findById(String.valueOf(item.getCategoryID())));
+            String categoryName = category.map(RoomCategory::getCategoryName).orElse("Không xác định");
             model.addRow(new Object[]{
                 item.getRoomID(),
-                item.getCategoryID(),
+                categoryName,
                 item.getFloor(),
                 item.getStatus(),
                 item.getDesc(),
-                item.isActive(),
+                item.isActive() ? "Hoạt động" : "Ngưng HĐ",
                 false
             });
         });
@@ -132,14 +137,15 @@ private RoomDAO dao = new RoomDAOImpl();
                 }
             }
             fillToTable();
-            JOptionPane.showMessageDialog(this, "Xóa các mục đã chọn thành công!");
+            MsgBox.alertSuccess("Xóa các mục đã chọn thành công!");
         }
     }
 
     @Override
     public void setForm(Room entity) {
         txtRoomId.setText(entity.getRoomID());
-        cboRoomCategory.setSelectedItem(String.valueOf(entity.getCategoryID()));
+        Optional<RoomCategory> category = Optional.ofNullable(categoryDao.findById(String.valueOf(entity.getCategoryID())));
+        cboRoomCategory.setSelectedItem(category.map(RoomCategory::getCategoryName).orElse(null));
         cboFloor.setSelectedItem(String.valueOf(entity.getFloor()));
         cboStatus.setSelectedItem(entity.getStatus());
         txtDesc.setText(entity.getDesc());
@@ -151,8 +157,14 @@ private RoomDAO dao = new RoomDAOImpl();
     public Room getForm() {
         Room entity = new Room();
         entity.setRoomID(txtRoomId.getText());
-        entity.setCategoryID(Integer.parseInt((String) cboRoomCategory.getSelectedItem()));
-        entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
+        String categoryName = (String) cboRoomCategory.getSelectedItem();
+        Optional<RoomCategory> category = categoryDao.findByName(categoryName);
+        entity.setCategoryID(category.map(RoomCategory::getCategoryID).orElse(0));
+        try {
+            entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
+        } catch (NumberFormatException e) {
+            entity.setFloor(0);
+        }
         entity.setStatus((String) cboStatus.getSelectedItem());
         entity.setDesc(txtDesc.getText());
         entity.setActive(rdoActive.isSelected());
@@ -163,12 +175,46 @@ private RoomDAO dao = new RoomDAOImpl();
     public void create() {
         try {
             Room entity = getForm();
+            // Kiểm tra các trường không được để trống hoặc không hợp lệ
+            if (entity.getRoomID() == null || entity.getRoomID().trim().isEmpty()) {
+                MsgBox.alertFail("Mã phòng không được để trống!");
+                return;
+            }
+            if (cboRoomCategory.getSelectedItem() == null) {
+                MsgBox.alertFail("Vui lòng chọn loại phòng!");
+                return;
+            }
+            if (entity.getCategoryID() == 0) {
+                MsgBox.alertFail("Loại phòng không hợp lệ!");
+                return;
+            }
+            if (cboFloor.getSelectedItem() == null) {
+                MsgBox.alertFail("Vui lòng chọn tầng!");
+                return;
+            }
+            if (entity.getFloor() <= 0) {
+                MsgBox.alertFail("Tầng phải là số dương!");
+                return;
+            }
+            if (cboStatus.getSelectedItem() == null) {
+                MsgBox.alertFail("Vui lòng chọn trạng thái!");
+                return;
+            }
+            if (entity.getDesc() == null || entity.getDesc().trim().isEmpty()) {
+                MsgBox.alertFail("Mô tả không được để trống!");
+                return;
+            }
+            if (!rdoActive.isSelected() && !rdoStopped.isSelected()) {
+                MsgBox.alertFail("Vui lòng chọn trạng thái hoạt động!");
+                return;
+            }
+
             dao.create(entity);
             fillToTable();
             clear();
             MsgBox.alertSuccess("Tạo phòng thành công!");
         } catch (Exception e) {
-            MsgBox.alertFail("Lỗi khi tạo phòng: ");
+            MsgBox.alertFail("Lỗi khi tạo phòng: " + e.getMessage());
         }
     }
 
@@ -180,7 +226,7 @@ private RoomDAO dao = new RoomDAOImpl();
             fillToTable();
             MsgBox.alertSuccess("Cập nhật phòng thành công!");
         } catch (Exception e) {
-            MsgBox.alertFail("Lỗi khi cập nhật phòng: ");
+            MsgBox.alertFail("Lỗi khi cập nhật phòng: " + e.getMessage());
         }
     }
 
@@ -492,7 +538,7 @@ private RoomDAO dao = new RoomDAOImpl();
     private void btnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAllActionPerformed
         // TODO add your handling code here:
         this.checkAll();
-        
+
     }//GEN-LAST:event_btnCheckAllActionPerformed
 
     private void btnUncheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUncheckAllActionPerformed
