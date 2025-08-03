@@ -322,7 +322,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
 
     private void btnRevenueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevenueActionPerformed
         // TODO add your handling code here:
-        new RevenueJDialog();
+        
     }//GEN-LAST:event_btnRevenueActionPerformed
 
     @Override
