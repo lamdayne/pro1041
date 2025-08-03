@@ -44,7 +44,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         cboRoomCategory.removeAllItems();
         try {
             for (RoomCategory category : categoryDao.findAll()) {
-                cboRoomCategory.addItem(String.valueOf(category.getCategoryID()));
+                cboRoomCategory.addItem(String.valueOf(category.getCategoryName()));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi thêm loại phòng!");
@@ -130,7 +130,8 @@ public void setForm(Room entity) {
 public Room getForm() {
     Room entity = new Room();
     entity.setRoomID(txtRoomId.getText());
-    entity.setCategoryID(Integer.parseInt((String) cboRoomCategory.getSelectedItem()));
+    RoomCategory itemCategory = categoryDao.findByName((String) cboRoomCategory.getSelectedItem());
+    entity.setCategoryID(itemCategory.getCategoryID());
     entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
     entity.setStatus((String) cboStatus.getSelectedItem());
     entity.setDesc(txtDesc.getText());
