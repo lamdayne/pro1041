@@ -144,6 +144,11 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         btnRevenue.setContentAreaFilled(false);
         btnRevenue.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnRevenue.setIconTextGap(10);
+        btnRevenue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRevenueActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnRevenue, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 210, 50));
 
         btnLogout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -314,6 +319,11 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
         // TODO add your handling code here:
         setMainPanelFromDialog(new ServiceCategoryManagerJDialog(this, true));
     }//GEN-LAST:event_btnCategoryServiceActionPerformed
+
+    private void btnRevenueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevenueActionPerformed
+        // TODO add your handling code here:
+        new RevenueJDialog();
+    }//GEN-LAST:event_btnRevenueActionPerformed
 
     @Override
     public void init() {
