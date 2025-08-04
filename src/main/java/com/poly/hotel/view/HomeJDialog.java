@@ -475,6 +475,7 @@ public class HomeJDialog extends javax.swing.JDialog implements HomeController {
                 btnRoom.setBackground(new Color(255, 153, 51));
                 break;
             case "3":
+                btnRoom.setEnabled(false);
                 btnRoom.setBackground(new Color(153, 153, 153));
                 break;
             default:
