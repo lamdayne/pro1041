@@ -1,28 +1,31 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package com.poly.hotel.view;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+
 
 /**
  *
  * @author ASUS
  */
-public class RevenueJDialog extends javax.swing.JFrame {
-   
-
-    
+public class RevenueJDialog extends JDialog {
+           
     /**
-     * Creates new form RevenueJDialog
+     * Creates new form demo
      */
-    public RevenueJDialog() {
+    public RevenueJDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
-          setIconImage(new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage());
-
+         setIconImage(new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage());
     }
+    
 
+     
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,10 +37,13 @@ public class RevenueJDialog extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btnPay = new javax.swing.JButton();
+        btndelete = new javax.swing.JButton();
+        btncance = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 255));
         jPanel3.setForeground(new java.awt.Color(51, 255, 102));
@@ -53,7 +59,7 @@ public class RevenueJDialog extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(649, Short.MAX_VALUE))
+                .addContainerGap(578, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -71,7 +77,7 @@ public class RevenueJDialog extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Ngày Boking", "BillID (mã hóa đơn)", "MÃ Phòng ", "Tiền Phòng", "Tiền Dịch Vụ", "Tổng Tiền", ""
+                "Ngày Boking", "Bill ( mã hóa đơn)", "Mã Phòng", "Tiền Phòng", "Tiền Dịch Vụ", "Tổng Tiền", ""
             }
         ) {
             Class[] types = new Class [] {
@@ -82,26 +88,62 @@ public class RevenueJDialog extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable1);
+
+        btnPay.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnPay.setForeground(new java.awt.Color(51, 51, 255));
+        btnPay.setText("Thanh toán ");
+
+        btndelete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btndelete.setForeground(new java.awt.Color(255, 51, 51));
+        btndelete.setText("Xóa hóa đơn");
+
+        btncance.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btncance.setForeground(new java.awt.Color(255, 204, 102));
+        btncance.setText("Hủy ");
+        btncance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncanceActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btndelete)
+                .addGap(8, 8, 8)
+                .addComponent(btncance, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(471, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPay, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btncance)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btndelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btncanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncanceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btncanceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,19 +171,30 @@ public class RevenueJDialog extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(RevenueJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RevenueJDialog().setVisible(true);
+                RevenueJDialog dialog = new RevenueJDialog(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPay;
+    private javax.swing.JButton btncance;
+    private javax.swing.JButton btndelete;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
