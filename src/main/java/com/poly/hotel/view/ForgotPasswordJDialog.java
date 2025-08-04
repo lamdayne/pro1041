@@ -184,6 +184,14 @@ public class ForgotPasswordJDialog extends javax.swing.JDialog {
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
         // TODO add your handling code here:
         User user = dao.findByEmail(txtEmail.getText());
+        if (txtEmail.getText().isEmpty() || txtEmail.getText().equalsIgnoreCase("Nhập email")) {
+            MsgBox.alert("Vui lòng nhập email");
+            return;
+        }
+        if (txtCodeReset.getText().isEmpty() || txtCodeReset.getText().equalsIgnoreCase("Nhập mã xác nhận")) {
+            MsgBox.alert("Vui lòng ấn gửi và nhập mã xác nhận");
+            return;
+        }
         if (MailService.verifyCode(txtCodeReset.getText())) {
             ChangePasswordJDialog dialog = new ChangePasswordJDialog((Frame) this.getOwner(), true);
             this.dispose();

@@ -22,9 +22,6 @@ public class RevenueJDialog extends JDialog {
         initComponents();
          setIconImage(new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage());
     }
-    
-
-     
    
     /**
      * This method is called from within the constructor to initialize the form.
