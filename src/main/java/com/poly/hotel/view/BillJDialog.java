@@ -49,7 +49,6 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
 
     @Override
     public void open() {
-
         fillToTable();
         clear();
         setEditable(true);
@@ -77,7 +76,6 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         bill.setPaymentStatus(cbopaymentStatus.getSelectedItem().toString());
         bill.setUsername(txtUsername.getText());
         return bill;
-
     }
 
     @Override
@@ -97,6 +95,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
                 false
             });
         }
+        System.out.println("[TEST] Số hóa đơn hiển thị: " + list.size());
     }
 
     @Override
@@ -104,11 +103,16 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         int row = tblBill.getSelectedRow();
         if (row >= 0) {
             String billID = tblBill.getValueAt(row, 0).toString();
+            System.out.println("[TEST] Chỉnh sửa hóa đơn với BillID = " + billID);
             Bill bill = billDao.findById(billID);
             if (bill != null) {
                 setForm(bill);
                 setEditable(true);
+            } else {
+                System.out.println("[ERROR] Không tìm thấy hóa đơn!");
             }
+        } else {
+            System.out.println("[WARN] Không có dòng nào được chọn!");
         }
     }
 
@@ -129,6 +133,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
             MsgBox.alertSuccess("Thêm hóa đơn thành công!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi thêm hóa đơn: " + e.getMessage());
+            System.out.println("[ERROR] " + e.getMessage());
         }
     }
 
@@ -141,6 +146,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
             MsgBox.alertSuccess( "Cập nhật thành công!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi cập nhật: " + e.getMessage());
+            System.out.println("[ERROR] " + e.getMessage());
         }
     }
 
@@ -156,6 +162,8 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
                 clear();
                 MsgBox.alertSuccess( "Xóa thành công!");
             }
+        } else {
+            System.out.println("[WARN] Không có dòng nào được chọn để xóa!");
         }
     }
 
@@ -197,17 +205,20 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
 
     @Override
     public void deleteCheckedItems() {
+        int count = 0;
         for (int i = tblBill.getRowCount() - 1; i >= 0; i--) {
             Boolean checked = (Boolean) tblBill.getValueAt(i, 0);
             if (checked != null && checked) {
                 String billID = tblBill.getValueAt(i, 1).toString();
                 billDao.deleteById(billID);
+                count++;
             }
         }
         fillToTable();
         JOptionPane.showMessageDialog(this, "Đã xóa các hóa đơn được chọn!");
+        System.out.println("[SUCCESS] Số hóa đơn đã xóa: " + count);
     }
-    
+
     public void setFormToCheckout(int bookingId) {
         Booking item = dao.findById(String.valueOf(bookingId));
         txtId.setText(XStr.getKey(String.valueOf(item.getBookingID() + item.getCustomerID())));
