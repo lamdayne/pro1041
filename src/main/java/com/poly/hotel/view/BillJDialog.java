@@ -14,6 +14,7 @@ import com.poly.hotel.dao.impl.RoomDAOImpl;
 import com.poly.hotel.entity.Bill;
 import com.poly.hotel.entity.Booking;
 import com.poly.hotel.entity.Room;
+import com.poly.hotel.util.MsgBox;
 import com.poly.hotel.util.XDate;
 import com.poly.hotel.util.XStr;
 import java.awt.Color;
@@ -125,7 +126,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
             billDao.create(bill);
             fillToTable();
             clear();
-            JOptionPane.showMessageDialog(this, "Thêm hóa đơn thành công!");
+            MsgBox.alertSuccess("Thêm hóa đơn thành công!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi thêm hóa đơn: " + e.getMessage());
         }
@@ -137,7 +138,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         try {
             billDao.update(bill);
             fillToTable();
-            JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+            MsgBox.alertSuccess( "Cập nhật thành công!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi cập nhật: " + e.getMessage());
         }
@@ -153,7 +154,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
                 billDao.deleteById(billID);
                 fillToTable();
                 clear();
-                JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                MsgBox.alertSuccess( "Xóa thành công!");
             }
         }
     }
