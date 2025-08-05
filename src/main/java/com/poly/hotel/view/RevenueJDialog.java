@@ -4,28 +4,66 @@
  */
 package com.poly.hotel.view;
 
+import com.poly.hotel.dao.BillDAO;
+import com.poly.hotel.dao.BookingDAO;
+import com.poly.hotel.dao.impl.BillDAOImpl;
+import com.poly.hotel.dao.impl.BookingDAOImpl;
+import com.poly.hotel.entity.Bill;
+import com.poly.hotel.entity.Booking;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
-
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ASUS
  */
 public class RevenueJDialog extends JDialog {
-           
+
+    BookingDAO bookingDao = new BookingDAOImpl();
+    List<Booking> booking = bookingDao.findAll();
+    BillDAO billDao = new BillDAOImpl();
+    List<Bill> bill = billDao.findAll();
+
     /**
      * Creates new form demo
      */
     public RevenueJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-         setIconImage(new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage());
-    }
-    
+        setIconImage(new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage());
+        // Fill dữ liệu lên bảng
+        fillToTable();
 
-     
-   
+    }
+
+    public void fillToTable() {
+        DefaultTableModel model = (DefaultTableModel) tblRevenue.getModel();
+        model.setRowCount(0);
+        for (Booking item : booking) {
+
+            String billId = null;
+            for (Bill bitem : bill) {
+                if (bitem.getBookingID() == item.getBookingID()) {
+                    billId = bitem.getBillID();
+                    break;
+                }
+            }
+            Object[] rowData = {
+                item.getBookingDate(),
+                billId,
+                item.getRoomID(),
+                item.getTotalRoomAmount(),
+                item.getTotalServiceAmount(),
+                item.getTotalAmount(),
+                false
+            };
+
+            model.addRow(rowData);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,7 +76,7 @@ public class RevenueJDialog extends JDialog {
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblRevenue = new javax.swing.JTable();
         btnPay = new javax.swing.JButton();
         btndelete = new javax.swing.JButton();
         btncance = new javax.swing.JButton();
@@ -59,7 +97,7 @@ public class RevenueJDialog extends JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(578, Short.MAX_VALUE))
+                .addContainerGap(846, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -69,7 +107,7 @@ public class RevenueJDialog extends JDialog {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblRevenue.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -88,7 +126,7 @@ public class RevenueJDialog extends JDialog {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblRevenue);
 
         btnPay.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPay.setForeground(new java.awt.Color(51, 51, 255));
@@ -130,7 +168,7 @@ public class RevenueJDialog extends JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPay, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(btnPay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btncance)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -145,6 +183,9 @@ public class RevenueJDialog extends JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btncanceActionPerformed
 
+    /**
+     * @param args the command line arguments
+     */
     /**
      * @param args the command line arguments
      */
@@ -188,6 +229,8 @@ public class RevenueJDialog extends JDialog {
         });
     }
 
+    /* Create and display the dialog */
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPay;
     private javax.swing.JButton btncance;
@@ -195,6 +238,6 @@ public class RevenueJDialog extends JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblRevenue;
     // End of variables declaration//GEN-END:variables
 }
