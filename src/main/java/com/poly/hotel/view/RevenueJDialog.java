@@ -32,6 +32,7 @@ public class RevenueJDialog extends JDialog {
     public RevenueJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+<<<<<<< HEAD
         setIconImage(new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage());
         // Fill dữ liệu lên bảng
         fillToTable();
@@ -64,6 +65,11 @@ public class RevenueJDialog extends JDialog {
         }
     }
 
+=======
+         setIconImage(new ImageIcon(getClass().getResource("/com/poly/hotel/icons/5-stars.png")).getImage());
+    }
+   
+>>>>>>> d016bc12118c5c43214454d972848082872b08ac
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

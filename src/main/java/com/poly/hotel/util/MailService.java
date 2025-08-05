@@ -45,7 +45,7 @@ public class MailService {
             message.setContent(content, "text/html; charset=UTF-8");
             Transport.send(message);
             System.out.println("Send email success to " + to);
-            MsgBox.alert("Mã xác nhận đã gửi đến email của bạn");
+            MsgBox.alertSuccess("Mã xác nhận đã gửi đến email của bạn");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
