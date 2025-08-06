@@ -46,6 +46,18 @@ public class XStr {
         String key = "XXXXXXXX" + Integer.toHexString(Math.abs(hashCode)).toUpperCase();
         return key.substring(key.length() - 8);
     }
+    
+    public static String generateCode(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String code = "";
+
+        for (int i = 0; i < length; i++) {
+            int index = (int)(Math.random() * characters.length());
+            code += characters.charAt(index);
+        }
+
+        return code;
+    }
 
     public static void main(String[] args) {
         String encodedText = XStr.encodeB64("Nguyễn Nghiệm");
