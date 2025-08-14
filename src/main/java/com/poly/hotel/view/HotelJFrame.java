@@ -340,7 +340,7 @@ public class HotelJFrame extends javax.swing.JFrame implements HotelJFrameContro
             btnUserManager.setVisible(false);
         }
     }
-    
+
     @Override
     public Frame getFrame() {
         return this;
