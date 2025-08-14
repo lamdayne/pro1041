@@ -8,6 +8,8 @@ import com.poly.hotel.controller.UserController;
 import com.poly.hotel.dao.UserDAO;
 import com.poly.hotel.dao.impl.UserDAOImpl;
 import com.poly.hotel.entity.User;
+import com.poly.hotel.util.MsgBox;
+import com.poly.hotel.util.XAuth;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.List;
@@ -233,6 +235,13 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                 "Xác nhận",
                 JOptionPane.YES_NO_OPTION);
 
+        for (int i = 0; i < tblUser.getRowCount(); i++) {
+            if ((Boolean) tblUser.getValueAt(i, 8) && items.get(i).getUsername().equals(XAuth.user.getUsername())) {
+                MsgBox.alert("Không thể xóa tài khoản đang đăng nhập");
+                return;
+            }
+        }
+        
         if (confirm == JOptionPane.YES_OPTION) {
             for (int i = 0; i < tblUser.getRowCount(); i++) {
                 if ((Boolean) tblUser.getValueAt(i, 8)) {
