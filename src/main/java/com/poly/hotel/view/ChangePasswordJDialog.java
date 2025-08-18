@@ -170,7 +170,7 @@ public class ChangePasswordJDialog extends javax.swing.JDialog {
         } else {
             user.setPassword(newpass);
             userDAO.update(user);
-            MsgBox.alert("Đổi mật khẩu thành công!");
+            MsgBox.alertSuccess("Đổi mật khẩu thành công!");
         }
     }
 
