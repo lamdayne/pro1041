@@ -149,7 +149,11 @@ public class CustomerJDialog extends javax.swing.JDialog implements CustomerCont
 
     private void btnDeleteItemsCheckedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemsCheckedActionPerformed
         // TODO add your handling code here:
-        this.deleteCheckedItems();
+        try {
+            this.deleteCheckedItems();
+        } catch (Exception e) {
+            MsgBox.alert("Không thể xóa thông tin khách hàng");
+        }
     }//GEN-LAST:event_btnDeleteItemsCheckedActionPerformed
 
     @Override

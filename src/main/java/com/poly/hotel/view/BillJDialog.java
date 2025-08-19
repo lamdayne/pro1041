@@ -143,7 +143,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         try {
             billDao.update(bill);
             fillToTable();
-            MsgBox.alertSuccess( "Cập nhật thành công!");
+            MsgBox.alertSuccess("Cập nhật thành công!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi cập nhật: " + e.getMessage());
             System.out.println("[ERROR] " + e.getMessage());
@@ -160,7 +160,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
                 billDao.deleteById(billID);
                 fillToTable();
                 clear();
-                MsgBox.alertSuccess( "Xóa thành công!");
+                MsgBox.alertSuccess("Xóa thành công!");
             }
         } else {
             System.out.println("[WARN] Không có dòng nào được chọn để xóa!");
@@ -226,6 +226,37 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
         txtPaymentDate.setText(XDate.format(XDate.now(), XDate.PATTERN_FULL));
         txtAmount.setText(String.valueOf(item.getTotalAmount()));
         txtUsername.setText(item.getUserName());
+    }
+
+    public void paymentProcess() {
+        boolean hasSelection = false;
+        for (int i = 0; i < tblBill.getRowCount(); i++) {
+            Boolean checked = (Boolean) tblBill.getValueAt(i, 7); // cột checkbox là index 7
+            if (checked != null && checked) {
+                hasSelection = true;
+                if (tblBill.getValueAt(i, 5).toString().equals("Chưa thanh toán")) {
+                    Bill bill = new Bill();
+                    bill.setBillID(tblBill.getValueAt(i, 0).toString());
+                    bill.setBookingID(Integer.parseInt(tblBill.getValueAt(i, 1).toString()));
+                    bill.setPaymentDate((java.util.Date) tblBill.getValueAt(i, 2));
+                    bill.setAmount(Double.parseDouble(tblBill.getValueAt(i, 3).toString()));
+                    bill.setPaymentMethod(tblBill.getValueAt(i, 4).toString());
+                    bill.setPaymentStatus("Đã thanh toán");
+                    bill.setUsername(tblBill.getValueAt(i, 6).toString());
+                    billDao.update(bill);
+                    MsgBox.alertSuccess("Thanh toán thành công");
+                    fillToTable();
+                    return;
+                } else {
+                    MsgBox.alertSuccess("Hóa đơn đã được thanh toán");
+                    return;
+                }
+            }
+        }
+        if (!hasSelection) {
+            MsgBox.alert("Vui lòng chọn hóa đơn");
+            return;
+        }
     }
 
     /**
@@ -516,7 +547,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController {
 
     private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
         // TODO add your handling code here:
-        this.checkAll();
+        this.paymentProcess();
     }//GEN-LAST:event_btnCheckoutActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

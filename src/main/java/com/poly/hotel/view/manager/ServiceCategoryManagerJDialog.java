@@ -29,6 +29,9 @@ public class ServiceCategoryManagerJDialog extends javax.swing.JDialog implement
         super(parent, modal);
         initComponents();
         this.open();
+        btnCheckAll.setVisible(false);
+        btnUnCheckAll.setVisible(false);
+        btnDelete.setVisible(false);
     }
 
     String placeholderServiceName = "Nhập tên loại dịch vụ";

@@ -12,6 +12,7 @@ import com.poly.hotel.dao.impl.ServiceManagerImpl;
 import com.poly.hotel.entity.Service;
 import com.poly.hotel.entity.ServiceCategory;
 import com.poly.hotel.util.MsgBox;
+import com.poly.hotel.util.XStr;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -35,6 +36,7 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
         super(parent, modal);
         initComponents();
         this.open();
+        txtServiceId.setEditable(false);
     }
 
     /**
@@ -176,7 +178,7 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1022, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCheckAll, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -301,7 +303,7 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(107, Short.MAX_VALUE)
+                .addContainerGap(203, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jSeparator1)
@@ -320,9 +322,9 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
                                     .addComponent(rdbOffline))
                                 .addGroup(jPanel3Layout.createSequentialGroup()
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtUnit)
-                                        .addComponent(txtServiceId)
-                                        .addComponent(cboCategory, 0, 309, Short.MAX_VALUE))
+                                        .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtServiceId, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cboCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -330,9 +332,9 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
                                         .addComponent(jLabel7))))
                             .addGap(18, 18, 18)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-                                .addComponent(txtServiceName)
-                                .addComponent(txtServicePrice))))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtServiceName, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtServicePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -341,12 +343,12 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(78, 78, 78))
+                .addGap(193, 193, 193))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtServiceId, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -380,7 +382,7 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         tabs.addTab("Biểu Mẫu", jPanel3);
@@ -456,7 +458,9 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
 
     private void tblServiceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblServiceMouseClicked
         // TODO add your handling code here:
-        this.edit();
+        if (evt.getClickCount() == 2) {
+            this.edit();
+        }
     }//GEN-LAST:event_tblServiceMouseClicked
 
     @Override
@@ -542,6 +546,7 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
         if (entity == null) {
             return;
         }
+        entity.setServiceID(XStr.generateCode(6));
         dao.create(entity);
         MsgBox.alertSuccess("Thêm dịch vụ thành công");
         this.fillToTable();
@@ -576,8 +581,7 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
     }
 
     @Override
-    public void setEditable(boolean editable
-    ) {
+    public void setEditable(boolean editable) {
         txtServiceId.setEnabled(!editable);
         btnCreate.setEnabled(!editable);
         btnUpdate.setEnabled(editable);
@@ -615,10 +619,10 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
 
     private boolean validateInput() {
         try {
-            if (txtServiceId.getText().isEmpty()) {
-                MsgBox.alert("Vui lòng nhập mã dịch vụ");
-                return false;
-            }
+//            if (txtServiceId.getText().isEmpty()) {
+//                MsgBox.alert("Vui lòng nhập mã dịch vụ");
+//                return false;
+//            }
             if (txtServiceName.getText().isEmpty()) {
                 MsgBox.alert("Vui lòng nhập tên dịch vụ");
                 return false;

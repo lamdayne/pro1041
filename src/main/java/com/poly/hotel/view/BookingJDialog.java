@@ -130,8 +130,6 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
         tblRoomSelected = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         cboService = new javax.swing.JComboBox<>();
-        jLabel23 = new javax.swing.JLabel();
-        dcsTime = new com.toedter.calendar.JDateChooser();
         btnAddService = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         btnCancel = new javax.swing.JButton();
@@ -322,7 +320,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel25.setText("Trả trước:");
+        jLabel25.setText("Tổng tiền:");
 
         txtPrepay.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(0, 220, 255)));
         txtPrepay.addActionListener(new java.awt.event.ActionListener() {
@@ -544,13 +542,6 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
 
         cboService.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel23.setText("Thời gian:");
-
-        dcsTime.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 3, new java.awt.Color(0, 220, 255)));
-        dcsTime.setDateFormatString("yyyy-MM-dd HH:mm:ss");
-
         btnAddService.setBackground(new java.awt.Color(204, 204, 255));
         btnAddService.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddService.setText("Thêm dịch vụ");
@@ -566,17 +557,10 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(cboService, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAddService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel23)
-                        .addGap(18, 18, 18)
-                        .addComponent(dcsTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(153, 153, 153))))
+                .addComponent(cboService, 0, 175, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAddService, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -585,11 +569,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAddService, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                     .addComponent(cboService))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dcsTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -1012,7 +992,6 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
     private javax.swing.JComboBox<String> cboService;
     private com.toedter.calendar.JDateChooser dcsCheckin;
     private com.toedter.calendar.JDateChooser dcsCheckout;
-    private com.toedter.calendar.JDateChooser dcsTime;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
@@ -1024,7 +1003,6 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;

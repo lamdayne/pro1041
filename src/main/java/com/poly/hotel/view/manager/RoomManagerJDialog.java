@@ -39,7 +39,52 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         }
         fillCategories();
         fillToTable();
+        fillStatusComboBox();
     }
+    
+    private void fillStatusComboBox() {
+        cboStatus.removeAllItems();
+        cboStatus.addItem("Trống");
+        cboStatus.addItem("Đã đặt");
+        cboStatus.addItem("Đang dọn dẹp");
+        cboStatus.addItem("Đang sửa chữa");
+    }
+
+    // Phương thức chuyển đổi từ status text sang status code
+    private String getStatusCode(String statusText) {
+        switch (statusText) {
+            case "Trống":
+                return "0";
+            case "Đã đặt":
+                return "1";
+            case "Đang dọn dẹp":
+                return "2";
+            case "Đang sửa chữa":
+                return "3";
+            default:
+                return "0";
+        }
+    }
+
+    // Phương thức chuyển đổi từ status code sang status text
+    private String getStatusText(String statusCode) {
+        if (statusCode == null) {
+            return "Trống";
+        }
+        switch (statusCode) {
+            case "0":
+                return "Trống";
+            case "1":
+                return "Đã đặt";
+            case "2":
+                return "Đang dọn dẹp";
+            case "3":
+                return "Đang sửa chữa";
+            default:
+                return "Trống";
+        }
+    }
+
 
     private void fillCategories() {
         cboRoomCategory.removeAllItems();
@@ -65,24 +110,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         model.setRowCount(0);
         items = dao.findAll();
         items.forEach(item -> {
-            String st;
-            switch (item.getStatus()) {
-                case "0":
-                    st = "Trống";
-                    break;
-                case "1":
-                    st = "Đã đặt";
-                    break;
-                case "2":
-                    st = "Đang dọn dẹp";
-                    break;
-                case "3":
-                    st = "Sửa chữa";
-                    break;
-                default:
-                    st = "Không xác định";
-                    break;
-            }
+            String st = getStatusText(item.getStatus());
             RoomCategory category = categoryDao.findById(String.valueOf(item.getCategoryID()));
             String categoryName = category.getCategoryName();
             model.addRow(new Object[]{
@@ -139,7 +167,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         txtRoomId.setText(entity.getRoomID());
         cboRoomCategory.setSelectedItem(String.valueOf(entity.getCategoryID()));
         cboFloor.setSelectedItem(String.valueOf(entity.getFloor()));
-        cboStatus.setSelectedItem(entity.getStatus());
+        cboStatus.setSelectedItem(getStatusText(entity.getStatus()));
         txtDesc.setText(entity.getDesc());
         rdoActive.setSelected(entity.isActive());
         rdoStopped.setSelected(!entity.isActive());
@@ -152,7 +180,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         RoomCategory itemCategory = categoryDao.findByName((String) cboRoomCategory.getSelectedItem());
         entity.setCategoryID(itemCategory.getCategoryID());
         entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
-        entity.setStatus((String) cboStatus.getSelectedItem());
+        entity.setStatus(getStatusCode((String) cboStatus.getSelectedItem()));
         entity.setDesc(txtDesc.getText());
         entity.setActive(rdoActive.isSelected());
         return entity;

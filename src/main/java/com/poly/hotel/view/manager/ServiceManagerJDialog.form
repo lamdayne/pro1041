@@ -93,7 +93,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jScrollPane1" min="-2" pref="251" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="811" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="1022" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
@@ -316,9 +316,9 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="107" max="32767" attributes="0"/>
+                      <EmptySpace pref="203" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jSeparator1" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -338,9 +338,9 @@
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="txtUnit" max="32767" attributes="0"/>
-                                              <Component id="txtServiceId" max="32767" attributes="0"/>
-                                              <Component id="cboCategory" pref="309" max="32767" attributes="0"/>
+                                              <Component id="txtUnit" min="-2" pref="309" max="-2" attributes="0"/>
+                                              <Component id="txtServiceId" min="-2" pref="309" max="-2" attributes="0"/>
+                                              <Component id="cboCategory" min="-2" pref="309" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace pref="34" max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -352,13 +352,13 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jScrollPane3" pref="337" max="32767" attributes="0"/>
-                                      <Component id="txtServiceName" max="32767" attributes="0"/>
-                                      <Component id="txtServicePrice" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane3" min="-2" pref="337" max="-2" attributes="0"/>
+                                      <Component id="txtServiceName" min="-2" pref="337" max="-2" attributes="0"/>
+                                      <Component id="txtServicePrice" min="-2" pref="337" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="btnCreate" min="-2" pref="118" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnUpdate" min="-2" pref="97" max="-2" attributes="0"/>
@@ -368,14 +368,14 @@
                               <Component id="btnClear" min="-2" pref="115" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtServiceId" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
@@ -391,7 +391,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtUnit" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
@@ -410,14 +410,14 @@
                       <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="btnUpdate" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                               <Component id="btnDelete" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                               <Component id="btnClear" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
                           <Component id="btnCreate" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="50" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

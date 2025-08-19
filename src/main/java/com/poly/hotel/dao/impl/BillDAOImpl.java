@@ -41,14 +41,13 @@ public class BillDAOImpl implements BillDAO {
     @Override
     public void update(Bill bill) {
         Object[] values = {
-            bill.getBillID(),
             bill.getBookingID(),
             bill.getAmount(),
             bill.getPaymentMethod(),
             bill.getPaymentDate(),
             bill.getPaymentStatus(),
-            bill.getUsername()
-
+            bill.getUsername(),
+            bill.getBillID()
         };
         XJdbc.executeUpdate(updateSql, values);
     }
