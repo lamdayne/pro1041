@@ -9,6 +9,7 @@ import com.poly.hotel.dao.RoomCategoryDAO;
 import com.poly.hotel.dao.impl.RoomCategoryDAOImpl;
 import com.poly.hotel.entity.RoomCategory;
 import com.poly.hotel.util.MsgBox;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -20,7 +21,6 @@ import javax.swing.table.DefaultTableModel;
  * @author Windows
  */
 public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements RoomCategoryManagerController {
-
     private RoomCategoryDAO dao = new RoomCategoryDAOImpl();
     private List<RoomCategory> items = new ArrayList<>();
 
@@ -154,7 +154,7 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
             }
             try {
                 if (entity.getBaseDailyPrice() <= 0) {
-                    MsgBox.alertFail("Giá theo ngày phải là số dương!");
+                    MsgBox.alertFail("Giá theo ngày phải lớn hơn 0!");
                     return;
                 }
             } catch (NumberFormatException e) {
@@ -568,6 +568,7 @@ public class RoomCategoryManagerJDialog extends javax.swing.JDialog implements R
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtIdActionPerformed
 
     /**
