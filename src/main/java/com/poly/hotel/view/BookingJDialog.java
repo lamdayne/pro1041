@@ -928,7 +928,8 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
                 bookingItem.getRoomID(),
                 room.getFloor(),
                 service.getServiceName(),
-                service.getPrice()
+                service.getPrice(),
+                XDate.format(XDate.now(), XDate.PATTERN_FULL)
             };
             model.addRow(rowData);
         });
@@ -936,6 +937,7 @@ public class BookingJDialog extends javax.swing.JDialog implements BookingContro
     }
 
     public void setCustomerBooking(int bookingId) {
+        btnSave.setEnabled(false);
         Booking bk = booking.findById(String.valueOf(bookingId));
         Customer cus = customerDao.findById(String.valueOf(bk.getCustomerID()));
         dcsCheckin.setDate(bk.getCheckInDate());

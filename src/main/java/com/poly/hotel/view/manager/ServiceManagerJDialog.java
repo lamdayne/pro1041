@@ -27,7 +27,7 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
     List<ServiceCategory> categories;
     ServiceDAO dao = new ServiceManagerImpl();
     List<Service> items = List.of();
-    
+
     /**
      * Creates new form ServiceManagerJDialog
      */
@@ -420,12 +420,16 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-        this.create();
+        if (validateInput()) {
+            this.create();
+        }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        this.update();
+        if (validateInput()) {
+            this.update();
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -539,6 +543,7 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
             return;
         }
         dao.create(entity);
+        MsgBox.alertSuccess("Thêm dịch vụ thành công");
         this.fillToTable();
         this.clear();
     }
@@ -546,7 +551,11 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
     @Override
     public void update() {
         Service entity = this.getForm();
+        if (entity == null) {
+            return;
+        }
         dao.update(entity);
+        MsgBox.alertSuccess("Cập nhật dịch vụ thành công");
         this.fillToTable();
     }
 
@@ -603,7 +612,39 @@ public class ServiceManagerJDialog extends javax.swing.JDialog implements Servic
             tblService.setValueAt(checked, i, 6);
         }
     }
-    
+
+    private boolean validateInput() {
+        try {
+            if (txtServiceId.getText().isEmpty()) {
+                MsgBox.alert("Vui lòng nhập mã dịch vụ");
+                return false;
+            }
+            if (txtServiceName.getText().isEmpty()) {
+                MsgBox.alert("Vui lòng nhập tên dịch vụ");
+                return false;
+            }
+            if (txtServicePrice.getText().isEmpty()) {
+                MsgBox.alert("Vui lòng nhập giá dịch vụ");
+                return false;
+            }
+            if (txtUnit.getText().isEmpty()) {
+                MsgBox.alert("Vui lòng nhập loại");
+                return false;
+            }
+            if (txtDescription.getText().isEmpty()) {
+                MsgBox.alert("Vui lòng nhập mô tả");
+                return false;
+            }
+            if (!rdbOnline.isSelected() && !rdbOffline.isSelected()) {
+                MsgBox.alert("Chọn trạng thái dịch vụ!");
+                return false;
+            }
+        } catch (Exception e) {
+            MsgBox.alert("Mã dịch vụ đã tồn tại");
+        }
+        return true;
+    }
+
     /**
      * @param args the command line arguments
      */

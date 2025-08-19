@@ -45,7 +45,7 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         cboRoomCategory.removeAllItems();
         try {
             for (RoomCategory category : categoryDao.findAll()) {
-                cboRoomCategory.addItem(String.valueOf(category.getCategoryID()));
+                cboRoomCategory.addItem(String.valueOf(category.getCategoryName()));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi thêm loại phòng!");
@@ -65,13 +65,31 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
         model.setRowCount(0);
         items = dao.findAll();
         items.forEach(item -> {
+            String st;
+            switch (item.getStatus()) {
+                case "0":
+                    st = "Trống";
+                    break;
+                case "1":
+                    st = "Đã đặt";
+                    break;
+                case "2":
+                    st = "Đang dọn dẹp";
+                    break;
+                case "3":
+                    st = "Sửa chữa";
+                    break;
+                default:
+                    st = "Không xác định";
+                    break;
+            }
             RoomCategory category = categoryDao.findById(String.valueOf(item.getCategoryID()));
             String categoryName = category.getCategoryName();
             model.addRow(new Object[]{
                 item.getRoomID(),
                 categoryName,
                 item.getFloor(),
-                item.getStatus(),
+                st,
                 item.getDesc(),
                 item.isActive() ? "Hoạt động" : "Ngưng HĐ",
                 false
@@ -117,27 +135,28 @@ public class RoomManagerJDialog extends javax.swing.JDialog implements RoomManag
     }
 
     @Override
-public void setForm(Room entity) {
-    txtRoomId.setText(entity.getRoomID());
-    cboRoomCategory.setSelectedItem(String.valueOf(entity.getCategoryID()));
-    cboFloor.setSelectedItem(String.valueOf(entity.getFloor()));
-    cboStatus.setSelectedItem(entity.getStatus());
-    txtDesc.setText(entity.getDesc());
-    rdoActive.setSelected(entity.isActive());
-    rdoStopped.setSelected(!entity.isActive());
-}
+    public void setForm(Room entity) {
+        txtRoomId.setText(entity.getRoomID());
+        cboRoomCategory.setSelectedItem(String.valueOf(entity.getCategoryID()));
+        cboFloor.setSelectedItem(String.valueOf(entity.getFloor()));
+        cboStatus.setSelectedItem(entity.getStatus());
+        txtDesc.setText(entity.getDesc());
+        rdoActive.setSelected(entity.isActive());
+        rdoStopped.setSelected(!entity.isActive());
+    }
 
-@Override
-public Room getForm() {
-    Room entity = new Room();
-    entity.setRoomID(txtRoomId.getText());
-    entity.setCategoryID(Integer.parseInt((String) cboRoomCategory.getSelectedItem()));
-    entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
-    entity.setStatus((String) cboStatus.getSelectedItem());
-    entity.setDesc(txtDesc.getText());
-    entity.setActive(rdoActive.isSelected());
-    return entity;
-}
+    @Override
+    public Room getForm() {
+        Room entity = new Room();
+        entity.setRoomID(txtRoomId.getText());
+        RoomCategory itemCategory = categoryDao.findByName((String) cboRoomCategory.getSelectedItem());
+        entity.setCategoryID(itemCategory.getCategoryID());
+        entity.setFloor(Integer.parseInt((String) cboFloor.getSelectedItem()));
+        entity.setStatus((String) cboStatus.getSelectedItem());
+        entity.setDesc(txtDesc.getText());
+        entity.setActive(rdoActive.isSelected());
+        return entity;
+    }
 
     @Override
     public void create() {
